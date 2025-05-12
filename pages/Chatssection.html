@@ -482,11 +482,47 @@
             </div>
             
             <div class="content">
-                <h1 class="title">Chats</h1>
+                <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                    <h1 class="title" style="margin: 0;">Chats</h1>
+                    <!-- Group Chat Creation Button (moved next to Chats) -->
+                    <button id="createGroupChatBtn" title="Create Group Chat" style="
+                        width: 40px;
+                        height: 40px;
+                        border-radius: 50%;
+                        background: #4A90E2;
+                        color: #fff;
+                        font-size: 1.6rem;
+                        border: none;
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+                        cursor: pointer;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        margin-left: 4px;
+                    ">
+                        +
+                    </button>
+                </div>
                 <div class="chats-container">
                     <!-- Chat List -->
                     <div class="chat-list">
                         <div class="chat-list-header">Messages</div>
+                        <!-- Search bar for contacts -->
+                        <div style="padding: 12px 16px; border-bottom: 1px solid #e5e7eb; background: #fafbfc;">
+                            <input
+                                id="contactSearchInput"
+                                type="text"
+                                placeholder="Search contacts or start new message..."
+                                style="width: 100%; padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px;"
+                            />
+                            <button
+                                id="startNewMessageBtn"
+                                title="Start new message"
+                                style="margin-top: 8px; width: 100%; background: #4A90E2; color: #fff; border: none; border-radius: 8px; padding: 8px 0; font-size: 15px; cursor: pointer;"
+                            >
+                                New Message
+                            </button>
+                        </div>
                         <div class="chat-item">
                             <div class="chat-avatar"></div>
                             <div class="chat-info">
@@ -528,6 +564,55 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Group Chat Creation Floating Button -->
+    <!-- Removed duplicate floating button from the corner -->
+    <!--
+    <button id="createGroupChatBtn" title="Create Group Chat" style="
+        position: fixed;
+        bottom: 32px;
+        right: 32px;
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        background: #4A90E2;
+        color: #fff;
+        font-size: 2.2rem;
+        border: none;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        cursor: pointer;
+        z-index: 2000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    ">
+        +
+    </button>
+    -->
+
+    <!-- Group Chat Modal (hidden by default) -->
+    <div id="groupChatModal" style="
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #fff;
+        padding: 32px 24px;
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.25);
+        z-index: 3000;
+        min-width: 320px;
+        max-width: 90vw;
+    ">
+        <h3 style="margin-bottom: 16px;">Create Group Chat</h3>
+        <input id="groupNameInput" type="text" placeholder="Group Name" style="width:100%;margin-bottom:12px;padding:8px;border-radius:6px;border:1px solid #ccc;" />
+        <textarea id="groupMembersInput" placeholder="Enter usernames, comma separated" style="width:100%;margin-bottom:12px;padding:8px;border-radius:6px;border:1px solid #ccc;"></textarea>
+        <div style="display:flex;gap:10px;justify-content:flex-end;">
+            <button id="createGroupBtn" style="background:#4A90E2;color:#fff;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Create</button>
+            <button id="closeGroupModalBtn" style="background:#eee;color:#333;border:none;padding:8px 16px;border-radius:6px;cursor:pointer;">Cancel</button>
         </div>
     </div>
 
@@ -614,6 +699,52 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        // Floating "+" button opens the modal
+        document.getElementById('createGroupChatBtn').onclick = function() {
+            document.getElementById('groupChatModal').style.display = 'block';
+        };
+
+        // Close modal
+        document.getElementById('closeGroupModalBtn').onclick = function() {
+            document.getElementById('groupChatModal').style.display = 'none';
+        };
+
+        // Create group chat logic
+        document.getElementById('createGroupBtn').onclick = function() {
+            const name = document.getElementById('groupNameInput').value.trim();
+            const members = document.getElementById('groupMembersInput').value.split(',').map(m => m.trim()).filter(Boolean);
+            if (!name || members.length < 2) {
+                alert('Please enter a group name and at least two members.');
+                return;
+            }
+            // Here you would send the group chat data to your backend or update the UI as needed
+            alert(`Group "${name}" created with members: ${members.join(', ')}`);
+            document.getElementById('groupChatModal').style.display = 'none';
+            // Optionally, reset fields
+            document.getElementById('groupNameInput').value = '';
+            document.getElementById('groupMembersInput').value = '';
+        };
+
+        // Simple contact search filter for chat list
+        document.getElementById('contactSearchInput').addEventListener('input', function () {
+            const filter = this.value.toLowerCase();
+            document.querySelectorAll('.chat-item').forEach(function (item) {
+                const name = item.querySelector('.chat-name').textContent.toLowerCase();
+                const message = item.querySelector('.chat-message').textContent.toLowerCase();
+                if (name.includes(filter) || message.includes(filter)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+
+        // New Message button logic (example: open modal or alert)
+        document.getElementById('startNewMessageBtn').onclick = function () {
+            alert('Start a new message (feature to be implemented)');
+            // You can open a modal or redirect to a new message page here
+        };
     </script>
 </body>
 </html>
