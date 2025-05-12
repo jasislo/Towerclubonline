@@ -141,7 +141,7 @@ function getAccountLevel(followers, referrals) {
     if (followers >= 100000 && referrals >= 50000) return 'Platinum';
     if (followers >= 50000 && referrals >= 10000) return 'Gold';
     if (followers >= 10000 && referrals >= 1000) return 'Silver';
-    if (followers >= 1000 && referrals >= 100) return 'Bronze';
+    if (followers >= 1000 && referrals >= 100) return 'VIP Member'; // Changed from 'Bronze' to 'VIP Member'
     return 'Starter';
 }
 
@@ -217,11 +217,43 @@ function closeReferralRewardModal() {
 }
 
 function showCashOutModal() {
-    document.getElementById('cashOutModal').style.display = 'flex';
+    // Ask the user if they want to move the reward to their wallet balance
+    if (confirm('Move Reward to your Wallet Balance?')) {
+        // Proceed to make transfer to wallet balance
+        // Simulate transfer logic (replace with actual API call if needed)
+        // Example: update wallet balance in UI or notify user
+        const toast = document.createElement('div');
+        toast.className = 'toast toast-success';
+        toast.textContent = 'Reward moved to your Wallet Balance!';
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 3000);
+
+        // Optionally, update wallet balance in the DOM here
+        // Example: document.getElementById('walletBalance').textContent = newBalance;
+    } else {
+        // Cancel transfer, do nothing or show a cancellation message
+        const toast = document.createElement('div');
+        toast.className = 'toast toast-info';
+        toast.textContent = 'Transfer cancelled.';
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 2000);
+    }
+}
+
+function showReferralPromo() {
+    const promoBanner = document.createElement('div');
+    promoBanner.className = 'promo-banner';
+    promoBanner.textContent = 'THIS referral code #jonatthanasis gives 2 months free!';
+    document.body.prepend(promoBanner);
+
+    setTimeout(() => {
+        promoBanner.remove();
+    }, 8000); // Hide after 8 seconds
 }
 
 document.addEventListener('DOMContentLoaded', () => {
     new ReferralProfile();
+    showReferralPromo(); // Show the promo banner
 
     // Modal button handlers
     const cashOutYesBtn = document.getElementById('cashOutYesBtn');
@@ -241,5 +273,29 @@ document.addEventListener('DOMContentLoaded', () => {
         cashOutNoBtn.onclick = function() {
             cashOutModal.style.display = 'none';
         };
+    }
+
+    // Referral Code Form Logic (add this if not already present)
+    // If you have a referral code input form:
+    const referralInput = document.getElementById('referralCodeInput');
+    const referralMsg = document.getElementById('referralCodeMessage');
+    if (referralInput && referralMsg) {
+        document.getElementById('referralCodeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const code = referralInput.value.trim().toLowerCase();
+            if (code === '#jonatthanasis' || code === 'jonatthanasis') {
+                referralMsg.style.display = 'block';
+                referralMsg.style.color = '#22c55e';
+                referralMsg.textContent = 'Referral code applied! You get 2 months free of charge membership.';
+            } else if (code.length < 3) {
+                referralMsg.style.display = 'block';
+                referralMsg.style.color = '#F06A6A';
+                referralMsg.textContent = 'Please enter a valid referral code.';
+            } else {
+                referralMsg.style.display = 'block';
+                referralMsg.style.color = '#22c55e';
+                referralMsg.textContent = 'Referral code applied!';
+            }
+        });
     }
 });
