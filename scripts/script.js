@@ -96,3 +96,63 @@ function validateInput(input) {
 function redirectToPicturesProfile() {
     window.location.href = 'pictures_profile.html'; // Redirect to pictures_profile.html
 }
+
+// --- Group Chat Creation Feature ---
+
+// Example: Open a modal to create a group chat
+function openGroupChatModal() {
+    let modal = document.getElementById('groupChatModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'groupChatModal';
+        modal.style.position = 'fixed';
+        modal.style.top = '50%';
+        modal.style.left = '50%';
+        modal.style.transform = 'translate(-50%, -50%)';
+        modal.style.background = '#fff';
+        modal.style.padding = '20px';
+        modal.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+        modal.innerHTML = `
+            <h3>Create Group Chat</h3>
+            <input id="groupNameInput" type="text" placeholder="Group Name" style="width:100%;margin-bottom:10px;" />
+            <textarea id="groupMembersInput" placeholder="Enter usernames, comma separated" style="width:100%;margin-bottom:10px;"></textarea>
+            <button id="createGroupBtn">Create</button>
+            <button id="closeGroupModalBtn">Cancel</button>
+        `;
+        document.body.appendChild(modal);
+
+        document.getElementById('closeGroupModalBtn').onclick = () => modal.remove();
+        document.getElementById('createGroupBtn').onclick = () => {
+            const name = document.getElementById('groupNameInput').value.trim();
+            const members = document.getElementById('groupMembersInput').value.split(',').map(m => m.trim()).filter(Boolean);
+            createGroupChat(name, members);
+            modal.remove();
+        };
+    }
+}
+
+// Example: Group chat creation algorithm
+function createGroupChat(groupName, members) {
+    if (!groupName || members.length < 2) {
+        alert('Please enter a group name and at least two members.');
+        return;
+    }
+    // Here you would send the group chat data to your backend or store it as needed
+    console.log('Group chat created:', { groupName, members });
+    alert(`Group "${groupName}" created with members: ${members.join(', ')}`);
+}
+
+// Example: Add a button to open the group chat modal (you can move this to your HTML)
+document.addEventListener('DOMContentLoaded', () => {
+    let btn = document.getElementById('openGroupChatBtn');
+    if (!btn) {
+        btn = document.createElement('button');
+        btn.id = 'openGroupChatBtn';
+        btn.textContent = 'Create Group Chat';
+        btn.style.position = 'fixed';
+        btn.style.bottom = '20px';
+        btn.style.right = '20px';
+        document.body.appendChild(btn);
+        btn.onclick = openGroupChatModal;
+    }
+});
