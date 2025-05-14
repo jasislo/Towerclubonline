@@ -151,6 +151,8 @@ darkModeToggle.addEventListener('click', () => {
     const logoutBtn = document.querySelector('.nav-actions a[href="/pages/logout.html"]');
     if (logoutBtn) {
         logoutBtn.addEventListener('click', (e) => {
+            e.preventDefault(); // Prevent default link navigation
+
             // Clear all member-related data from localStorage/sessionStorage
             localStorage.removeItem('memberProfile');
             localStorage.removeItem('profilePicture');
@@ -162,8 +164,8 @@ darkModeToggle.addEventListener('click', () => {
             // Optionally clear all localStorage (uncomment if you want a full reset)
             // localStorage.clear();
 
-            // Proceed to logout page
-            // (Default behavior: goes to /pages/logout.html)
+            // Redirect to login.html
+            window.location.href = '/pages/login.html';
         });
     }
 </script>
