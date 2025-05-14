@@ -494,6 +494,20 @@ body {
     font-weight: 500;
 }
 
+.promo-banner {
+    background: #1e90ff;
+    color: #fff;
+    padding: 12px 0;
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.1rem;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+}
+
 @media (max-width: 768px) {
     .header {
         margin: 10px;
@@ -506,4 +520,20 @@ body {
     .balance-amount h1 {
         font-size: 2rem;
     }
+}
+
+@media (max-width: 600px) {
+  .main-nav, .footer-content, .auth-container, .profile-section {
+    padding: 10px;
+    font-size: 1rem;
+  }
+  .nav-links, .footer-column {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .profile-picture, .logo {
+    width: 48px;
+    height: 48px;
+  }
+  /* Add more mobile-specific styles as needed */
 }
