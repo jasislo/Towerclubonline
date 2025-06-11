@@ -803,7 +803,7 @@
 
             <!-- Navigation Actions -->
             <div class="nav-actions">
-                <a href="login.html" class="btn btn-outline" data-i18n="nav-login">Login</a>
+                <a href="login.html" class="btn btn-outline" data-i18n="nav-login">Log in</a>
                 <a href="PAY.HTML" class="btn btn-primary btn-large" data-i18n="nav-get-started">Get Started</a>
                 <select id="languageSelect" class="language-select" aria-label="Select Language">
                     <option value="en" data-i18n="lang-en">English</option>
@@ -1004,7 +1004,7 @@
                 </div>
 
                 <div class="payment-form" id="paypalPaymentFormContainer">
-                    <button class="btn-paypal" id="paypalButton" type="button" data-i18n="payment-paypal-login">Login with PayPal</button>
+                    <button class="btn-paypal" id="paypalButton" type="button" data-i18n="payment-paypal-login">Log in with PayPal</button>
                     <button class="btn-primary" id="makePaypalPayment" type="button" data-i18n="payment-paypal-make-payment">Pay Now with PayPal</button>
                 </div>
             </div>
@@ -1069,8 +1069,8 @@
                     <div class="footer-column">
                         <h4 data-i18n="footer-social">Social</h4>
                         <ul>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">X</a></li>
+                            <li><a href="#">Youtube</a></li>
                             <li><a href="#">Facebook</a></li>
                             <li><a href="#">Instagram</a></li>
                         </ul>
@@ -1118,6 +1118,13 @@
                 
                 // Store the selected state
                 btn.setAttribute('data-selected', 'true');
+                
+                // If payment is already completed, redirect to register.html
+                if (window.paymentSecured || sessionStorage.getItem('paymentComplete') === 'true') {
+                    setTimeout(() => {
+                        window.location.href = 'register.html';
+                    }, 500);
+                }
             });
 
             // Ensure "Selected" text persists on hover
@@ -1159,8 +1166,8 @@
             alert(`Processing payment of $${selectedPlanAmount.toFixed(2)} for ${selectedPlan} plan. Card ending in ${cardNumber.slice(-4)} under ${cardHolder}.`);
             window.paymentSecured = true;
             
-            // Show success message and enable proceed button
-            showPaymentSuccess();
+            // Show success message and redirect to register.html
+            showPaymentSuccessAndRedirect();
         });
 
         // PayPal Payment Button Logic
@@ -1169,52 +1176,52 @@
                 alert('Please select a plan before making payment.');
                 return;
             }
-            
-            // Check if already logged in with PayPal
-            const isLoggedInWithPayPal = sessionStorage.getItem('paypalLoggedIn') === 'true';
-            
-            if (!isLoggedInWithPayPal) {
-                // First time login - simulate PayPal login process
-                alert('PayPal login simulation: You would be redirected to PayPal to sign in, then return here to complete payment.');
-                
-                // Mark as logged in with PayPal
-                sessionStorage.setItem('paypalLoggedIn', 'true');
-                
-                // Update button text to show logged in status
-                this.textContent = 'Logged with PayPal';
-                this.style.backgroundColor = '#22c55e'; // Green background to indicate logged in
-                this.style.color = '#ffffff';
-                
-                // In a real implementation, you would redirect to PayPal like this:
-                // window.location.href = "https://www.paypal.com/signin?returnUrl=" + encodeURIComponent(window.location.origin + "/Towerclub%20LLC/Towerclub%20web%20app/pages/PAY.HTML");
-            } else {
-                // Already logged in - just show payment button
-                alert('Already logged in with PayPal. Ready to make payment.');
-            }
-            
-            // Show the Make Payment button after PayPal login
-            document.getElementById('makePaypalPayment').style.display = 'block';
-            document.getElementById('makePaypalPayment').textContent = `Pay $${selectedPlanAmount.toFixed(2)} with PayPal`;
-        });
 
-        // Make Payment with PayPal button handler
-        document.getElementById('makePaypalPayment').addEventListener('click', function() {
-            if (!selectedPlan || !selectedPlanAmount) {
-                alert('Please select a plan before making payment.');
-                return;
-            }
-            
-            // Process the payment with the selected plan
-            alert(`Processing PayPal payment of $${selectedPlanAmount.toFixed(2)} for ${selectedPlan} plan.`);
-            window.paymentSecured = true;
-            
-            // Show success message and enable proceed button
-            showPaymentSuccess();
-            
-            // Store payment status for session
-            sessionStorage.setItem('paymentComplete', 'true');
+            // Store current state so you can restore after PayPal login
+            sessionStorage.setItem('returnToPayPage', 'true');
             sessionStorage.setItem('selectedPlan', selectedPlan);
             sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
+
+            // Redirect to PayPal login with return URL to pay.html
+            // Replace YOUR_PAYPAL_CLIENT_ID with your real client ID
+            // This is the PayPal Checkout flow (not demo)
+            const baseUrl = window.location.origin + window.location.pathname;
+            const returnUrl = encodeURIComponent(baseUrl + '?paypal_return=true');
+            // Example PayPal OAuth URL (replace with your real PayPal app's URL if needed)
+            const paypalLoginUrl = `https://www.paypal.com/signin?returnUrl=${returnUrl}`;
+            window.location.href = paypalLoginUrl;
+        });
+
+        // On page load, check if returning from PayPal
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const paypalReturn = urlParams.get('paypal_return') === 'true';
+
+            if (paypalReturn || sessionStorage.getItem('returnToPayPage') === 'true') {
+                // Mark as logged in with PayPal
+                sessionStorage.setItem('paypalLoggedIn', 'true');
+                sessionStorage.removeItem('returnToPayPage');
+
+                // Update PayPal button UI
+                const paypalButton = document.getElementById('paypalButton');
+                if (paypalButton) {
+                    paypalButton.textContent = 'Logged with PayPal';
+                    paypalButton.style.backgroundColor = '#22c55e';
+                    paypalButton.style.color = '#ffffff';
+                }
+
+                // Show PayPal payment button
+                const makePaypalPayment = document.getElementById('makePaypalPayment');
+                if (makePaypalPayment) {
+                    makePaypalPayment.style.display = 'block';
+                    makePaypalPayment.textContent = `Pay $${selectedPlanAmount ? Number(selectedPlanAmount).toFixed(2) : ''} with PayPal`;
+                }
+
+                // Clean up URL
+                if (paypalReturn) {
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                }
+            }
         });
 
         // Special handling for Get Started buttons
@@ -1233,7 +1240,13 @@
             if (heroGetStarted) {
                 heroGetStarted.addEventListener('click', function(e) {
                     e.preventDefault();
+                    // Check if payment is completed, if so redirect to register.html
+                    if (window.paymentSecured || sessionStorage.getItem('paymentComplete') === 'true') {
                     window.location.href = 'register.html';
+                    } else {
+                        // If no payment, still allow registration
+                        window.location.href = 'register.html';
+                    }
                 });
             }
 
@@ -1293,15 +1306,77 @@
 
         // Check for existing payment on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // Check if returning from PayPal login
+            const returningFromPayPal = sessionStorage.getItem('returnToPayPage') === 'true';
+            const paypalLoginInProgress = sessionStorage.getItem('paypalLoginInProgress') === 'true';
+            const urlParams = new URLSearchParams(window.location.search);
+            const paypalReturn = urlParams.get('paypal_return') === 'true';
+            
+            // Handle PayPal return flow
+            if (returningFromPayPal || paypalReturn) {
+                // Clear the return flags
+                sessionStorage.removeItem('returnToPayPage');
+                sessionStorage.removeItem('paypalLoginInProgress');
+                
+                // Mark as logged in with PayPal
+                sessionStorage.setItem('paypalLoggedIn', 'true');
+                
+                // Update PayPal button to show logged in state
+                const paypalButton = document.getElementById('paypalButton');
+                if (paypalButton) {
+                    paypalButton.textContent = 'Logged with PayPal';
+                    paypalButton.style.backgroundColor = '#22c55e';
+                    paypalButton.style.color = '#ffffff';
+                }
+                
+                // Show success message
+                alert('Successfully logged in with PayPal! You can now proceed with payment.');
+                
+                // Restore selected plan and show payment button
+                const savedPlan = sessionStorage.getItem('selectedPlan');
+                const savedAmount = sessionStorage.getItem('selectedPlanAmount');
+                if (savedPlan && savedAmount) {
+                    selectedPlan = savedPlan;
+                    selectedPlanAmount = parseFloat(savedAmount);
+                    
+                    // Update the button to show selected state
+                    const selectedButton = document.querySelector(`[data-plan="${savedPlan}"]`);
+                    if (selectedButton) {
+                        selectedButton.textContent = 'Selected';
+                        selectedButton.classList.add('selected-plan');
+                        selectedButton.setAttribute('data-selected', 'true');
+                    }
+                    
+                    // Show PayPal payment button
+                    const makePaypalPayment = document.getElementById('makePaypalPayment');
+                    if (makePaypalPayment) {
+                        makePaypalPayment.style.display = 'block';
+                        makePaypalPayment.textContent = `Pay $${selectedPlanAmount.toFixed(2)} with PayPal`;
+                    }
+                }
+                
+                // Clear URL parameters for clean state
+                if (paypalReturn) {
+                    const newUrl = window.location.pathname;
+                    window.history.replaceState({}, document.title, newUrl);
+                }
+            }
+            
+            // Check if payment is already completed
             if (sessionStorage.getItem('paymentComplete') === 'true') {
                 window.paymentSecured = true;
                 enableProceedButtons();
+                
+                // If payment is complete, redirect to register.html
+                setTimeout(() => {
+                    window.location.href = 'register.html';
+                }, 1000);
             }
             
             // Restore selected plan if returning from PayPal
             const savedPlan = sessionStorage.getItem('selectedPlan');
             const savedAmount = sessionStorage.getItem('selectedPlanAmount');
-            if (savedPlan && savedAmount) {
+            if (savedPlan && savedAmount && !returningFromPayPal && !paypalReturn) {
                 selectedPlan = savedPlan;
                 selectedPlanAmount = parseFloat(savedAmount);
                 
@@ -1313,24 +1388,13 @@
                     selectedButton.setAttribute('data-selected', 'true');
                 }
                 
-                // Show PayPal payment button if payment not completed
-                if (!window.paymentSecured) {
+                // Show PayPal payment button if payment not completed and logged in
+                if (!window.paymentSecured && sessionStorage.getItem('paypalLoggedIn') === 'true') {
                     const makePaypalPayment = document.getElementById('makePaypalPayment');
                     if (makePaypalPayment) {
                         makePaypalPayment.style.display = 'block';
                         makePaypalPayment.textContent = `Pay $${selectedPlanAmount.toFixed(2)} with PayPal`;
                     }
-                }
-            }
-            
-            // Check if returning from PayPal (you can add URL parameters to detect this)
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('paypal_return') === 'true') {
-                // User returned from PayPal, show payment button
-                const makePaypalPayment = document.getElementById('makePaypalPayment');
-                if (makePaypalPayment && selectedPlan) {
-                    makePaypalPayment.style.display = 'block';
-                    makePaypalPayment.textContent = `Pay $${selectedPlanAmount.toFixed(2)} with PayPal`;
                 }
             }
             
@@ -1393,23 +1457,39 @@
             // Optionally: Save code to localStorage/session or send to backend
         });
 
-        // Update payment success messages
-        function showPaymentSuccess() {
+        // Update payment success messages and redirect to register.html
+        function showPaymentSuccessAndRedirect() {
             const successMessage = document.createElement('div');
             successMessage.className = 'payment-success';
             successMessage.style.cssText = 'background-color: #22c55e; color: white; padding: 20px; border-radius: 5px; margin-top: 15px; text-align: center;';
             successMessage.innerHTML = `
-                <p style="margin-bottom: 15px; font-size: 1.1rem;">Payment successful! Choose your next step:</p>
-                <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <a href="register.html" class="btn btn-primary" style="display: inline-block; text-decoration: none; padding: 12px 24px; min-width: 180px;">
-                        Create Account
-                    </a>
-                    <a href="register.html" class="btn btn-outline" style="display: inline-block; text-decoration: none; padding: 12px 24px; min-width: 180px; background: white; color: #22c55e; border: 2px solid white;">
-                        Proceed to Registration
-                    </a>
+                <p style="margin-bottom: 15px; font-size: 1.1rem;">Payment successful! Redirecting to registration...</p>
+                <div style="display: flex; justify-content: center;">
+                    <div class="spinner" style="width: 30px; height: 30px; border: 3px solid rgba(255, 255, 255, 0.3); border-top: 3px solid white; border-radius: 50%; animation: spin 1s linear infinite;"></div>
                 </div>
             `;
+            
+            // Add CSS for spinner animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            `;
+            document.head.appendChild(style);
+            
             document.querySelector('.payment-form').appendChild(successMessage);
+            
+            // Store payment completion status
+            sessionStorage.setItem('paymentComplete', 'true');
+            sessionStorage.setItem('selectedPlan', selectedPlan);
+            sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
+            
+            // Redirect to register.html after 2 seconds
+            setTimeout(() => {
+                window.location.href = 'register.html';
+            }, 2000);
         }
 
         // Add payment verification function
@@ -1427,6 +1507,17 @@
                 });
             });
         });
+
+        // Sync profile picture everywhere on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedPic = localStorage.getItem('profilePicture');
+    if (savedPic) {
+        ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.src = savedPic;
+        });
+    }
+});
     </script>
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
