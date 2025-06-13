@@ -878,6 +878,15 @@
             document.getElementById('age').value = memberProfile.age;
         }
     }
+
+    // Sync profile picture everywhere on page load
+    const savedPic = localStorage.getItem('profilePicture');
+    if (savedPic) {
+        ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.src = savedPic;
+        });
+    }
 });
 
         function showCardPaymentForm() {
@@ -1012,10 +1021,6 @@
         }
     });
     </script>
-    <script src="/scripts/lang.js"></script>
-    <script>
-  applyTranslations(); // Call this on page load
-</script>
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
     <script src="/scripts/header.js"></script>
