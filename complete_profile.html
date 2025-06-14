@@ -456,7 +456,8 @@
                     <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
                 </div>
                 <!-- Log Out Button -->
-                <a href="/pages/logout.html" class="btn btn-outline logout-button">Log Out</a>
+                <a href="/pages/logout.html" class="btn btn-outline">Log out</a>
+                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
             </div>
         </div>
     </nav>
@@ -483,9 +484,18 @@
                     <input type="text" id="name" name="name" required data-i18n-placeholder="profile-fullname-placeholder">
                 </div>
 
+                <!-- Username input with # symbol rule -->
                 <div class="form-group">
-                    <label for="username" data-i18n="profile-username">Create Username</label>
-                    <input type="text" id="username" name="username" placeholder="username" required data-i18n-placeholder="profile-username-placeholder">
+                    <label for="username">Username (must start with #)</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        name="username" 
+                        placeholder="#yourname" 
+                        pattern="^#[a-zA-Z0-9_]{1,}$"
+                        required
+                        oninput="this.setCustomValidity(!/^#[a-zA-Z0-9_]{1,}$/.test(this.value) ? 'Username must start with # and contain at least one character after #' : '')"
+                    >
                 </div>
 
                 <div class="form-group">
@@ -574,6 +584,15 @@
             fileInput.type = 'file';
             fileInput.accept = 'image/*';
 
+            // Sync profile picture everywhere on page load
+            const savedPic = localStorage.getItem('profilePicture');
+            if (savedPic) {
+                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.src = savedPic;
+                });
+            }
+
             // Handle profile image click
             profileImage.addEventListener('click', () => {
                 fileInput.click();
@@ -628,6 +647,19 @@
                     validateInput(input);
                 });
             });
+
+            // Username validation: must start with # and at least one character after
+            const usernameInput = document.getElementById('username');
+            if (usernameInput) {
+                usernameInput.addEventListener('input', function() {
+                    const value = usernameInput.value.trim();
+                    if (!/^#[a-zA-Z0-9_]{1,}$/.test(value)) {
+                        usernameInput.setCustomValidity('Username must start with # and contain at least one character after # (letters, numbers, or _).');
+                    } else {
+                        usernameInput.setCustomValidity('');
+                    }
+                });
+            }
         });
 
         function validateInput(input) {
@@ -684,9 +716,28 @@
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
     <script src="/scripts/header.js"></script>
-    <script src="/scripts/lang.js"></script>
     <script>
       applyTranslations(); // Call this on page load
+    </script>
+    <!-- Google Translate integration -->
+    <div class="nav-actions">
+        <a href="login.html" class="btn btn-outline" data-i18n="nav-login">Log in</a>
+        <a href="PAY.HTML" class="btn btn-primary btn-large" data-i18n="nav-get-started">Get Started</a>
+        <!-- Google Translate language selector button -->
+        <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
+    </div>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,ar,zh-CN,es,fr',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+    </script>
+    <script 
+      type="text/javascript" 
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
     </script>
 </body>
 </html>

@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="Add Transaction – TowerClub" data-i18n="meta-description">
-    <title data-i18n="page-title">Add Transaction – TowerClub</title>
+    <meta name="description" content="Add Transaction – TowerClub">
+    <title>Add Transaction – TowerClub</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/transactions.css">
     <link rel="stylesheet" href="/styles/header.css">
-    <script type="module">
-        import translationManager from '../scripts/translation-manager.js';
-    </script>
     <style>
         body {
             padding-top: 70px; /* Add padding to prevent content from hiding behind fixed nav */
@@ -465,6 +462,86 @@
                 margin-top: 10px;
             }
         }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+
+        body.dark-mode .transaction-details-container {
+            background: #2d2d2d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .balance-overview {
+            background: #2d2d2d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .balance-card {
+            background: #3d3d3d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .balance-card h3 {
+            color: #ffffff;
+        }
+
+        body.dark-mode .transaction-history {
+            background: #2d2d2d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .transaction-item {
+            background: #3d3d3d;
+            border-color: #4d4d4d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .transaction-item:hover {
+            background: #4d4d4d;
+        }
+
+        body.dark-mode .transaction-title {
+            color: #ffffff;
+        }
+
+        body.dark-mode .transaction-date {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .main-footer {
+            background-color: #1a1a1a;
+        }
+
+        body.dark-mode .footer-brand .brand-description {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .footer-column ul li a {
+            color: #b0b0b0;
+        }
+
+        body.dark-mode .footer-column ul li a:hover {
+            color: #ffffff;
+        }
+
+        body.dark-mode .footer-bottom {
+            color: #b0b0b0;
+        }
+
+        /* Dark mode button styles */
+        body.dark-mode .btn-outline {
+            background: #3d3d3d;
+            border-color: #4d4d4d;
+            color: #ffffff;
+        }
+
+        body.dark-mode .btn-outline:hover {
+            background: #4d4d4d;
+            color: #22c55e;
+        }
     </style>
 </head>
 <body>
@@ -472,16 +549,17 @@
         <div class="nav-content">
             <!-- Brand Section -->
             <a href="/pages/mainpage.html" class="nav-brand">
-                <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="logo" data-i18n="logo-alt">
-                <span class="brand-name" data-i18n="brand-name">TowerClub</span>
+                <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="logo">
+                <span class="brand-name">TowerClub</span>
+                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
             </a>
 
             <!-- Navigation Links -->
             <div class="nav-links">
-                <a href="/pages/dashboard.html" class="nav-link" data-i18n="nav-dashboard">Dashboard</a>
+                <a href="/pages/dashboard.html" class="nav-link">Dashboard</a>
                 <a href="/pages/my_virtualcard.html" class="nav-link">Wallet</a>
-                <a href="/pages/add-transaction.html" class="nav-link" data-i18n="nav-transfer">Transfer</a>
-                <a href="/pages/activities.html" class="nav-link" data-i18n="nav-activities">Activities</a>
+                <a href="/pages/add-transaction.html" class="nav-link">Transfer</a>
+                <a href="/pages/activities.html" class="nav-link">Activities</a>
                 <a href="/pages/settings.html" class="nav-link">Settings</a>
             </div>
 
@@ -509,18 +587,18 @@
                             <span class="material-icons">arrow_back</span>
                         </button>
                         <div>
-                            <h1 data-i18n="add-transaction-title">Add Transaction</h1>
-                            <p data-i18n="add-transaction-desc">Enter your transaction details below.</p>
+                            <h1>Add Transaction</h1>
+                            <p>Enter your transaction details below.</p>
                         </div>
                     </div>
                     <div class="header-actions">
                         <button id="editBtn" class="btn btn-secondary" onclick="window.location.href='edittransaction.html'">
                             <span class="material-icons">send</span>
-                            Transfer
+                            I want to make a Transfer
                         </button>
                         <button id="deleteBtn" class="btn btn-error">
                             <span class="material-icons">delete</span>
-                            Delete
+                            Cancel
                         </button>
                     </div>
                 </div>
@@ -531,15 +609,15 @@
                     <div class="balance-cards">
                         <div class="balance-card">
                             <h3>Money In</h3>
-                            <p class="balance-amount" id="moneyIn">$12,340.00</p>
+                            <p class="balance-amount" id="moneyIn"></p>
                         </div>
                         <div class="balance-card">
                             <h3>Money Out</h3>
-                            <p class="balance-amount" id="moneyOut">$8,120.00</p>
+                            <p class="balance-amount" id="moneyOut"></p>
                         </div>
                         <div class="balance-card total">
                             <h3>Total Balance</h3>
-                            <p class="balance-amount" id="totalBalance">$4,220.00</p>
+                            <p class="balance-amount" id="totalBalance"></p>
                         </div>
                     </div>
                 </div>
@@ -547,29 +625,7 @@
                 <!-- Transaction History Section -->
                 <div class="transaction-history">
                     <h2>Transaction History</h2>
-                    <div class="transaction-list">
-                        <div class="transaction-item">
-                            <div class="transaction-info">
-                                <h3 class="transaction-title">Grocery Shopping</h3>
-                                <p class="transaction-date">April 25, 2025</p>
-                            </div>
-                            <div class="transaction-amount negative">- $120.00</div>
-                        </div>
-                        <div class="transaction-item">
-                            <div class="transaction-info">
-                                <h3 class="transaction-title">Salary</h3>
-                                <p class="transaction-date">April 20, 2025</p>
-                            </div>
-                            <div class="transaction-amount positive">+ $3,000.00</div>
-                        </div>
-                        <div class="transaction-item">
-                            <div class="transaction-info">
-                                <h3 class="transaction-title">Electricity Bill</h3>
-                                <p class="transaction-date">April 18, 2025</p>
-                            </div>
-                            <div class="transaction-amount negative">- $150.00</div>
-                        </div>
-                    </div>
+                    <div class="transaction-list"></div>
                 </div>
             </div>
         </main>
@@ -580,10 +636,10 @@
             <div class="footer-top">
                 <div class="footer-brand">
                     <div class="brand-wrapper">
-                        <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo" data-i18n="footer-logo-alt">
-                        <span class="brand-name" data-i18n="footer-brand-name">TowerClub</span>
+                        <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo">
+                        <span class="brand-name">TowerClub</span>
                     </div>
-                    <p class="brand-description" data-i18n="footer-description">
+                    <p class="brand-description">
                         Your trusted platform for financial growth and investment opportunities.
                     </p>
                 </div>
@@ -618,8 +674,8 @@
                     <div class="footer-column">
                         <h4>Social</h4>
                         <ul>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">X</a></li>
+                            <li><a href="#">Youtube</a></li>
                             <li><a href="#">Facebook</a></li>
                             <li><a href="#">Instagram</a></li>
                         </ul>
@@ -627,18 +683,160 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p data-i18n="footer-copyright">&copy; 2025 TowerClub LLC. All rights reserved.</p>
+                <p>&copy; 2025 TowerClub LLC. All rights reserved.</p>
             </div>
         </div>
     </footer>
 
-    <script src="/scripts/lang.js"></script>
-    <script>
-      applyTranslations(); // Call this on page load
-    </script>
-    <script type="module" src="/scripts/transactions/transaction-details.js"></script>
+    <script type="module" src="/scripts/add-transaction.js"></script>
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
-    <script src="/scripts/header.js"></script>
+    <script src="/netlify/functions/header.js"></script>
+    <script type="module">
+        import DarkMode from '/scripts/dark-mode.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            DarkMode.init();
+        });
+    </script>
+    <script>
+        // Page-specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize page functionality
+            initializePage();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Load initial data
+            loadTransactionData();
+        });
+
+        function initializePage() {
+            console.log('Add Transaction page initialized');
+            
+            // Check if user is authenticated
+            const isAuthenticated = localStorage.getItem('userAuthenticated') === 'true';
+            if (!isAuthenticated) {
+                // Redirect to login if not authenticated
+                window.location.href = '/pages/login.html';
+                return;
+            }
+        }
+
+        function setupEventListeners() {
+            // Back button functionality
+            const backButton = document.querySelector('.btn-icon');
+            if (backButton) {
+                backButton.addEventListener('click', function() {
+                    history.back();
+                });
+            }
+
+            // Transfer button functionality
+            const transferButton = document.getElementById('editBtn');
+            if (transferButton) {
+                transferButton.addEventListener('click', function() {
+                    window.location.href = 'edittransaction.html';
+                });
+            }
+
+            // Cancel button functionality
+            const cancelButton = document.getElementById('deleteBtn');
+            if (cancelButton) {
+                cancelButton.addEventListener('click', function() {
+                    if (confirm('Are you sure you want to cancel? All unsaved changes will be lost.')) {
+                        history.back();
+                    }
+                });
+            }
+
+            // Listen for dark mode changes
+            document.addEventListener('darkModeChange', function(e) {
+                updatePageForDarkMode(e.detail.isDarkMode);
+            });
+        }
+
+        function loadTransactionData() {
+            // Load balance data
+            updateBalanceDisplay();
+            
+            // Load transaction history
+            loadTransactionHistory();
+        }
+
+        function updateBalanceDisplay() {
+            // This would typically load from an API
+            // For now, using static data
+            const moneyIn = 12340.00;
+            const moneyOut = 8120.00;
+            const totalBalance = moneyIn - moneyOut;
+
+            document.getElementById('moneyIn').textContent = `$${moneyIn.toFixed(2)}`;
+            document.getElementById('moneyOut').textContent = `$${moneyOut.toFixed(2)}`;
+            document.getElementById('totalBalance').textContent = `$${totalBalance.toFixed(2)}`;
+        }
+
+        function loadTransactionHistory() {
+            // This would typically load from an API
+            // For now, the data is already in the HTML
+            console.log('Transaction history loaded');
+        }
+
+        function updatePageForDarkMode(isDarkMode) {
+            // Additional dark mode updates specific to this page
+            const body = document.body;
+            
+            if (isDarkMode) {
+                body.classList.add('dark-mode');
+            } else {
+                body.classList.remove('dark-mode');
+            }
+        }
+
+        // Sync profile picture everywhere on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedPic = localStorage.getItem('profilePicture');
+            if (savedPic) {
+                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.src = savedPic;
+                });
+            }
+        });
+
+        // Export functions for use in other scripts
+        window.AddTransactionPage = {
+            initializePage,
+            setupEventListeners,
+            loadTransactionData,
+            updateBalanceDisplay,
+            loadTransactionHistory,
+            updatePageForDarkMode
+        };
+    </script>
+    <script type="module">
+    import profilePictureManager from '/scripts/profile-picture-manager.js';
+    // No need to call anything, the manager auto-initializes and syncs on DOMContentLoaded
+</script>
+<!-- Add this inside your header, next to the Get Started button (or similar location) -->
+<div class="nav-actions">
+    <a href="login.html" class="btn btn-outline" data-i18n="nav-login">Log in</a>
+    <a href="PAY.HTML" class="btn btn-primary btn-large" data-i18n="nav-get-started">Get Started</a>
+</div>
+
+<!-- Add these scripts before the closing </body> tag -->
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,ar,zh-CN,es,fr',
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+</script>
+<script 
+  type="text/javascript" 
+  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
 </body>
 </html>

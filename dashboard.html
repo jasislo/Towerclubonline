@@ -571,6 +571,7 @@
                 </div>
                 <!-- Log Out Button -->
                 <a href="/pages/logout.html" class="btn btn-outline">Log out</a>
+                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
             </div>
         </div>
     </nav>
@@ -588,7 +589,7 @@
                 <span class="material-icons icon">account_balance_wallet</span>
                 <div>
                     <h2 data-i18n="dashboard-balance">Total Balance</h2>
-                    <p id="totalBalance">$0.00</p> <!-- Added ID -->
+                    <p id="totalBalance">$0.00</p>
                 </div>
             </div>
 
@@ -597,7 +598,7 @@
                 <span class="material-icons icon">arrow_downward</span>
                 <div>
                     <h2 data-i18n="dashboard-income">Monthly Income</h2>
-                    <p id="moneyIn">$0.00</p> <!-- Added ID -->
+                    <p id="moneyIn">$0.00</p>
                 </div>
             </div>
 
@@ -606,16 +607,16 @@
                 <span class="material-icons icon">arrow_upward</span>
                 <div>
                     <h2 data-i18n="dashboard-expenses">Monthly Expenses</h2>
-                    <p id="moneyOut">$0.00</p> <!-- Added ID -->
+                    <p id="moneyOut">$0.00</p>
                 </div>
             </div>
 
             <!-- Savings Rate -->
-            <div class="dashboard-card">
+            <div class="dashboard-card" id="savingsRateCard">
                 <span class="material-icons icon">savings</span>
                 <div>
-                    <h2 data-i18n="dashboard-savings">Savings Rate</h2>
-                    <p id="savingsRate">0%</p> <!-- Added ID -->
+                    <h2 data-i18n="dashboard-savings">Overall</h2>
+                    <p id="savingsRate">0%</p>
                 </div>
             </div>
 
@@ -624,7 +625,7 @@
                 <span class="material-icons icon">pie_chart</span>
                 <div>
                     <h2 data-i18n="dashboard-portfolio">Your Portfolio</h2>
-                    <p id="portfolioValue">$0.00</p> <!-- Added ID -->
+                    <p id="portfolioValue">$0.00</p>
                 </div>
             </div>
 
@@ -635,7 +636,7 @@
                     <h2 data-i18n="dashboard-recent-transactions">Recent Transactions</h2>
                     <div id="recentTransactions">
                         <!-- Transactions will be dynamically populated -->
-                    </div> <!-- Added ID -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -765,8 +766,8 @@
                     <div class="footer-column">
                         <h4>Social</h4>
                         <ul>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">X</a></li>
+                            <li><a href="#">Youtube</a></li>
                             <li><a href="#">Facebook</a></li>
                             <li><a href="#">Instagram</a></li>
                         </ul>
@@ -781,7 +782,6 @@
 
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/header.js"></script>
-    <script src="/scripts/lang.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Redirect to mainpage.html when clicking TowerClub in header
@@ -796,41 +796,237 @@
                 window.location.href = '/pages/activities.html';
             });
 
-            const portfolioCard = document.querySelector('.dashboard-card:nth-child(5)'); // Assuming it's the 5th card
+            const portfolioCard = document.querySelector('.dashboard-card:nth-child(5)');
             portfolioCard.addEventListener('click', () => {
                 window.location.href = '/pages/crypto.html';
             });
 
-            const cryptoItems = document.querySelectorAll('.crypto-item');
+            // Redirect to socialmedia.html when clicking Savings Rate card
+            const savingsRateCard = document.getElementById('savingsRateCard');
+            if (savingsRateCard) {
+                savingsRateCard.addEventListener('click', () => {
+                    window.location.href = '/pages/socialmedia.html';
+                });
+            }
 
+            const cryptoItems = document.querySelectorAll('.crypto-item');
             cryptoItems.forEach((cryptoItem, index) => {
                 cryptoItem.addEventListener('click', () => {
-                    // Redirect to crypto.html with a query parameter for the selected cryptocurrency
                     window.location.href = `/pages/crypto.html?crypto=${index + 1}`;
                 });
             });
 
             const activityItems = document.querySelectorAll('.activity-item');
-
             activityItems.forEach((activityItem) => {
                 activityItem.addEventListener('click', () => {
-                    // Redirect to activities.html
                     window.location.href = '/pages/activities.html';
                 });
             });
 
             const chatItems = document.querySelectorAll('.chat-item');
-
             chatItems.forEach((chatItem, index) => {
                 chatItem.addEventListener('click', () => {
-                    // Redirect to socialmedia2.html with a query parameter for the selected chat
                     window.location.href = `/pages/socialmedia2.html?chat=${index + 1}`;
                 });
             });
 
             applyTranslations(); // Call this on page load
         });
+
+        // Sync profile picture everywhere on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedPic = localStorage.getItem('profilePicture');
+            if (savedPic) {
+                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.src = savedPic;
+                });
+            }
+        });
     </script>
     <script src="/scripts/sync.js"></script>
+    <script type="module">
+        import DarkMode from '/scripts/dark-mode.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            DarkMode.init();
+        });
+    </script>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,ar,zh-CN,es,fr',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+    </script>
+    <script 
+      type="text/javascript" 
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+    <script>
+document.addEventListener('DOMContentLoaded', () => {
+    // --- API Endpoints (Replace with your real endpoints and keys) ---
+    const API_BASE = 'https://api.yourtowerclub.com';
+    const API_KEY = 'YOUR_API_KEY'; // Use secure authentication in production
+
+    // 1. Total Balance
+    const totalBalanceAPI = `${API_BASE}/user/balance?apiKey=${API_KEY}`;
+    // 2. Monthly Income
+    const monthlyIncomeAPI = `${API_BASE}/user/income?apiKey=${API_KEY}`;
+    // 3. Monthly Expenses
+    const monthlyExpensesAPI = `${API_BASE}/user/expenses?apiKey=${API_KEY}`;
+    // 4. Savings Rate
+    const savingsRateAPI = `${API_BASE}/user/savings-rate?apiKey=${API_KEY}`;
+    // 5. Portfolio Value
+    const portfolioAPI = `${API_BASE}/user/portfolio/value?apiKey=${API_KEY}`;
+    // 6. Recent Transactions
+    const recentTransactionsAPI = `${API_BASE}/user/transactions?limit=5&apiKey=${API_KEY}`;
+    // 7. Cryptocurrency Prices (CoinGecko public API as example)
+    const cryptoAPI = 'https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,litecoin&vs_currencies=usd&include_24hr_change=true';
+    // 8. Financial News (NewsAPI.org or your backend proxy)
+    const financialNewsAPI = `https://newsapi.org/v2/top-headlines?category=business&language=en&apiKey=YOUR_NEWSAPI_KEY`;
+
+    // --- Fetch and Render Functions ---
+
+    // 1. Fetch Total Balance
+    async function fetchTotalBalance() {
+        try {
+            const response = await fetch(totalBalanceAPI, { credentials: 'include' });
+            const data = await response.json();
+            document.getElementById('totalBalance').textContent = `$${parseFloat(data.balance).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        } catch (error) {
+            console.error('Error fetching total balance:', error);
+        }
+    }
+
+    // 2. Fetch Monthly Income
+    async function fetchMonthlyIncome() {
+        try {
+            const response = await fetch(monthlyIncomeAPI, { credentials: 'include' });
+            const data = await response.json();
+            document.getElementById('moneyIn').textContent = `$${parseFloat(data.income).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        } catch (error) {
+            console.error('Error fetching monthly income:', error);
+        }
+    }
+
+    // 3. Fetch Monthly Expenses
+    async function fetchMonthlyExpenses() {
+        try {
+            const response = await fetch(monthlyExpensesAPI, { credentials: 'include' });
+            const data = await response.json();
+            document.getElementById('moneyOut').textContent = `$${parseFloat(data.expenses).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        } catch (error) {
+            console.error('Error fetching monthly expenses:', error);
+        }
+    }
+
+    // 4. Fetch Savings Rate
+    async function fetchSavingsRate() {
+        try {
+            const response = await fetch(savingsRateAPI, { credentials: 'include' });
+            const data = await response.json();
+            document.getElementById('savingsRate').textContent = `${parseFloat(data.savingsRate).toFixed(1)}%`;
+        } catch (error) {
+            console.error('Error fetching savings rate:', error);
+        }
+    }
+
+    // 5. Fetch Portfolio Value
+    async function fetchPortfolioValue() {
+        try {
+            const response = await fetch(portfolioAPI, { credentials: 'include' });
+            const data = await response.json();
+            document.getElementById('portfolioValue').textContent = `$${parseFloat(data.totalValue).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
+        } catch (error) {
+            console.error('Error fetching portfolio value:', error);
+        }
+    }
+
+    // 6. Fetch Recent Transactions
+    async function fetchRecentTransactions() {
+        try {
+            const response = await fetch(recentTransactionsAPI, { credentials: 'include' });
+            const data = await response.json();
+            const recentTransactionsDiv = document.getElementById('recentTransactions');
+            recentTransactionsDiv.innerHTML = '';
+            if (data.transactions && data.transactions.length > 0) {
+                data.transactions.forEach(tx => {
+                    const txDiv = document.createElement('div');
+                    txDiv.className = 'transaction-item';
+                    txDiv.innerHTML = `
+                        <span>${tx.description}</span>
+                        <span class="amount ${tx.amount >= 0 ? 'positive' : 'negative'}">
+                            ${tx.amount >= 0 ? '+' : '-'}$${Math.abs(tx.amount).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}
+                        </span>
+                    `;
+                    recentTransactionsDiv.appendChild(txDiv);
+                });
+            } else {
+                recentTransactionsDiv.innerHTML = '<div class="transaction-item"><span>No transactions found.</span></div>';
+            }
+        } catch (error) {
+            console.error('Error fetching recent transactions:', error);
+        }
+    }
+
+    // 7. Fetch Cryptocurrency Prices
+    async function fetchCryptoPrices() {
+        try {
+            const response = await fetch(cryptoAPI);
+            const data = await response.json();
+            const cryptoList = document.querySelectorAll('.crypto-list .crypto-item');
+            // Bitcoin
+            if (cryptoList[0] && data.bitcoin) {
+                cryptoList[0].querySelector('.crypto-price').textContent = `$${parseFloat(data.bitcoin.usd).toLocaleString()}`;
+                const btcChange = data.bitcoin.usd_24h_change;
+                cryptoList[0].querySelector('.crypto-trend').textContent = `${btcChange >= 0 ? '+' : ''}${btcChange.toFixed(2)}%`;
+                cryptoList[0].querySelector('.crypto-trend').className = `crypto-trend ${btcChange >= 0 ? 'positive' : 'negative'}`;
+            }
+            // Ethereum
+            if (cryptoList[1] && data.ethereum) {
+                cryptoList[1].querySelector('.crypto-price').textContent = `$${parseFloat(data.ethereum.usd).toLocaleString()}`;
+                const ethChange = data.ethereum.usd_24h_change;
+                cryptoList[1].querySelector('.crypto-trend').textContent = `${ethChange >= 0 ? '+' : ''}${ethChange.toFixed(2)}%`;
+                cryptoList[1].querySelector('.crypto-trend').className = `crypto-trend ${ethChange >= 0 ? 'positive' : 'negative'}`;
+            }
+            // Litecoin
+            if (cryptoList[2] && data.litecoin) {
+                cryptoList[2].querySelector('.crypto-price').textContent = `$${parseFloat(data.litecoin.usd).toLocaleString()}`;
+                const ltcChange = data.litecoin.usd_24h_change;
+                cryptoList[2].querySelector('.crypto-trend').textContent = `${ltcChange >= 0 ? '+' : ''}${ltcChange.toFixed(2)}%`;
+                cryptoList[2].querySelector('.crypto-trend').className = `crypto-trend ${ltcChange >= 0 ? 'positive' : 'negative'}`;
+            }
+        } catch (error) {
+            console.error('Error fetching crypto prices:', error);
+        }
+    }
+
+    // 8. Fetch Financial News (optional: add a section for news)
+    async function fetchFinancialNews() {
+        try {
+            const response = await fetch(financialNewsAPI);
+            const data = await response.json();
+            // Example: log news or display in a new section
+            // console.log(data.articles);
+        } catch (error) {
+            console.error('Error fetching financial news:', error);
+        }
+    }
+
+    // --- Initialize Data Fetching ---
+    fetchTotalBalance();
+    fetchMonthlyIncome();
+    fetchMonthlyExpenses();
+    fetchSavingsRate();
+    fetchPortfolioValue();
+    fetchRecentTransactions();
+    fetchCryptoPrices();
+    // fetchFinancialNews(); // Uncomment if you add a news section
+
+    // ...existing navigation and profile picture sync code...
+});
+</script>
 </body>
 </html>

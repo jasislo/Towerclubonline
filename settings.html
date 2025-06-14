@@ -349,6 +349,23 @@
     <script type="module">
         import translationManager from '../scripts/translation-manager.js';
     </script>
+    <script type="module">
+        import DarkMode from '/scripts/dark-mode.js';
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Set switch state based on saved preference
+    const switchEl = document.getElementById('darkModeSwitch');
+    switchEl.checked = localStorage.getItem('darkMode') === 'true';
+
+    switchEl.addEventListener('change', () => {
+        localStorage.setItem('darkMode', switchEl.checked ? 'true' : 'false');
+        DarkMode.setDarkMode(switchEl.checked);
+    });
+
+    // Initialize dark mode on settings page
+    DarkMode.init();
+});
+    </script>
 </head>
 <body>
     <!-- Header -->
@@ -358,6 +375,7 @@
             <a href="mainpage.html" class="nav-brand">
                 <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" data-i18n="logo-alt">
                 <span class="brand-name" data-i18n="brand-name">TowerClub</span>
+                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
             </a>
 
             <!-- Navigation Links -->
@@ -377,7 +395,7 @@
                     <input type="file" id="profilePictureInput" accept="image/*" data-i18n="profile-picture-input-alt">
                 </div>
                 <!-- Log Out Button -->
-                <a href="/logout.html" class="btn-outline" data-i18n="logout">Log out</a>
+                <a href="/pages/logout.html" class="btn btn-outline">Log out</a>
             </div>
         </div>
     </nav>
@@ -418,6 +436,14 @@
 
         <div style="text-align: center; margin-top: 30px;">
             <button class="button" id="darkModeToggle" data-i18n="dark-mode-toggle">Dark Mode</button>
+        </div>
+
+        <!-- Dark Mode Switch -->
+        <div style="text-align: center; margin-top: 20px;">
+            <label>
+                <input type="checkbox" id="darkModeSwitch">
+                Enable Dark Mode
+            </label>
         </div>
     </div>
 
@@ -465,8 +491,8 @@
                     <div class="footer-column">
                         <h4>Social</h4>
                         <ul>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">X</a></li>
+                            <li><a href="#">Youtube</a></li>
                             <li><a href="#">Facebook</a></li>
                             <li><a href="#">Instagram</a></li>
                         </ul>
@@ -479,10 +505,6 @@
         </div>
     </footer>
 
-    <script src="/scripts/lang.js"></script>
-    <script>
-      applyTranslations(); // Call this on page load
-    </script>
     <script>
         const profilePicture = document.getElementById('profilePicture');
         const profilePictureInput = document.getElementById('profilePictureInput');
@@ -582,6 +604,17 @@
             // Ensure the main profile picture matches the header profile picture on page load
             mainProfilePicture.src = headerProfilePicture.src;
         });
+
+        // Sync profile picture everywhere on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedPic = localStorage.getItem('profilePicture');
+            if (savedPic) {
+                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.src = savedPic;
+                });
+            }
+        });
     </script>
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
@@ -645,6 +678,21 @@
                 }
             });
         });
+    </script>
+
+    <!-- Google Translate Script -->
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,ar,zh-CN,es,fr',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+    </script>
+    <script 
+      type="text/javascript" 
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
     </script>
 </body>
 </html>

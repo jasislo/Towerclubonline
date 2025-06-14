@@ -11,6 +11,12 @@
     <script type="module">
         import translationManager from '../scripts/translation-manager.js';
     </script>
+    <script type="module">
+    import DarkMode from '/scripts/dark-mode.js';
+    document.addEventListener('DOMContentLoaded', () => {
+        DarkMode.init();
+    });
+</script>
     <style>
         :root {
             --primary-color: #39D2C0;
@@ -409,7 +415,8 @@
                     <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
                 </div>
                 <!-- Log Out Button -->
-                <a href="logout.html" class="btn btn-outline" style="color: white; border: 2px solid white;">Logout</a>
+                <a href="/pages/logout.html" class="btn btn-outline" style="color: white; border: 2px solid white;">Log out</a>
+                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
             </div>
         </div>
     </nav>
@@ -472,7 +479,7 @@
                 <span>Edit Pictutes Profile</span>
                 <i class="fas fa-chevron-right"></i>
             </div>
-            <div class="menu-item" onclick="navigateTo('change-password')">
+            <div class="menu-item" onclick="navigateTo('forgot-password.html')">
                 <span>Change Password</span>
                 <i class="fas fa-chevron-right"></i>
             </div>
@@ -545,13 +552,20 @@
         function navigateTo(page) {
             window.location.href = page;
         }
+
+        // Sync profile picture everywhere on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedPic = localStorage.getItem('profilePicture');
+            if (savedPic) {
+                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.src = savedPic;
+                });
+            }
+        });
     </script>
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
     <script src="/scripts/header.js"></script>
-    <script src="/scripts/lang.js"></script>
-    <script>
-      applyTranslations(); // Call this on page load
-    </script>
 </body>
 </html>

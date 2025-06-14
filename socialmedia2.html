@@ -204,8 +204,15 @@
             width: 40px;
             height: 40px;
             border-radius: 50%;
-            background-color: #ccc;
             margin-right: 12px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .chat-avatar:hover {
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
         }
 
         .chat-info {
@@ -216,6 +223,14 @@
             font-weight: 600;
             color: var(--text-color);
             margin-bottom: 4px;
+            cursor: pointer;
+            transition: color 0.3s;
+            text-decoration: none;
+        }
+
+        .chat-name:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
         }
 
         .chat-message {
@@ -238,6 +253,12 @@
             font-size: 18px;
             font-weight: 600;
             text-align: center;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .chat-interface-header:hover {
+            background-color: #357ABD;
         }
 
         .chat-messages {
@@ -434,6 +455,7 @@
             <a href="mainpage.html" class="nav-brand">
                 <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo">
                 <span class="brand-name">TowerClub</span>
+                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
             </a>
             <div class="nav-links">
                 <a href="dashboard.html" class="nav-link">Dashboard</a>
@@ -446,7 +468,7 @@
                 <div class="profile-picture-container">
                     <img src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/finance-app-sample-kugwu4/assets/ijvuhvqbvns6/uiAvatar@2x.png" alt="Profile Picture">
                 </div>
-                <a href="logout.html" class="btn-outline">Log out</a>
+                <a href="/pages/logout.html" class="btn btn-outline">Log out</a>
             </div>
         </div>
     </nav>
@@ -461,23 +483,29 @@
                     Messages
                 </a>
                 <div class="chat-item">
-                    <div class="chat-avatar"></div>
+                    <div class="chat-avatar" onclick="redirectToProfile('John Doe')">
+                        <img src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/finance-app-sample-kugwu4/assets/ijvuhvqbvns6/uiAvatar@2x.png" alt="John Doe" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; cursor: pointer;">
+                    </div>
                     <div class="chat-info">
-                        <p class="chat-name">John Doe</p>
+                        <p class="chat-name" onclick="redirectToChat()">John Doe</p>
                         <p class="chat-message">Hey, how are you?</p>
                     </div>
                 </div>
                 <div class="chat-item">
-                    <div class="chat-avatar"></div>
+                    <div class="chat-avatar" onclick="redirectToProfile('Jane Smith')">
+                        <img src="https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face" alt="Jane Smith" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; cursor: pointer;">
+                    </div>
                     <div class="chat-info">
-                        <p class="chat-name">Jane Smith</p>
+                        <p class="chat-name" onclick="redirectToChat()">Jane Smith</p>
                         <p class="chat-message">Let's catch up later!</p>
                     </div>
                 </div>
                 <div class="chat-item">
-                    <div class="chat-avatar"></div>
+                    <div class="chat-avatar" onclick="redirectToProfile('Mike Johnson')">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face" alt="Mike Johnson" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; cursor: pointer;">
+                    </div>
                     <div class="chat-info">
-                        <p class="chat-name">Mike Johnson</p>
+                        <p class="chat-name" onclick="redirectToChat()">Mike Johnson</p>
                         <p class="chat-message">Got it, thanks!</p>
                     </div>
                 </div>
@@ -485,7 +513,7 @@
 
             <!-- Chat Interface -->
             <div class="chat-interface">
-                <div class="chat-interface-header">John Doe</div>
+                <div class="chat-interface-header" onclick="redirectToProfile('John Doe')">John Doe</div>
                 <div class="chat-messages">
                     <div class="message received">
                         <div class="message-content">Hey, how are you?</div>
@@ -570,8 +598,8 @@
                     <div class="footer-column">
                         <h4>Social</h4>
                         <ul>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">LinkedIn</a></li>
+                            <li><a href="#">X</a></li>
+                            <li><a href="#">Youtube</a></li>
                             <li><a href="#">Facebook</a></li>
                             <li><a href="#">Instagram</a></li>
                         </ul>
@@ -654,6 +682,25 @@
             window.location.href = `crypto.html?currency=${crypto}`;
         }
 
+        // Redirect to user's profile page
+        function redirectToProfile(userName) {
+            // Convert the user name to a URL-friendly format
+            const profileUrl = userName.toLowerCase().replace(/\s+/g, '_') + '_profile.html';
+            window.location.href = profileUrl;
+        }
+
+        // Redirect to chat section
+        function redirectToChat() {
+            window.location.href = 'Chatssection.html';
+        }
+
+        // Update chat interface when a chat item is clicked
+        function updateChatInterface(userName) {
+            const chatHeader = document.querySelector('.chat-interface-header');
+            chatHeader.textContent = userName;
+            chatHeader.onclick = () => redirectToProfile(userName);
+        }
+
         // Fetch cryptocurrency data from the API
         async function fetchMarketData() {
             try {
@@ -687,22 +734,145 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            const chatItems = document.querySelectorAll('.chat-item');
+            // Remove the old chat item click functionality since we now have separate handlers
+            // for profile pictures and names
+            console.log('Social media page loaded with new click behaviors');
+        });
 
-            chatItems.forEach((chatItem, index) => {
-                chatItem.addEventListener('click', () => {
-                    // Redirect to socialmedia2.html with a query parameter for the selected chat
-                    window.location.href = `/pages/socialmedia2.html?chat=${index + 1}`;
+        // Sync profile picture everywhere on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedPic = localStorage.getItem('profilePicture');
+            if (savedPic) {
+                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.src = savedPic;
+                });
+            }
+        });
+
+        // Fetch and display the top 10 recent messages in the chat list
+        async function fetchRecentMessages() {
+            try {
+                // Replace with your actual API endpoint for fetching recent messages
+                const response = await fetch('/api/messages/recent?limit=10', { credentials: 'include' });
+                const messages = await response.json();
+
+                const chatList = document.querySelector('.chat-list');
+                // Remove all chat-item elements except the header
+                chatList.querySelectorAll('.chat-item').forEach(item => item.remove());
+
+                messages.forEach(msg => {
+                    const chatItem = document.createElement('div');
+                    chatItem.classList.add('chat-item');
+                    chatItem.innerHTML = `
+                        <div class="chat-avatar" onclick="redirectToProfile('${msg.senderName}')">
+                            <img src="${msg.senderAvatar || 'https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/finance-app-sample-kugwu4/assets/ijvuhvqbvns6/uiAvatar@2x.png'}" alt="${msg.senderName}" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; cursor: pointer;">
+                        </div>
+                        <div class="chat-info">
+                            <p class="chat-name" onclick="redirectToChat()">${msg.senderName}</p>
+                            <p class="chat-message">${msg.message}</p>
+                        </div>
+                    `;
+                    chatList.appendChild(chatItem);
+                });
+            } catch (error) {
+                console.error('Error fetching recent messages:', error);
+            }
+        }
+
+        // Call fetchRecentMessages on page load
+        document.addEventListener('DOMContentLoaded', fetchRecentMessages);
+
+        // Fetch and display conversation messages with the selected user/contact
+        async function fetchConversationMessages(contactId) {
+            try {
+                // Replace with your actual API endpoint for fetching conversation messages
+                const response = await fetch(`/api/messages/conversation/${contactId}?limit=50`, { credentials: 'include' });
+                if (!response.ok) throw new Error('Failed to fetch conversation');
+                const messages = await response.json();
+
+                const chatMessages = document.querySelector('.chat-messages');
+                chatMessages.innerHTML = ''; // Clear previous messages
+
+                messages.forEach(msg => {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = msg.isOwnMessage ? 'message sent' : 'message received';
+                    msgDiv.innerHTML = `<div class="message-content">${msg.message}</div>`;
+                    chatMessages.appendChild(msgDiv);
+                });
+
+                // Optionally, scroll to the bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            } catch (error) {
+                console.error('Error fetching conversation messages:', error);
+            }
+        }
+
+        // Example usage: call this when a chat/contact is selected
+        // fetchConversationMessages(selectedContactId);
+
+        // To wire up chat selection:
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.chat-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    // You should have a way to get the contactId for this chat
+                    const contactId = this.getAttribute('data-contact-id'); // Set this attribute when rendering chat items
+                    if (contactId) {
+                        fetchConversationMessages(contactId);
+
+                        // Optionally update chat header
+                        const userName = this.querySelector('.chat-name').textContent;
+                        const chatHeader = document.querySelector('.chat-interface-header');
+                        chatHeader.textContent = userName;
+                        chatHeader.onclick = () => redirectToProfile(userName);
+                    }
                 });
             });
         });
+
+        // ...existing code...
     </script>
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
     <script src="/scripts/header.js"></script>
-    <script src="/scripts/lang.js"></script>
     <script>
       applyTranslations(); // Call this on page load
+    </script>
+    <script type="module">
+        import DarkMode from '/scripts/dark-mode.js';
+        document.addEventListener('DOMContentLoaded', () => {
+            DarkMode.init();
+        });
+    </script>
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+          pageLanguage: 'en',
+          includedLanguages: 'en,ar,zh-CN,es,fr',
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+      }
+    </script>
+    <script 
+      type="text/javascript" 
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+    </script>
+    <script>
+    (function() {
+        // Helper to check if Google Translate banner iframe is present
+        function checkGoogleBanner() {
+            var bannerFrame = document.querySelector('iframe.goog-te-banner-frame');
+            if (bannerFrame && bannerFrame.style.display !== 'none') {
+                document.body.classList.add('has-google-banner');
+            } else {
+                document.body.classList.remove('has-google-banner');
+            }
+        }
+        // Check on load and every second (in case of language change)
+        window.addEventListener('load', function() {
+            setInterval(checkGoogleBanner, 1000);
+        });
+    })();
     </script>
 </body>
 </html>
