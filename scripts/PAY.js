@@ -13,47 +13,75 @@ const planPrices = {
 // Membership selection algorithm for "Get Started" buttons
 document.querySelectorAll('.get-started-btn').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
-        e.preventDefault(); // Prevent default link behavior and NO redirect
-        e.stopPropagation(); // Stop event bubbling
+        // ...existing code...
+        
+        // Special handling for Get Started buttons
+        document.addEventListener('DOMContentLoaded', function() {
+            // Header Get Started button - scroll to pricing section
+            const headerGetStarted = document.querySelector('.nav-actions .btn-primary');
+            if (headerGetStarted) {
+                headerGetStarted.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const pricingSection = document.getElementById('pricing');
+                    if (pricingSection) {
+                        pricingSection.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
+        
+            // Hero section Get Started Now button - allow direct navigation to register.html
+            const heroGetStarted = document.querySelector('.hero-actions .btn-primary');
+            if (heroGetStarted) {
+                heroGetStarted.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Only allow redirect if payment is complete
+                    if (window.paymentSecured || sessionStorage.getItem('paymentComplete') === 'true') {
+                        window.location.href = 'register.html';
+                    } else {
+                        // Optionally, scroll to payment section or show a message
+                        document.querySelector('.payment-section').scrollIntoView({ 
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            }
+        });
+        //        e.preventDefault();
+        e.stopPropagation();
 
         // Remove "Selected" from all buttons and reset text
         document.querySelectorAll('.get-started-btn').forEach(function(b) {
-            b.textContent = 'Get Started';
             b.classList.remove('selected-plan');
-            b.style.pointerEvents = 'auto'; // Make all buttons clickable again
+            b.textContent = 'Get Started';
         });
 
-        // Set this button as selected
-        btn.textContent = 'Selected';
+        // Mark this button as selected
         btn.classList.add('selected-plan');
+        btn.textContent = 'Selected';
+
+        // Set selected plan and amount (assuming data attributes)
         selectedPlan = btn.getAttribute('data-plan');
         selectedPlanAmount = planPrices[selectedPlan];
-        btn.style.pointerEvents = 'auto'; // Keep selected button clickable
-        
-        // Store the selected state
-        btn.setAttribute('data-selected', 'true');
     });
 
-    // Ensure "Selected" text persists on hover
+    // Show "Selected" on hover if this button is selected
     btn.addEventListener('mouseenter', function() {
-        if (btn.classList.contains('selected-plan') || btn.getAttribute('data-selected') === 'true') {
+        if (btn.classList.contains('selected-plan')) {
             btn.textContent = 'Selected';
-        } else {
-            btn.textContent = 'Get Started';
         }
     });
 
+    // Restore text on mouse leave
     btn.addEventListener('mouseleave', function() {
-        if (btn.classList.contains('selected-plan') || btn.getAttribute('data-selected') === 'true') {
+        if (btn.classList.contains('selected-plan')) {
             btn.textContent = 'Selected';
         } else {
             btn.textContent = 'Get Started';
         }
-    });
-
-    // Prevent any default link behavior
-    btn.addEventListener('mousedown', function(e) {
-        e.preventDefault();
     });
 });
 
@@ -73,62 +101,8 @@ document.getElementById('cardPaymentForm').addEventListener('submit', function(e
     alert(`Processing payment of $${selectedPlanAmount.toFixed(2)} for ${selectedPlan} plan. Card ending in ${cardNumber.slice(-4)} under ${cardHolder}.`);
     window.paymentSecured = true;
     
-    // Show success message and enable proceed button
-    showPaymentSuccess();
-});
-
-// PayPal Payment Button Logic
-document.getElementById('paypalButton').addEventListener('click', function () {
-    if (!selectedPlan || !selectedPlanAmount) {
-        alert('Please select a plan before making payment.');
-        return;
-    }
-    
-    // Check if already logged in with PayPal
-    const isLoggedInWithPayPal = sessionStorage.getItem('paypalLoggedIn') === 'true';
-    
-    if (!isLoggedInWithPayPal) {
-        // First time login - simulate PayPal login process
-        alert('PayPal login simulation: You would be redirected to PayPal to sign in, then return here to complete payment.');
-        
-        // Mark as logged in with PayPal
-        sessionStorage.setItem('paypalLoggedIn', 'true');
-        
-        // Update button text to show logged in status
-        this.textContent = 'Logged with PayPal';
-        this.style.backgroundColor = '#22c55e'; // Green background to indicate logged in
-        this.style.color = '#ffffff';
-        
-        // In a real implementation, you would redirect to PayPal like this:
-        // window.location.href = "https://www.paypal.com/signin?returnUrl=" + encodeURIComponent(window.location.origin + "/Towerclub%20LLC/Towerclub%20web%20app/pages/PAY.HTML");
-    } else {
-        // Already logged in - just show payment button
-        alert('Already logged in with PayPal. Ready to make payment.');
-    }
-    
-    // Show the Make Payment button after PayPal login
-    document.getElementById('makePaypalPayment').style.display = 'block';
-    document.getElementById('makePaypalPayment').textContent = `Pay $${selectedPlanAmount.toFixed(2)} with PayPal`;
-});
-
-// Make Payment with PayPal button handler
-document.getElementById('makePaypalPayment').addEventListener('click', function() {
-    if (!selectedPlan || !selectedPlanAmount) {
-        alert('Please select a plan before making payment.');
-        return;
-    }
-    
-    // Process the payment with the selected plan
-    alert(`Processing PayPal payment of $${selectedPlanAmount.toFixed(2)} for ${selectedPlan} plan.`);
-    window.paymentSecured = true;
-    
-    // Show success message and enable proceed button
-    showPaymentSuccess();
-    
-    // Store payment status for session
-    sessionStorage.setItem('paymentComplete', 'true');
-    sessionStorage.setItem('selectedPlan', selectedPlan);
-    sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
+    // Show success message and redirect to register.html
+    showPaymentSuccessAndRedirect();
 });
 
 // Special handling for Get Started buttons
@@ -247,16 +221,6 @@ document.addEventListener('DOMContentLoaded', function() {
             makePaypalPayment.textContent = `Pay $${selectedPlanAmount.toFixed(2)} with PayPal`;
         }
     }
-    
-    // Check PayPal login status and update button accordingly
-    const paypalButton = document.getElementById('paypalButton');
-    const isLoggedInWithPayPal = sessionStorage.getItem('paypalLoggedIn') === 'true';
-    
-    if (paypalButton && isLoggedInWithPayPal) {
-        paypalButton.textContent = 'Logged with PayPal';
-        paypalButton.style.backgroundColor = '#22c55e'; // Green background to indicate logged in
-        paypalButton.style.color = '#ffffff';
-    }
 });
 
 // Payment Option Show/Hide Logic (matches onboarding.html)
@@ -287,24 +251,32 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Referral Code Form Logic
-document.getElementById('referralCodeForm').addEventListener('submit', function(e) {
+document.getElementById('referralCodeForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const codeInput = document.getElementById('referralCodeInput');
     const message = document.getElementById('referralCodeMessage');
-    const code = codeInput.value.trim();
+    const referralCode = codeInput.value.trim();
 
-    if (code.length < 3) {
-        message.style.display = 'block';
-        message.style.color = '#F06A6A';
-        message.textContent = 'Please enter a valid referral code.';
-        return;
+    // Call backend API to validate referral code against users in the database
+    try {
+        const response = await fetch('/api/referral/apply', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ referralCode })
+        });
+        const result = await response.json();
+        if (result.success) {
+            message.textContent = 'Referral code applied successfully!';
+            message.style.color = 'green';
+            sessionStorage.setItem('referralCode', referralCode);
+        } else {
+            message.textContent = 'Invalid referral code. Please try again.';
+            message.style.color = 'red';
+        }
+    } catch (error) {
+        message.textContent = 'Error validating referral code.';
+        message.style.color = 'red';
     }
-
-    // Simulate referral code validation (replace with real API call if needed)
-    message.style.display = 'block';
-    message.style.color = '#22c55e';
-    message.textContent = 'Referral code applied!';
-    // Optionally: Save code to localStorage/session or send to backend
 });
 
 // Update payment success messages with translations
@@ -340,4 +312,177 @@ document.addEventListener('DOMContentLoaded', function() {
             // No prevention of default behavior
         });
     });
+});
+
+// --- STRIPE INTEGRATION START ---
+
+// Initialize Stripe
+const stripe = Stripe('pk_live_51Q1c9WKxFfFtkJUstOvyWc7Wvvuma7hmZtslUdXcGj4Ri5cVDXET75L0M0Bpvq8BIvDPQdK9pa74i9jWuTHz2Ujw00eADQnvsR');
+const elements = stripe.elements();
+const cardElement = elements.create('card');
+cardElement.mount('#cardElement'); // Make sure your HTML has <div id="cardElement"></div>
+
+// Handle card form submission
+document.getElementById('cardPaymentForm').addEventListener('submit', async function(event) {
+    event.preventDefault();
+    if (!selectedPlan || !selectedPlanAmount) {
+        alert('Please select a plan before making payment.');
+        return;
+    }
+
+    // Optionally, disable the button to prevent multiple clicks
+    const submitBtn = document.querySelector('#cardPaymentForm button[type="submit"]');
+    if (submitBtn) submitBtn.disabled = true;
+
+    // Call your backend to create a PaymentIntent and get its client_secret
+    const response = await fetch('http://localhost:4242/create-payment-intent', { // <-- Updated URL
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ amount: Math.round(selectedPlanAmount * 100) }) // amount in cents
+    });
+    const { clientSecret } = await response.json();
+
+    // Confirm the card payment
+    const { error, paymentIntent } = await stripe.confirmCardPayment(clientSecret, {
+        payment_method: {
+            card: cardElement,
+            billing_details: {
+                name: document.getElementById('cardHolder').value
+            }
+        }
+    });
+
+    if (error) {
+        alert(error.message);
+        if (submitBtn) submitBtn.disabled = false;
+        return;
+    }
+
+    if (paymentIntent && paymentIntent.status === 'succeeded') {
+        window.paymentSecured = true;
+        showPaymentSuccess();
+        sessionStorage.setItem('paymentComplete', 'true');
+        sessionStorage.setItem('selectedPlan', selectedPlan);
+        sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
+    }
+    if (submitBtn) submitBtn.disabled = false;
+});
+
+// --- STRIPE INTEGRATION END ---
+
+const express = require('express');
+const Stripe = require('stripe');
+const cors = require('cors');
+
+const app = express();
+const stripe = Stripe('sk_live_YOUR_SECRET_KEY'); // <-- Use your Stripe SECRET key here
+
+app.use(cors());
+app.use(express.json());
+
+app.post('/create-payment-intent', async (req, res) => {
+    const { amount } = req.body;
+    try {
+        const paymentIntent = await stripe.paymentIntents.create({
+            amount,
+            currency: 'usd',
+            automatic_payment_methods: { enabled: true },
+        });
+        res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+app.listen(4242, () => console.log('Server running on port 4242'));
+
+const express = require('express');
+const router = express.Router();
+// Assume you have a User model for your database
+const User = require('./models/User');
+
+router.post('/api/referral/apply', async (req, res) => {
+    const { referralCode } = req.body;
+    try {
+        // Check if referralCode exists for any user in the database
+        const user = await User.findOne({ referralCode });
+        if (user) {
+            res.json({ success: true });
+        } else {
+            res.json({ success: false });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, error: 'Server error' });
+    }
+});
+
+module.exports = router;
+
+// Track selected plan and payment status
+let selectedPlan = null;
+let selectedPlanAmount = null;
+window.paymentSecured = false;
+
+// Pricing for each plan (must match your pricing section)
+const planPrices = {
+    "Basic": 11.95,
+    "VIP Member": 14.95,
+    "Business": 16.95
+};
+
+// Membership selection algorithm for "Get Started" buttons
+document.querySelectorAll('.get-started-btn').forEach(function(btn) {
+    btn.addEventListener('click', function(e) {
+        // Example: get plan name from button data attribute
+        const plan = btn.getAttribute('data-plan');
+        if (plan && planPrices[plan]) {
+            window.selectedPlan = plan;
+            window.selectedPlanAmount = planPrices[plan];
+        }
+        // Update Pay Now button text
+        const makePaypalPayment = document.getElementById('makePaypalPayment');
+        if (makePaypalPayment && window.selectedPlanAmount) {
+            makePaypalPayment.textContent = `Pay $${window.selectedPlanAmount.toFixed(2)} with PayPal`;
+        }
+    });
+});
+
+// Make Payment with PayPal button handler
+document.getElementById('makePaypalPayment').addEventListener('click', function() {
+    if (!selectedPlan || !selectedPlanAmount) {
+        alert('Please select a plan before making payment.');
+        return;
+    }
+    
+    // Process the payment with the selected plan
+    alert(`Processing PayPal payment of $${selectedPlanAmount.toFixed(2)} for ${selectedPlan} plan.`);
+    window.paymentSecured = true;
+    
+    // Show success message and enable proceed button
+    showPaymentSuccess();
+    
+    // Store payment status for session
+    sessionStorage.setItem('paymentComplete', 'true');
+    sessionStorage.setItem('selectedPlan', selectedPlan);
+    sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
+
+    // --- Add this block to update PayPal button behavior ---
+    const makePaypalPayment = document.getElementById('makePaypalPayment');
+    if (makePaypalPayment) {
+        // Change button text
+        makePaypalPayment.textContent = 'Get Started Now';
+        // Add hover effect
+        makePaypalPayment.addEventListener('mouseenter', function() {
+            makePaypalPayment.textContent = 'Get Started Now';
+        });
+        makePaypalPayment.addEventListener('mouseleave', function() {
+            makePaypalPayment.textContent = 'Get Started Now';
+        });
+        // Redirect to register.html on click
+        makePaypalPayment.onclick = function(e) {
+            e.preventDefault();
+            window.location.href = 'register.html';
+        };
+    }
+    // --- End block ---
 });
