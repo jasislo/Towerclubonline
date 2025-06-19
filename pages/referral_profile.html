@@ -737,15 +737,9 @@
                 referralInput.addEventListener('blur', function() {
                     referralMsg.style.display = 'none';
                 });
-                // Add a button for applying the code if not present
-                if (!document.getElementById('applyReferralBtn')) {
-                    const btn = document.createElement('button');
-                    btn.id = 'applyReferralBtn';
-                    btn.textContent = 'Apply code';
-                    btn.style.marginLeft = '10px';
-                    btn.onclick = applyReferralCode;
-                    referralInput.parentNode.appendChild(btn);
-                }
+                // Remove the apply code button if present
+                const btn = document.getElementById('applyReferralBtn');
+                if (btn) btn.remove();
             }
             function applyReferralCode() {
                 const code = referralInput.value.trim().toLowerCase();
