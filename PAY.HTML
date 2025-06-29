@@ -347,12 +347,11 @@
         }
 
         .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            max-width: 1200px;
-            margin: 0 auto;
-            margin-top: 0; /* Remove any extra top margin for the grid */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            padding: 20px;
         }
 
         .pricing-card {
@@ -367,6 +366,12 @@
         .pricing-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .pricing-card.featured {
+            max-width: 400px;
+            margin: 0 auto;
+            transform: scale(1.05);
         }
 
         .pricing-header {
@@ -1102,6 +1107,376 @@
             font-weight: 700;
             pointer-events: none;
         }
+
+        /* Make Payment Section */
+        #make-payment-section {
+            margin-top: 40px;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #make-payment-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        #make-payment-section .payment-option {
+            margin-bottom: 15px;
+            padding: 15px;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            background-color: #f9fafb;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        #make-payment-section .payment-option:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        #make-payment-section .payment-option i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        #make-payment-section .payment-option span {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        #make-payment-section .btn-paypal {
+            background-color: #ffc439 !important; /* PayPal yellow */
+            color: #111827 !important;            /* Dark text for contrast */
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+            margin-top: 10px;
+            display: inline-block;
+        }
+
+        #make-payment-section .btn-paypal:hover {
+            background-color: #e0a800 !important; /* Darker yellow on hover */
+            color: #111827 !important;
+            transform: scale(1.05);
+        }
+
+        /* Center the Make Payment header */
+        .app-header {
+            text-align: center; /* Center the text */
+            margin-bottom: 20px; /* Add spacing below the header */
+        }
+
+        .brand-link {
+            display: flex;
+            align-items: center;
+            text-decoration: none; /* Remove underline */
+        }
+
+        @media (max-width: 768px) {
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links-section {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+
+            #make-payment-section {
+                padding: 15px;
+            }
+        }
+
+        /* Hero Section Styles */
+        .hero-section {
+            background: linear-gradient(90deg, #22c55e, #a855f7); /* Green to Fuchsia gradient */
+            color: white;
+            padding: 100px 20px;
+            text-align: center;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            color: #f5f5f5;
+        }
+
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .hero-actions .btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+            border-radius: 5px;
+            transition: transform 0.2s;
+        }
+
+        .hero-actions .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Payment Section Styles */
+        .payment-section {
+            margin-top: 80px;
+            padding: 40px 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            font-size: 2rem;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .payment-option {
+            background-color: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .payment-option:hover {
+            transform: scale(1.02);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .payment-option i {
+            font-size: 2rem;
+            color: var(--primary-color);
+        }
+
+        .payment-option span {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .btn-credit-card {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            width: 100%;
+        }
+
+        .btn-credit-card:hover {
+            background-color: #00796B;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .payment-section {
+                padding: 30px 15px;
+            }
+
+            .section-header {
+                font-size: 1.5rem;
+            }
+
+            .payment-option {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .payment-option i {
+                margin-bottom: 10px;
+            }
+
+            .btn-credit-card {
+                padding: 12px 24px;
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Add styles for the success message buttons */
+        .payment-success .btn {
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        .payment-success .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .payment-success .btn-primary {
+            background: white;
+            color: #22c55e;
+        }
+        .payment-success .btn-primary:hover {
+            background: #f8f8f8;
+        }
+        .payment-success .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .referral-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 40px 0 30px 0;
+        }
+        .referral-form {
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(34,197,94,0.08);
+            padding: 24px 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 320px;
+            max-width: 400px;
+            width: 100%;
+        }
+        .referral-label {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 12px;
+            color: #22c55e;
+            letter-spacing: 0.01em;
+        }
+        .referral-input-group {
+            display: flex;
+            width: 100%;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        .referral-input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1.5px solid #22c55e;
+            border-radius: 6px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .referral-input:focus {
+            border-color: #a855f7;
+        }
+        .referral-btn {
+            background: linear-gradient(90deg, #22c55e, #a855f7);
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.2s;
+            box-shadow: 0 2px 6px rgba(168,85,247,0.08);
+        }
+        .referral-btn:hover {
+            background: linear-gradient(90deg, #a855f7, #22c55e);
+            transform: translateY(-2px) scale(1.03);
+        }
+        .referral-message {
+            display: block;
+            margin-top: 8px;
+            font-size: 0.98rem;
+            min-height: 20px;
+            text-align: center;
+            transition: color 0.2s;
+        }
+        @media (max-width: 600px) {
+            .referral-form {
+                padding: 16px 8px;
+                min-width: 0;
+            }
+            .referral-input-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .referral-btn {
+                width: 100%;
+            }
+        }
+
+        /* Update footer styles to ensure it stays at the bottom */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            margin: 0;
+            padding: 0;
+        }
+
+        .app-container {
+            flex: 1 0 auto;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            padding-top: 100px;
+        }
+
+        .main-footer {
+            flex-shrink: 0;
+            width: 100%;
+            background-color: #1f2937;
+            color: white;
+            padding: 60px 0 30px;
+            margin-top: 60px;
+        }
+
+        .landing-content {
+            flex: 1 0 auto;
+            width: 100%;
+        }
+
+        /* Ensure footer stays at bottom even with little content */
+        @media (min-height: 100vh) {
+            .main-footer {
+                margin-top: auto;
+            }
+        }
+
+        /* Add style for selected plan button */
+        .selected-plan {
+            background: linear-gradient(90deg, #22c55e, #a855f7) !important;
+            color: #fff !important;
+            border: none !important;
+            font-weight: 700;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -1127,7 +1502,7 @@
             <!-- Navigation Actions -->
             <div class="nav-actions">
                 <a href="login.html" class="btn btn-outline">Log in</a>
-                <a href="PAY.HTML" class="btn btn-primary btn-large">Get Started</a>
+                <a href="#" class="btn btn-primary btn-large" onclick="document.querySelector('.payment-section').scrollIntoView({behavior:'smooth',block:'start'});return false;">Get Started</a>
                 <!-- Google Translate language selector button placed next to Get Started -->
                 <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
             </div>
@@ -1138,24 +1513,8 @@
     <div class="app-container">
         <!-- Pricing Section -->
         <section id="pricing" class="pricing-section">
-            <h2>Simple, Transparent Pricing</h2>
+            <h2>Plan Selected</h2>
             <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Basic</h3>
-                        <div class="price">$11.95<span>/month</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>Basic expenses tracking</li>
-                        <li>Monthly budget planning</li>
-                        <li>Basic analytics</li>
-                        <li>Build Financial social Network</li>
-                        <li>Transfers between Members</li>
-                        <li>Profile and Chats</li>
-                        <li>7 days Free Trial</li>
-                    </ul>
-                    <a href="register.html" class="btn btn-outline btn-block get-started-btn" data-plan="Basic">Get Started</a>
-                </div>
                 <div class="pricing-card featured">
                     <div class="pricing-header">
                         <h3>VIP Member</h3>
@@ -1164,26 +1523,13 @@
                     <ul class="pricing-features">
                         <li>Advanced analytics</li>
                         <li>Build Financial social Network</li>
-                        <li>Unlimited budgets</li>
-                        <li>Saving goals</li>
+                        <li>Financial Newsupdates</li>
+                        <li>Crypto Currencies updates</li>
                         <li>Priority support</li>
                         <li>Transfers between Members</li>
                         <li>Profile and Chats</li>
                     </ul>
-                    <a href="register.html" class="btn btn-primary btn-block get-started-btn" data-plan="VIP Member">Get Started</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="pricing-header">
-                        <h3>Business</h3>
-                        <div class="price">$16.95<span>/month</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li>All Pro features</li>
-                        <li>Team management</li>
-                        <li>Dedicated support</li>
-                        <li>Custom integrations</li>
-                    </ul>
-                    <a href="#contact" class="btn btn-outline btn-block get-started-btn" data-plan="Business">Get Started</a>
+                    <a href="#" class="btn btn-primary btn-block get-started-btn" data-plan="VIP Member">Get Started</a>
                 </div>
             </div>
         </section>
@@ -1353,9 +1699,9 @@
         <section class="hero-section">
             <div class="hero-content">
                 <h1>Take Control of Your Financial Future</h1>
-                <p class="hero-subtitle">Smart financial management made simple. Track expenses, set budgets, and achieve your financial goals with TowerClub.</p>
+                <p class="hero-subtitle">Smart financial management made simple. Track expenses, set budgets, and achieve your financial goals with TowerClub LLC.</p>
                 <div class="hero-actions">
-                    <a href="register.html" class="btn btn-primary btn-large">Get Started Now</a>
+                    <a href="#" class="btn btn-primary btn-large" onclick="document.querySelector('.payment-section').scrollIntoView({behavior:'smooth',block:'start'});return false;">Get Started Now</a>
                     <a href="#demo" class="btn btn-outline btn-large">Watch Demo</a>
                 </div>
             </div>
@@ -1369,7 +1715,7 @@
                 <div class="footer-brand">
                     <div class="brand-wrapper">
                         <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo">
-                        <span class="brand-name">TowerClub</span>
+                        <span class="brand-name">TowerClub LLC</span>
                     </div>
                     <p class="brand-description">
                         Your trusted platform for financial growth and investment opportunities.
@@ -1428,9 +1774,7 @@
 
         // Pricing for each plan (must match your pricing section)
         const planPrices = {
-            "Basic": 11.95,
-            "VIP Member": 14.95,
-            "Business": 16.95
+            "VIP Member": 14.95
         };
 
         // Membership selection algorithm for "Get Started" buttons
@@ -1456,11 +1800,14 @@
                 // Store the selected state
                 btn.setAttribute('data-selected', 'true');
                 
-                // If payment is already completed, redirect to register.html
-                if (window.paymentSecured || sessionStorage.getItem('paymentComplete') === 'true') {
-                    setTimeout(() => {
-                        window.location.href = 'register.html';
-                    }, 500);
+                // After selecting plan, scroll to payment section
+                document.querySelector('.payment-section').scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                // Show message to complete payment
+                if (!window.paymentSecured && !sessionStorage.getItem('paymentComplete')) {
+                    alert('Please complete your payment for the selected plan.');
                 }
             });
 
@@ -1544,31 +1891,38 @@
 
         // Special handling for Get Started buttons
         document.addEventListener('DOMContentLoaded', function() {
-            // Header Get Started button - scroll to pricing section
+            // Header Get Started button - check payment status
             const headerGetStarted = document.querySelector('.nav-actions .btn-primary');
             if (headerGetStarted) {
                 headerGetStarted.addEventListener('click', function(e) {
                     e.preventDefault();
-                    const pricingSection = document.getElementById('pricing');
-                    if (pricingSection) {
-                        pricingSection.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                    if (window.paymentSecured || sessionStorage.getItem('paymentComplete') === 'true') {
+                        window.location.href = 'register.html';
+                    } else {
+                        // If no payment, scroll to payment section
+                        const paymentSection = document.querySelector('.payment-section');
+                        if (paymentSection) {
+                            paymentSection.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                        // Show message about payment requirement
+                        alert('Please complete your payment before proceeding to registration.');
                     }
                 });
             }
 
-            // Hero section Get Started Now button - allow direct navigation to register.html
+            // Hero section Get Started Now button - check payment status
             const heroGetStarted = document.querySelector('.hero-actions .btn-primary');
             if (heroGetStarted) {
                 heroGetStarted.addEventListener('click', function(e) {
                     e.preventDefault();
-                    // Only allow redirect if payment is complete
                     if (window.paymentSecured || sessionStorage.getItem('paymentComplete') === 'true') {
                         window.location.href = 'register.html';
                     } else {
-                        // Optionally, scroll to payment section or show a message
+                        alert('Please complete your payment before proceeding to registration.');
+                        // Scroll to payment section
                         document.querySelector('.payment-section').scrollIntoView({ 
                             behavior: 'smooth',
                             block: 'start'

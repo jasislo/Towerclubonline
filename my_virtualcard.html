@@ -680,15 +680,6 @@
                     <select id="cardTypeSelect" class="form-control">
                         <option value="VISA">VISA</option>
                         <option value="MASTERCARD">Mastercard</option>
-                        <option value="PAYPAL">PayPal</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="providerSelect">Provider:</label>
-                    <select id="providerSelect" class="form-control">
-                        <option value="LOCAL">Local Generation</option>
-                        <option value="VISA">VISA API</option>
-                        <option value="PAYPAL">PayPal API</option>
                     </select>
                 </div>
             </div>
@@ -696,10 +687,6 @@
                 <div class="form-group">
                     <label for="cardholderName">Cardholder Name:</label>
                     <input type="text" id="cardholderName" class="form-control" placeholder="Enter cardholder name" value="VIRTUAL CARD">
-                </div>
-                <div class="form-group">
-                    <label for="creditLimit">Card Limit ($):</label>
-                    <input type="number" id="creditLimit" class="form-control" placeholder="1000" value="1000" min="100" max="50000">
                 </div>
             </div>
             <div class="form-actions">
@@ -754,7 +741,7 @@
                 <div class="footer-brand">
                     <div class="brand-wrapper">
                         <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo" data-i18n="footer-logo-alt">
-                        <span class="brand-name" data-i18n="footer-brand-name">TowerClub</span>
+                        <span class="brand-name" data-i18n="footer-brand-name">TowerClub LLC</span>
                     </div>
                     <p class="brand-description" data-i18n="footer-description">
                         Your trusted platform for financial growth and investment opportunities.
@@ -893,7 +880,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 </script>
-<!-- Add this before </body> if not already present -->
+<!-- Add this before </body> -->
 <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
@@ -906,6 +893,103 @@ document.addEventListener('DOMContentLoaded', () => {
 <script 
   type="text/javascript" 
   src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
+</script>
+<!-- Add this script before the closing body tag -->
+<script type="module">
+    import transferService from '/scripts/transfer-service.js';
+
+    // Update card balance when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        // Get current balance
+        const balance = transferService._getUserBalance();
+        
+        // Update card display
+        updateCardBalance(balance);
+        
+        // Listen for transaction events
+        window.addEventListener('transaction-added', () => {
+            const updatedBalance = transferService._getUserBalance();
+            updateCardBalance(updatedBalance);
+        });
+    });
+
+    // Update the card balance display
+    function updateCardBalance(balance) {
+        // Update income card display
+        const walletBalance = document.querySelector('.amount.positive');
+        if (walletBalance) {
+            walletBalance.textContent = `+$${balance.toFixed(2)}`;
+        }
+        
+        // Update card details section
+        const cardDetails = document.getElementById('cardDetails');
+        if (cardDetails) {
+            // If card is not yet generated, keep default message
+            if (cardDetails.textContent.includes('Generate a virtual card')) {
+                return;
+            }
+            
+            // Create or update card details content
+            cardDetails.innerHTML = `
+                <div class="detail-item">
+                    <span class="label">Card Type:</span>
+                    <span class="value">MASTERCARD VIRTUAL</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Current Balance:</span>
+                    <span class="value">$${balance.toFixed(2)}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Status:</span>
+                    <span class="value active">Active</span>
+                </div>
+                <div class="detail-item">
+                    <span class="label">Created:</span>
+                    <span class="value">${new Date().toLocaleDateString('en-US', {
+                        month: 'short',
+                        day: 'numeric',
+                        year: 'numeric'
+                    })}</span>
+                </div>
+            `;
+        }
+    }
+
+    // Add this to your existing DOMContentLoaded event listener
+    document.addEventListener('DOMContentLoaded', () => {
+        const balance = transferService._getUserBalance();
+        updateCardBalance(balance);
+        
+        // Listen for balance changes
+        window.addEventListener('balance-updated', () => {
+            const updatedBalance = transferService._getUserBalance();
+            updateCardBalance(updatedBalance);
+        });
+    });
+</script>
+<script type="module">
+    import transferService from '/scripts/transfer-service.js';
+
+    // Function to sync virtual card balance with account balance
+    function syncCardBalance() {
+        // Get account balance from transferService
+        const accountBalance = transferService._getUserBalance();
+        
+        // Update income card display only
+        const incomeAmount = document.querySelector('.income-card .amount.positive');
+        if (incomeAmount) {
+            incomeAmount.textContent = `+$${accountBalance.toFixed(2)}`;
+        }
+    }
+
+    // Sync balance when page loads
+    document.addEventListener('DOMContentLoaded', () => {
+        syncCardBalance();
+        
+        // Listen for balance changes
+        window.addEventListener('balance-updated', syncCardBalance);
+        window.addEventListener('transaction-added', syncCardBalance);
+    });
 </script>
 </body>
 </html>
