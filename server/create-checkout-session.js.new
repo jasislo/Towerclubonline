@@ -34,11 +34,12 @@ router.post('/create-checkout-session', async (req, res) => {
 
 module.exports = router;
 
-<!-- Example client-side code to redirect to Stripe Checkout -->
-<!-- Place this in your PAY.HTML or payment page -->
+// Note: The client-side code below should be moved to the PAY.HTML file, not kept in this server file
+/*
+Example client-side code to redirect to Stripe Checkout:
 <script src="https://js.stripe.com/v3/"></script>
 <script>
-const stripe = Stripe('pk_test_XXXXXXXXXXXXXXXXXXXXXXXX'); // Replace with your Stripe publishable key
+const stripe = Stripe('pk_live_51O6cvwHdkQbwbNbSyOfZmxkqUiYlDw0GWnUX1aFqEiRmPQHNPEUmMfPMYdpJHqsBYgqVmIJCYZwnKvlpXGWwUJdc00MRo0eSvg'); // Live Stripe publishable key
 
 document.getElementById('cardPayBtn').addEventListener('click', async function(e) {
     e.preventDefault();
@@ -52,3 +53,4 @@ document.getElementById('cardPayBtn').addEventListener('click', async function(e
     }
 });
 </script>
+*/

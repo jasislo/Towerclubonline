@@ -37,17 +37,43 @@ window.paymentSecured = false;
 
 // Pricing for each plan (must match your pricing section)
 const planPrices = {
-    "Basic": 11.95,
+    "Basic": 12.95,
     "VIP Member": 14.95,
     "Business": 16.95
 };
 
 // Membership selection algorithm for "Get Started" buttons
+function scrollToPaymentSection() {
+    const paymentSection = document.querySelector('.payment-section');
+    if (paymentSection) paymentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 document.querySelectorAll('.get-started-btn').forEach(function(btn) {
     btn.addEventListener('click', function(e) {
-        // Example: get plan name from button data attribute
+        e.preventDefault();
         const plan = btn.getAttribute('data-plan');
         if (plan && planPrices[plan]) {
+            // Update button states
+            document.querySelectorAll('.get-started-btn').forEach(b => {
+                if (b !== btn) {
+                    b.textContent = 'Get Started';
+                    b.classList.remove('selected-plan');
+                }
+            });
+            
+            // Set selected state
+            btn.textContent = 'Selected';
+            btn.classList.add('selected-plan');
+            selectedPlan = plan;
+            selectedPlanAmount = planPrices[plan];
+            btn.setAttribute('data-selected', 'true');
+            
+            // Scroll and check payment
+            scrollToPaymentSection();
+            if (!window.paymentSecured && !sessionStorage.getItem('paymentComplete')) {
+                alert('Please complete your payment for the selected plan.');
+            }
+        }
             window.selectedPlan = plan;
             window.selectedPlanAmount = planPrices[plan];
         }
@@ -106,7 +132,7 @@ window.paymentSecured = false;
 
 // Pricing for each plan (must match your pricing section)
 const planPrices = {
-    "Basic": 11.95,
+    "Basic": 12.95,
     "VIP Member": 14.95,
     "Business": 16.95
 };
@@ -249,7 +275,6 @@ function enableProceedButtons() {
                 });
             };
         }
-        btn.classList.add('payment-complete');
     });
 
     // Enable hero section buttons without payment check
@@ -260,13 +285,11 @@ function enableProceedButtons() {
                 window.location.href = 'register.html';
             };
         }
-        btn.classList.add('payment-complete');
     });
 
     // Enable pricing card buttons
     document.querySelectorAll('.get-started-btn').forEach(function(btn) {
         btn.onclick = null;
-        btn.classList.add('payment-complete');
     });
 
     // Store payment status
@@ -351,9 +374,10 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Referral Code Form Logic
-// Update: async API call and show success message for valid codes
+// Referral Code Form Logic is now implemented in PAY.HTML
+// This section is commented out to avoid conflicts
 
+/*
 document.getElementById('referralCodeForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     const codeInput = document.getElementById('referralCodeInput');
@@ -362,10 +386,10 @@ document.getElementById('referralCodeForm').addEventListener('submit', async fun
 
     // Call backend API to validate and apply referral code
     try {
-        const response = await fetch('/api/apply-referral', {
+        const response = await fetch('/api/referral/apply', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ code: referralCode })
+            body: JSON.stringify({ referralCode })
         });
         const data = await response.json();
         if (response.ok && data.success) {
@@ -378,6 +402,14 @@ document.getElementById('referralCodeForm').addEventListener('submit', async fun
             message.textContent = data.message || 'Invalid referral code. Please try again.';
             message.style.color = 'red';
             message.style.display = 'inline';
+        }
+    } catch (err) {
+        message.textContent = 'Error validating code. Please try again.';
+        message.style.color = 'red';
+        message.style.display = 'inline';
+    }
+});
+*/
         }
     } catch (err) {
         message.textContent = 'Error validating referral code. Please try again.';
@@ -478,11 +510,15 @@ document.getElementById('cardPaymentForm').addEventListener('submit', async func
 // --- STRIPE INTEGRATION END ---
 
 const express = require('express');
+/* 
+// Server-side code that should be moved to a proper server file
+// This code should not be in a frontend JavaScript file
 const Stripe = require('stripe');
 const cors = require('cors');
 
 const app = express();
-const stripe = Stripe('sk_live_YOUR_SECRET_KEY'); // <-- Use your Stripe SECRET key here
+// SECURITY ISSUE: Secret key should NEVER be in frontend code
+// const stripe = Stripe('sk_live_YOUR_SECRET_KEY'); 
 
 app.use(cors());
 app.use(express.json());
@@ -507,6 +543,7 @@ const express = require('express');
 const router = express.Router();
 // Assume you have a User model for your database
 const User = require('./models/User');
+*/
 
 router.post('/api/referral/apply', async (req, res) => {
     const { referralCode } = req.body;
@@ -524,3 +561,65 @@ router.post('/api/referral/apply', async (req, res) => {
 });
 
 module.exports = router;
+
+// Function to scroll to payment section
+function scrollToPaymentSection() {
+    document.querySelector('.payment-section').scrollIntoView({ 
+        behavior: 'smooth',
+        block: 'start'
+    });
+}
+
+// Handle all "Get Started" button clicks
+function handleGetStartedClick(e) {
+    e.preventDefault();
+    scrollToPaymentSection();
+    if (!window.paymentSecured && !sessionStorage.getItem('paymentComplete')) {
+        alert('Please complete your payment before proceeding to registration.');
+    }
+}
+
+// Add click handlers when the document is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Header Get Started button
+    const headerGetStarted = document.querySelector('.nav-actions .btn-primary');
+    if (headerGetStarted) {
+        headerGetStarted.addEventListener('click', handleGetStartedClick);
+    }
+
+    // Hero section Get Started Now button
+    const heroGetStarted = document.querySelector('.hero-actions .btn-primary');
+    if (heroGetStarted) {
+        heroGetStarted.addEventListener('click', handleGetStartedClick);
+    }
+
+    // Plan selection Get Started buttons
+    document.querySelectorAll('.get-started-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Remove "Selected" from all buttons
+            document.querySelectorAll('.get-started-btn').forEach(b => {
+                b.textContent = 'Get Started';
+                b.classList.remove('selected-plan');
+            });
+
+            // Set this button as selected
+            btn.textContent = 'Selected';
+            btn.classList.add('selected-plan');
+            selectedPlan = btn.getAttribute('data-plan');
+            selectedPlanAmount = planPrices[selectedPlan];
+            
+            // Store the selected state
+            btn.setAttribute('data-selected', 'true');
+            
+            // Scroll to payment section
+            scrollToPaymentSection();
+            
+            // Show message if payment not completed
+            if (!window.paymentSecured && !sessionStorage.getItem('paymentComplete')) {
+                alert('Please complete your payment for the selected plan.');
+            }
+        });
+    });
+});

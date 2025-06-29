@@ -7,8 +7,8 @@ const app = express();
 app.use(bodyParser.json());
 
 // PayPal API credentials
-const PAYPAL_CLIENT_ID = 'AW5Y3lm_yH0JQwcy00O1YN1O2VtRk_qEjbpWV5yVLcpKMhRNGYyIayxKZd45clIeCqF4joJ7cXWXC5Zj';
-const PAYPAL_SECRET = 'ENxRW5htK5pPUFKM4YirHwWqmReEzfwDj9CRSPZN3RamVGVp37J3bro58jpJ90tnXmgB7RppepwkhmJE';
+const PAYPAL_CLIENT_ID = 'AfxfDtMQIvo3xh0u2CGcJtlWEjJA4ZflxcCsR1tG2tz4Auhqp32Xogkb3dFYrRteOpPrHpht3SRDcuH1';
+const PAYPAL_SECRET = 'ENxRW5htK5pPUFKM4YirHwWqmReEzfwDj9CRSPZN3RamVGVp37J3bro58jpJ90tnXmgB7RppepwkhmJE'; // You should update this too when you have the new secret
 const PAYPAL_API = 'https://api-m.paypal.com'; // Switch to LIVE for real payments
 
 // Payment verification middleware

@@ -6,14 +6,14 @@ const app = express();
 app.use(express.json());
 
 const { PAYPAL_CLIENT_ID, PAYPAL_CLIENT_SECRET, PORT = 8082 } = process.env;
-const PAYPAL_API = "https://api-m.sandbox.paypal.com"; // Use live endpoint for production
+const PAYPAL_API = "https://api-m.paypal.com"; // Live endpoint for production
 
 // Your plans configuration
 const plans = [
     {
         name: "Basic",
         description: "Basic monthly membership",
-        amount: "11.95"
+        amount: "12.95"
     },
     {
         name: "VIP Member",

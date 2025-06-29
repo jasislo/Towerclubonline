@@ -131,9 +131,9 @@ class ReferralProfile {
     }
 }
 
-// Load followers count
-const followers = JSON.parse(localStorage.getItem('followers')) || [];
-document.getElementById('followersCount').textContent = followers.length;
+// Load followers count from localStorage
+const savedFollowers = JSON.parse(localStorage.getItem('followers')) || [];
+document.getElementById('followersCount').textContent = savedFollowers.length;
 // Repeat for other data types...
 
 /**
@@ -156,7 +156,7 @@ function getAccountLevel(followers, referrals, plan) {
 }
 
 // Example usage:
-const followers = 24000; // Replace with actual value
+const exampleFollowers = 24000; // Replace with actual value
 const referrals = 1200;  // Replace with actual value
 
 // Get selected plan from localStorage (set during onboarding/payment)
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', () => {
         };
     }
 
-    // Referral Code Form Logic (add this if not already present)
+    // Referral Code Form Logic
     // If you have a referral code input form:
     const referralInput = document.getElementById('referralCodeInput');
     const referralMsg = document.getElementById('referralCodeMessage');

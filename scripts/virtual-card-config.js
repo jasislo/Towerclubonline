@@ -6,10 +6,10 @@
 export const VIRTUAL_CARD_CONFIG = {
     // PayPal API Configuration
     paypal: {
-        clientId: process.env.PAYPAL_CLIENT_ID || 'your_paypal_client_id_here',
+        clientId: process.env.PAYPAL_CLIENT_ID || 'AfxfDtMQIvo3xh0u2CGcJtlWEjJA4ZflxcCsR1tG2tz4Auhqp32Xogkb3dFYrRteOpPrHpht3SRDcuH1',
         clientSecret: process.env.PAYPAL_CLIENT_SECRET || 'your_paypal_client_secret_here',
-        environment: 'sandbox', // Change to 'production' for live environment
-        enabled: false // Set to true when you have valid PayPal credentials
+        environment: 'production', // Live environment for production
+        enabled: true // Set to true since we have valid PayPal credentials
     },
 
     // VISA API Configuration
@@ -152,7 +152,7 @@ export function getEnvironmentConfig(environment = 'development') {
             break;
             
         case 'staging':
-            baseConfig.paypal.environment = 'sandbox';
+            baseConfig.paypal.environment = 'production';
             baseConfig.visa.environment = 'sandbox';
             baseConfig.security.requireAuthentication = true;
             baseConfig.ui.enableNotifications = true;
@@ -160,7 +160,7 @@ export function getEnvironmentConfig(environment = 'development') {
             
         case 'development':
         default:
-            baseConfig.paypal.environment = 'sandbox';
+            baseConfig.paypal.environment = 'production';
             baseConfig.visa.environment = 'sandbox';
             baseConfig.security.requireAuthentication = false;
             baseConfig.ui.enableNotifications = false;
