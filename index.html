@@ -312,6 +312,7 @@
                 <a href="/pages/index.html" class="nav-brand">
                     <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="brand-logo" data-i18n="logo-alt">
                     <span class="brand-name" data-i18n="brand-name">TowerClub</span>
+                    <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
                 </a>
 
                 <!-- Navigation Links -->
@@ -325,8 +326,6 @@
                 <div class="nav-actions">
                     <a href="login.html" class="btn btn-outline" data-i18n="nav-login">Login</a>
                     <a href="pay.html" class="btn btn-primary" data-i18n="nav-get-started">Get Started</a>
-                    <!-- Google Translate language selector button placed next to Get Started -->
-                    <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
                 </div>
             </div>
         </nav>
@@ -386,12 +385,9 @@
                     <div class="pricing-card">
                         <div class="pricing-header">
                             <h3 data-i18n="pricing-basic-title">Basic</h3>
-                            <div class="price">$11.95<span data-i18n="pricing-per-month">/month</span></div>
+                            <div class="price">$12.95<span data-i18n="pricing-per-month">/month</span></div>
                         </div>
                         <ul class="pricing-features">
-                            <li data-i18n="pricing-basic-feature-1">Basic expenses tracking</li>
-                            <li data-i18n="pricing-basic-feature-2">Monthly budget planning</li>
-                            <li data-i18n="pricing-basic-feature-3">Basic analytics</li>
                             <li data-i18n="pricing-basic-feature-4">Build Financial social Network</li>
                             <li data-i18n="pricing-basic-feature-5">Transfers between Members</li>
                             <li data-i18n="pricing-basic-feature-6">Profile and Chats</li>
@@ -407,8 +403,8 @@
                         <ul class="pricing-features">
                             <li data-i18n="pricing-vip-feature-1">Advanced analytics</li>
                             <li data-i18n="pricing-vip-feature-2">Build Financial social Network</li>
-                            <li data-i18n="pricing-vip-feature-3">Unlimited budgets</li>
-                            <li data-i18n="pricing-vip-feature-4">Saving goals</li>
+                            <li data-i18n="pricing-vip-feature-3">Financial News updates</li>
+                            <li data-i18n="pricing-vip-feature-4">Crypto Currencies updates</li>
                             <li data-i18n="pricing-vip-feature-5">Priority support</li>
                             <li data-i18n="pricing-vip-feature-6">Transfers between Members</li>
                             <li data-i18n="pricing-vip-feature-7">Profile and Chats</li>
@@ -457,7 +453,7 @@
             <section class="cta-section">
                 <div class="cta-content">
                     <h2 data-i18n="cta-title">Ready to Transform Your Financial Management?</h2>
-                    <p data-i18n="cta-subtitle">Join thousands of users who are already taking control of their finances with TowerClub.</p>
+                    <p data-i18n="cta-subtitle">Join thousands of users who are already taking control of their finances with TowerClub LLC.</p>
                     <a href="pay.html" class="btn btn-primary btn-large" data-i18n="cta-get-started">Get Started Now</a>
                 </div>
             </section>
@@ -490,7 +486,7 @@
                     <div class="footer-brand">
                         <div class="brand-wrapper">
                             <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo" data-i18n="footer-logo-alt">
-                            <span class="brand-name" data-i18n="footer-brand-name">TowerClub</span>
+                            <span class="brand-name" data-i18n="footer-brand-name">TowerClub LLC</span>
                         </div>
                         <p class="brand-description" data-i18n="footer-description">
                             Your trusted platform for financial growth and investment opportunities.
@@ -577,6 +573,20 @@
     // Check on load and every second (in case of language change)
     window.addEventListener('load', function() {
         setInterval(checkGoogleBanner, 1000);
+    });
+
+    // Redirect "Open Calculator" button to external calculator in a new window
+    document.addEventListener('DOMContentLoaded', function() {
+        var calcBtn = document.querySelector('.tool-card.calculator .btn');
+        if (calcBtn) {
+            calcBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.open(
+                  'https://www.americancentury.com/plan/calculators/investment-savings-and-distributions-calculator/',
+                  '_blank'
+                );
+            });
+        }
     });
 })();
 </script>
