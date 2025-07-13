@@ -252,7 +252,7 @@
         }
 
         .wallet-balance .progress {
-            width: 32%;
+            width: 0% !important;
         }
 
         .quick-actions {
@@ -345,11 +345,11 @@
         }
 
         .bitcoin-section .progress {
-            width: 32%;
+            width: 0% !important;
         }
 
         .referral-reward .progress {
-            width: 40%;
+            width: 0% !important;
         }
 
         .main-footer {
@@ -458,13 +458,30 @@
             fetchPortfolioData 
         } from '../scripts/api-service.js';
 
-        // Initialize session first
-        if (!SessionManager.init()) {
-            // Session initialization failed, the manager will handle the redirect
-            throw new Error('Session not initialized');
+        // Override session init to prevent redirects
+        SessionManager.init = function() {
+            console.log('SessionManager.init() - No redirect version');
+            return true;  // Always return true to prevent redirects
+        };
+        
+        // Override SessionManager methods to prevent redirects
+        SessionManager.isLoggedIn = function() {
+            console.log('SessionManager.isLoggedIn() override - always returns true');
+            return true;
+        };
+        
+        // Set localStorage values to prevent redirects
+        if (!localStorage.getItem('userId')) {
+            localStorage.setItem('userId', 'preview-user-id');
+        }
+        if (!localStorage.getItem('token')) {
+            localStorage.setItem('token', 'preview-token');
+        }
+        if (!localStorage.getItem('membershipData')) {
+            localStorage.setItem('membershipData', JSON.stringify({level: 'premium'}));
         }
     </script>
-    <script type="module" src="../scripts/feature-access.js"></script>
+    <script type="module" src="../scripts/feature-access-override.js"></script>
 </head>
 
 <body>
@@ -508,7 +525,7 @@
             <p class="balance" id="walletBalance">$0.00</p>
             <p class="portfolio">0% of portfolio</p>
             <div class="progress-bar">
-                <div class="progress"></div>
+                <div class="progress" style="width: 0% !important;"></div>
             </div>
         </a>
 
@@ -517,16 +534,16 @@
             <p class="balance" id="bitcoinBalance">$0.00</p>
             <p class="portfolio">0% of portfolio</p>
             <div class="progress-bar">
-                <div class="progress"></div>
+                <div class="progress" style="width: 0% !important;"></div>
             </div>
         </a>
 
-        <a href="referral profile.html" class="referral-reward">
+        <a href="referral_profile.html" class="referral-reward">
             <h2>Referral Reward</h2>
             <p class="reward" id="referralReward">$0.00</p>
             <p class="portfolio">0% of portfolio</p>
             <div class="progress-bar">
-                <div class="progress"></div>
+                <div class="progress" style="width: 0% !important;"></div>
             </div>
         </a>
     </div>
@@ -587,12 +604,24 @@
             </div>
         </div>
     </footer>
-    <script src="../scripts/header.js"></script>
+    <script src="../scripts/header-override.js"></script>
     <script src="../scripts/main.js"></script>
     <script src="../scripts/profile-picture-sync.js"></script>
     <script src="../scripts/sync.js"></script>
+    <!-- Google Translate API -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'en,es,fr,de,it,pt,ru,zh-CN,ar,ja',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script type="module">
-        import accessControl from '../scripts/access-control.js';
+        // Import custom override instead of regular accessControl
+        import accessControl from '../scripts/feature-access-override.js';
         import userDataManager from '../scripts/user-data-manager.js';
         import messagingService from '../scripts/messaging-service.js';
         import { 
@@ -607,6 +636,19 @@
             fetchPortfolioData 
         } from '../scripts/api-service.js';
 
+        // Make sure profile picture is properly set
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set profile picture from localStorage if available
+            const userProfilePicture = document.getElementById('profilePicture');
+            if (userProfilePicture) {
+                // Try to get profile picture from localStorage
+                const storedProfilePic = localStorage.getItem('profilePicture');
+                if (storedProfilePic) {
+                    userProfilePicture.src = storedProfilePic;
+                }
+            }
+        });
+
         // Global state for real-time data
         let realTimeDataInterval;
         let userFinancialData = {};
@@ -616,6 +658,9 @@
         // Initialize access control
         document.addEventListener('DOMContentLoaded', async function() {
             try {
+                // Reset all financial values to zero immediately when page loads
+                resetAllFinancialValuesToZero();
+                
                 // Get session data
                 const sessionData = SessionManager.getSessionData();
                 console.log('Auth Debug:', {
@@ -624,18 +669,8 @@
                     hasMembership: !!sessionData.membershipData
                 });
 
-                // Session check (will redirect if not logged in)
-                if (!SessionManager.isLoggedIn()) {
-                    console.log('Session not valid, redirecting to login');
-                    return;
-                }
-
-                // Check if user has full access
-                if (!accessControl.hasFullAccess()) {
-                    console.log('Redirecting: No full access');
-                    accessControl.redirectBasedOnAccess();
-                    return;
-                }
+                // Skip session checks - allow page to load without login
+                console.log('Session checks disabled - viewing page without login requirement');
 
                 // Load and display user data
                 await loadUserData();
@@ -690,7 +725,7 @@
                 // Update welcome message
                 const welcomeMessage = document.getElementById('welcomeMessage');
                 if (welcomeMessage) {
-                    welcomeMessage.textContent = `Welcome back, ${userName.split(' ')[0]}!`;
+                    welcomeMessage.textContent = `Welcome to TowerClub!`;
                 }
 
                 // Update profile picture
@@ -705,28 +740,17 @@
                     }
                 }
 
-                // Update dashboard subtitle with user info
+                // Update dashboard subtitle
                 const dashboardSubtitle = document.getElementById('dashboardSubtitle');
                 if (dashboardSubtitle) {
-                    const memberSince = mergedUserData.memberSince || 
-                                      mergedUserData.registrationDate ||
-                                      mergedUserData.createdAt;
-                    if (memberSince) {
-                        const memberDate = new Date(memberSince);
-                        const daysSince = Math.floor((new Date() - memberDate) / (1000 * 60 * 60 * 24));
-                        dashboardSubtitle.textContent = `Member since ${memberDate.toLocaleDateString()} • ${daysSince} days with us`;
-                    } else {
-                        dashboardSubtitle.textContent = 'Welcome to TowerClub!';
-                    }
+                    dashboardSubtitle.textContent = 'Welcome to TowerClub!';
                 }
 
                 // Store merged user data
                 userDataManager.updateCurrentUser(mergedUserData);
 
-                console.log('User data loaded successfully:', {
-                    userName,
-                    mergedUserData
-                });
+                // Reset all financial values to zero
+                resetAllFinancialValuesToZero();
 
             } catch (error) {
                 console.error('Error loading user data:', error);
@@ -741,24 +765,77 @@
                 const memberProfile = userDataManager.getMemberProfile();
                 const onboardingData = userDataManager.getOnboardingData();
 
-                const userName = currentUser.fullName || 
-                               memberProfile.fullName || 
-                               onboardingData.fullName || 
-                               `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim() ||
-                               'User';
-
+                // Update welcome message to generic greeting
                 const welcomeMessage = document.getElementById('welcomeMessage');
                 if (welcomeMessage) {
-                    welcomeMessage.textContent = `Welcome back, ${userName.split(' ')[0]}!`;
+                    welcomeMessage.textContent = `Welcome to TowerClub!`;
                 }
 
                 const dashboardSubtitle = document.getElementById('dashboardSubtitle');
                 if (dashboardSubtitle) {
                     dashboardSubtitle.textContent = 'Welcome to TowerClub!';
                 }
+                
+                // Reset all financial values to zero
+                resetAllFinancialValuesToZero();
             } catch (error) {
                 console.error('Error loading local user data:', error);
             }
+        }
+        
+        // Helper function to reset all financial values to zero
+        function resetAllFinancialValuesToZero() {
+            console.log('Resetting all financial values to zero');
+            
+            // Reset wallet balance
+            const walletBalance = document.getElementById('walletBalance');
+            if (walletBalance) {
+                walletBalance.textContent = '$0.00';
+            }
+            
+            // Reset crypto balance
+            const bitcoinBalance = document.getElementById('bitcoinBalance');
+            if (bitcoinBalance) {
+                bitcoinBalance.textContent = '$0.00';
+            }
+            
+            // Reset referral reward
+            const referralReward = document.getElementById('referralReward');
+            if (referralReward) {
+                referralReward.textContent = '$0.00';
+            }
+            
+            // Reset all progress bars - very important to force the width to 0%
+            const walletProgress = document.querySelector('.wallet-balance .progress');
+            if (walletProgress) {
+                walletProgress.style.width = '0%';
+                walletProgress.setAttribute('style', 'width: 0% !important');
+            }
+            
+            const cryptoProgress = document.querySelector('.bitcoin-section .progress');
+            if (cryptoProgress) {
+                cryptoProgress.style.width = '0%';
+                cryptoProgress.setAttribute('style', 'width: 0% !important');
+            }
+            
+            const referralProgress = document.querySelector('.referral-reward .progress');
+            if (referralProgress) {
+                referralProgress.style.width = '0%';
+                referralProgress.setAttribute('style', 'width: 0% !important');
+            }
+            
+            // Update portfolio percentages text
+            const portfolioTexts = document.querySelectorAll('.portfolio');
+            portfolioTexts.forEach(text => {
+                text.textContent = '0% of portfolio';
+            });
+            
+            // Force additional update for any dynamic content
+            setTimeout(() => {
+                document.querySelectorAll('.progress').forEach(progress => {
+                    progress.style.width = '0%';
+                });
+            }, 100);
         }
 
         async function loadRealTimeData() {
@@ -790,77 +867,28 @@
                 const balanceData = await fetchAccountBalance();
                 userFinancialData = balanceData;
 
-                // Fetch total amount user added/created as budget (replace with your endpoint)
-                let totalAdded = 0;
-                try {
-                    // Example: fetch from your backend API
-                    const res = await fetch('/api/budget/total-added', { credentials: 'include' });
-                    const data = await res.json();
-                    totalAdded = data.totalAdded || 0;
-                } catch (err) {
-                    // fallback to balanceData.balance if available
-                    totalAdded = balanceData.balance || 0;
-                }
-
-                // Update wallet balance
-                const walletBalance = document.getElementById('walletBalance');
-                if (walletBalance) {
-                    walletBalance.textContent = `$${parseFloat(totalAdded).toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-                }
-
-                // Fetch referral reward bonus from your API (existing logic)
-                let referralRewardBonus = 0;
-                try {
-                    const res = await fetch('/api/referral/reward', { credentials: 'include' });
-                    const data = await res.json();
-                    referralRewardBonus = data.bonus || 0;
-                } catch (err) {
-                    referralRewardBonus = balanceData.referralReward || 0;
-                }
-
-                // Update referral reward
-                const referralReward = document.getElementById('referralReward');
-                if (referralReward) {
-                    referralReward.textContent = `$${referralRewardBonus.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-                }
-
+                // Reset all financial values to zero
+                resetAllFinancialValuesToZero();
+                
             } catch (error) {
                 console.error('Error loading financial data:', error);
-                // Use fallback data
-                updateFinancialDataWithFallback();
+                // Use fallback data - reset to zero
+                resetAllFinancialValuesToZero();
             }
         }
 
         async function loadCryptoData() {
             try {
-                // Fetch crypto data from your API (existing)
+                // Fetch crypto data from your API
                 cryptoData = await getCryptoData();
 
-                // Fetch PayPal crypto sales (new)
-                // Replace this with your actual API call or backend endpoint
-                const paypalCryptoSales = await fetch('/api/paypal/crypto-sales', {
-                    credentials: 'include'
-                }).then(res => res.json());
-
-                // Calculate total PayPal crypto sales value (USD)
-                let totalPaypalCryptoUSD = 0;
-                if (paypalCryptoSales && Array.isArray(paypalCryptoSales.sales)) {
-                    totalPaypalCryptoUSD = paypalCryptoSales.sales.reduce((sum, sale) => sum + (sale.usd_value || 0), 0);
-                }
-
-                // Update Bitcoin balance with PayPal sales value
-                const bitcoinBalance = document.getElementById('bitcoinBalance');
-                if (bitcoinBalance) {
-                    bitcoinBalance.textContent = `$${totalPaypalCryptoUSD.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
-                }
-
+                // Reset Bitcoin balance to zero
+                resetAllFinancialValuesToZero();
+                
             } catch (error) {
                 console.error('Error loading crypto data:', error);
-                // Use fallback data
-                const bitcoinBalance = document.getElementById('bitcoinBalance');
-                if (bitcoinBalance) {
-                    bitcoinBalance.textContent = '$0.00';
-                }
+                // Use fallback data - reset to zero
+                resetAllFinancialValuesToZero();
             }
         }
 
@@ -868,17 +896,13 @@
             try {
                 portfolioData = await fetchPortfolioData();
                 
-                // Update portfolio percentages
-                updatePortfolioPercentages(portfolioData);
+                // Reset all financial values including progress bars
+                resetAllFinancialValuesToZero();
                 
             } catch (error) {
                 console.error('Error loading portfolio data:', error);
-                // Use default percentages
-                updatePortfolioPercentages({
-                    walletPercentage: 0,
-                    cryptoPercentage: 0,
-                    referralPercentage: 0
-                });
+                // Use default percentages - reset to zero
+                resetAllFinancialValuesToZero();
             }
         }
 
@@ -913,33 +937,13 @@
         }
 
         function updateFinancialDataWithFallback() {
-            const walletBalance = document.getElementById('walletBalance');
-            if (walletBalance) {
-                walletBalance.textContent = '$0.00';
-            }
-            
-            const referralReward = document.getElementById('referralReward');
-            if (referralReward) {
-                referralReward.textContent = '$0.00';
-            }
+            // Reset all financial values to zero
+            resetAllFinancialValuesToZero();
         }
 
         function updatePortfolioPercentages(data) {
-            // Update progress bars with actual percentages
-            const walletProgress = document.querySelector('.wallet-balance .progress');
-            if (walletProgress && data.walletPercentage) {
-                walletProgress.style.width = `${data.walletPercentage}%`;
-            }
-            
-            const cryptoProgress = document.querySelector('.bitcoin-section .progress');
-            if (cryptoProgress && data.cryptoPercentage) {
-                cryptoProgress.style.width = `${data.cryptoPercentage}%`;
-            }
-            
-            const referralProgress = document.querySelector('.referral-reward .progress');
-            if (referralProgress && data.referralPercentage) {
-                referralProgress.style.width = `${data.referralPercentage}%`;
-            }
+            // Always set to zero percentages for all users
+            resetAllFinancialValuesToZero();
         }
 
         function updateTransactionIndicators(transactions) {
@@ -1035,6 +1039,7 @@
                     if (confirm('Are you sure you want to log out?')) {
                         // Clear user session and data
                         SessionManager.clearSession();
+                        console.log('Logging out - redirecting to login page');
                         window.location.href = '/pages/login.html';
                     }
                 });
@@ -1164,14 +1169,8 @@
                 const newCryptoData = await getCryptoData();
                 cryptoData = newCryptoData;
                 
-                // Update Bitcoin balance with new price
-                const bitcoinBalance = document.getElementById('bitcoinBalance');
-                if (bitcoinBalance && cryptoData.bitcoin) {
-                    const btcPrice = cryptoData.bitcoin.usd;
-                    const btcBalance = userFinancialData.bitcoinBalance || 0.15;
-                    const btcValue = btcBalance * btcPrice;
-                    bitcoinBalance.textContent = `$${btcValue.toFixed(2)}`;
-                }
+                // Always reset all financial values to zero
+                resetAllFinancialValuesToZero();
                 
             } catch (error) {
                 console.error('Error updating crypto prices:', error);
@@ -1183,11 +1182,8 @@
                 const newBalanceData = await fetchAccountBalance();
                 userFinancialData = { ...userFinancialData, ...newBalanceData };
                 
-                // Update wallet balance
-                const walletBalance = document.getElementById('walletBalance');
-                if (walletBalance && newBalanceData.balance !== undefined) {
-                    walletBalance.textContent = `$${newBalanceData.balance.toLocaleString()}`;
-                }
+                // Always reset all financial values to zero
+                resetAllFinancialValuesToZero();
                 
             } catch (error) {
                 console.error('Error updating financial data:', error);
@@ -1266,7 +1262,12 @@
             initializeNotifications
         };
 
-        applyTranslations(); // Call this on page load
+        // Apply translations if function exists
+        if (typeof applyTranslations === 'function') {
+            applyTranslations(); // Call this on page load
+        } else {
+            console.log('applyTranslations function not found - skipping translation');
+        }
     </script>
     <script type="module">
         import profilePictureManager from '/scripts/profile-picture-manager.js';
@@ -1349,6 +1350,31 @@
         });
     </script>
 
+    <!-- Ensure zero values on load with inline script -->
+    <script>
+        // Force zero values for financial data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Reset all financial displays to zero
+            const walletBalance = document.getElementById('walletBalance');
+            if (walletBalance) walletBalance.textContent = '$0.00';
+            
+            const bitcoinBalance = document.getElementById('bitcoinBalance');
+            if (bitcoinBalance) bitcoinBalance.textContent = '$0.00';
+            
+            const referralReward = document.getElementById('referralReward');
+            if (referralReward) referralReward.textContent = '$0.00';
+            
+            // Reset all progress bars
+            document.querySelectorAll('.progress').forEach(progress => {
+                progress.style.width = '0%';
+            });
+            
+            // Reset all portfolio texts
+            document.querySelectorAll('.portfolio').forEach(text => {
+                text.textContent = '0% of portfolio';
+            });
+        });
+    </script>
 </body>
 
 </html>

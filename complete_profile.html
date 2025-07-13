@@ -712,7 +712,9 @@
                         username: profileData.username,
                         age: profileData.age,
                         email: profileData.email,
-                        phone: profileData.phone
+                        phone: profileData.phone,
+                        // Get the phone from localStorage if it was used for login
+                        loginPhone: localStorage.getItem('phone') || profileData.phone
                     }));
                     
                     // Show success notification

@@ -301,6 +301,42 @@
             background: #357ABD;
         }
 
+        /* Google Translate customization */
+        #google_translate_element {
+            display: inline-block;
+        }
+        
+        #google_translate_element .goog-te-gadget {
+            font-family: 'Lexend', sans-serif;
+            font-size: 0;
+        }
+        
+        #google_translate_element .goog-te-gadget-simple {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        #google_translate_element .goog-te-gadget-icon {
+            margin-right: 4px;
+        }
+        
+        #google_translate_element .goog-te-menu-value {
+            color: #ffffff;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        
+        #google_translate_element .goog-te-menu-value span {
+            font-weight: 500;
+        }
+        
+        #google_translate_element .goog-te-menu-value span:last-child {
+            display: none;
+        }
+
         /* Crypto Section */
         .crypto-section {
             flex: 1;
@@ -477,29 +513,31 @@
         import translationManager from '../scripts/translation-manager.js';
     </script>
     <script src="../scripts/header.js"></script>
+    <script type="module" src="../scripts/google_translator_selector.js"></script>
 </head>
 <body>
-    <header class="main-nav" style="background: linear-gradient(90deg, #22c55e, #a855f7); padding: 15px 30px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
-        <div class="nav-content" style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <a href="/pages/mainpage.html" class="nav-brand" style="display: flex; align-items: center; gap: 10px; text-decoration: none;">
-                    <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" style="height: 40px; width: auto;">
-                    <span class="brand-name" style="font-size: 1.5rem; font-weight: 600; color: #ffffff;">TowerClub</span>
+    <header class="main-nav" style="background: linear-gradient(90deg, #22c55e, #a855f7); padding: 10px 20px; box-shadow: 0 4px 8px rgba(0,0,0,0.15); position: fixed; top: 0; left: 0; right: 0; z-index: 1000;">
+        <div class="nav-content" style="max-width: 1280px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-right: 30px;">
+                <a href="/pages/mainpage.html" class="nav-brand" style="display: flex; align-items: center; gap: 5px; text-decoration: none;">
+                    <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" style="height: 36px; width: auto;">
+                    <span class="brand-name" style="font-size: 1.4rem; font-weight: 600; color: #ffffff;">TowerClub</span>
                 </a>
+                <div id="google_translate_element" style="margin-left: 10px;"></div>
             </div>
-            <div class="nav-links" style="display: flex; gap: 20px;">
-                <a href="/pages/dashboard.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 8px 16px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Dashboard</a>
-                <a href="/pages/wallet.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 8px 16px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Wallet</a>
-                <a href="/pages/transfer.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 8px 16px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Transfer</a>
-                <a href="/pages/activities.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 8px 16px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Activities</a>
-                <a href="/pages/settings.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 8px 16px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Settings</a>
+            <div class="nav-links" style="display: flex; gap: 16px; flex-grow: 1; justify-content: center;">
+                <a href="/pages/dashboard.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 6px 14px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Dashboard</a>
+                <a href="/pages/my_card.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 6px 14px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Wallet</a>
+                <a href="/pages/transfer.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 6px 14px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Transfer</a>
+                <a href="/pages/activities.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 6px 14px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Activities</a>
+                <a href="/pages/settings.html" class="nav-link" style="color: #ffffff; font-weight: 500; font-size: 1rem; text-decoration: none; padding: 6px 14px; border: 2px solid transparent; border-radius: 5px; transition: background 0.3s, color 0.3s, border-color 0.3s;">Settings</a>
             </div>
-            <div class="nav-actions" style="display: flex; align-items: center; gap: 15px;">
-                <div class="profile-picture-container" style="width: 40px; height: 40px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 2px solid #ffffff; transition: box-shadow 0.3s ease, transform 0.3s ease;">
+            <div class="nav-actions" style="display: flex; align-items: center; gap: 10px;">
+                <div class="profile-picture-container" style="width: 38px; height: 38px; border-radius: 50%; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 2px solid #ffffff; transition: box-shadow 0.3s ease, transform 0.3s ease;">
                     <img id="profilePicture" src="/assets/images/default-avatar.png" alt="Profile Picture" style="width: 100%; height: 100%; object-fit: cover;">
                     <input id="profilePictureInput" type="file" accept="image/*" style="display: none;">
                 </div>
-                <button id="logoutButton" class="btn-outline" style="background: transparent; border: 2px solid #ffffff; color: #ffffff; padding: 8px 32px; border-radius: 5px; font-size: 1rem; transition: background 0.3s, color 0.3s;">Log out</button>
+                <button id="logoutButton" class="btn-outline" style="background: transparent; border: 2px solid #ffffff; color: #ffffff; padding: 6px 20px; border-radius: 5px; font-size: 0.9rem; transition: background 0.3s, color 0.3s;">Log out</button>
             </div>
         </div>
     </header>
@@ -1111,37 +1149,6 @@
             });
         }
     });
-    </script>
-
-    <!-- Google Translate -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'en',
-                includedLanguages: 'en,ar,zh-CN,es,fr',
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-    <!-- Google Translate Banner Check -->
-    <script>
-    (function() {
-        // Helper to check if Google Translate banner iframe is present
-        function checkGoogleBanner() {
-            var bannerFrame = document.querySelector('iframe.goog-te-banner-frame');
-            if (bannerFrame && bannerFrame.style.display !== 'none') {
-                document.body.classList.add('has-google-banner');
-            } else {
-                document.body.classList.remove('has-google-banner');
-            }
-        }
-        // Check on load and every second (in case of language change)
-        window.addEventListener('load', function() {
-            setInterval(checkGoogleBanner, 1000);
-        });
-    })();
     </script>
 
     <!-- Crypto Dashboard API Integration & Card Redirects -->

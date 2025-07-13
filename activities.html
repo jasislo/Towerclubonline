@@ -5,23 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="TowerClub Transaction History" data-i18n="meta-description">
     <title data-i18n="page-title">Transaction History - TowerClub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500                    <tbody>
-                        <tr>
-                            <td>2024-07-28</td>
-                            <td>Expense</td>
-                            <td>Food</td>
-                            <td>Grocery Shopping</td>
-                            <td>-$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="0">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-27</td>
-                            <td>Income</td>
-                            <td>Salary</td>
-                            <td>Paycheck</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="1">Cancel</button></td>
-                        </tr>" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet"> rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/analytics.css">
@@ -397,6 +381,11 @@ header p {
                 </select>
                 <button id="filter-button">Apply Filter</button>
             </div>
+            <div id="empty-state-message" style="text-align: center; margin-top: 20px; padding: 15px; background-color: #f8f9fa; border-radius: 8px;">
+                <p style="font-size: 15px; color: #6c757d;">
+                    Your financial activity summary will be displayed here once you start making transactions.
+                </p>
+            </div>
         </section>
 
         <section id="transaction-history" class="data-section">
@@ -414,150 +403,12 @@ header p {
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>2024-07-28</td>
-                            <td>Expense</td>
-                            <td>Food</td>
-                            <td>Grocery Shopping</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="0">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-27</td>
-                            <td>Income</td>
-                            <td>Salary</td>
-                            <td>Paycheck</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="1">Cancel</button></td>
-                        </tr>
-<tr>
-<td>2024-07-26</td>
-                            <td>Expense</td>
-                            <td>Utilities</td>
-                            <td>Electricity Bill</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="2">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-25</td>
-                            <td>Expense</td>
-                            <td>Transportation</td>
-                            <td>Gasoline</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="3">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-24</td>
-                            <td>Income</td>
-                            <td>Investment</td>
-                            <td>Stock Sale</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="4">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-23</td>
-                            <td>Expense</td>
-                            <td>Entertainment</td>
-                            <td>Movie Tickets</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="5">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-22</td>
-                            <td>Expense</td>
-                            <td>Housing</td>
-                            <td>Rent</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="6">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-21</td>
-                            <td>Income</td>
-                            <td>Freelance</td>
-                            <td>Web Design Project</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="7">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-20</td>
-                            <td>Expense</td>
-                            <td>Dining</td>
-                            <td>Restaurant</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="8">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-19</td>
-                            <td>Expense</td>
-                            <td>Clothing</td>
-                            <td>New Shoes</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="9">Cancel</button></td>
-                        </tr>
-<tr>
-<td>2024-07-26</td>
-                            <td>Expense</td>
-                            <td>Utilities</td>
-                            <td>Electricity Bill</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="10">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-25</td>
-                            <td>Expense</td>
-                            <td>Transportation</td>
-                            <td>Gasoline</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="11">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-24</td>
-                            <td>Income</td>
-                            <td>Investment</td>
-                            <td>Stock Sale</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="12">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-23</td>
-                            <td>Expense</td>
-                            <td>Entertainment</td>
-                            <td>Movie Tickets</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="13">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-22</td>
-                            <td>Expense</td>
-                            <td>Housing</td>
-                            <td>Rent</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="14">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-21</td>
-                            <td>Income</td>
-                            <td>Freelance</td>
-                            <td>Web Design Project</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="15">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-20</td>
-                            <td>Expense</td>
-                            <td>Dining</td>
-                            <td>Restaurant</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="16">Cancel</button></td>
-                        </tr>
-                        <tr>
-                            <td>2024-07-19</td>
-                            <td>Expense</td>
-                            <td>Clothing</td>
-                            <td>New Shoes</td>
-                            <td>$0.00</td>
-                            <td><button class="cancel-transaction-btn" data-index="17">Cancel</button></td>
+                    <tbody id="transaction-table-body">
+                        <!-- Transactions will appear here when users make real transactions -->
+                        <tr id="no-transactions-row">
+                            <td colspan="6" style="text-align: center; padding: 30px;">
+                                <p style="font-size: 16px; color: #666;">No transactions yet. Your transaction history will appear here once you start making transactions.</p>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -638,6 +489,214 @@ header p {
 
     <script type="module">
         import { requireAuth, handleLogout } from '/scripts/auth-utils.js';
+        import { getTransactions } from '../scripts/api-service.js';
+
+        // Function to toggle empty state messages based on transaction availability
+        function toggleEmptyStateMessages(hasTransactions) {
+            const emptyStateMessage = document.getElementById('empty-state-message');
+            if (emptyStateMessage) {
+                emptyStateMessage.style.display = hasTransactions ? 'none' : 'block';
+            }
+            
+            // Update the transaction history section empty state
+            const noTransactionsRow = document.getElementById('no-transactions-row');
+            if (noTransactionsRow) {
+                noTransactionsRow.style.display = hasTransactions ? 'none' : '';
+            }
+        }
+        
+        // Function to load real transactions when available
+        async function loadTransactionHistory() {
+            try {
+                const tableBody = document.getElementById('transaction-table-body');
+                const noTransactionsRow = document.getElementById('no-transactions-row');
+                
+                // Attempt to fetch real transactions from API
+                const transactions = await getTransactions();
+                
+                // Toggle empty state messages based on transaction availability
+                toggleEmptyStateMessages(transactions && transactions.length > 0);
+                
+                // If we have real transactions, display them
+                if (transactions && transactions.length > 0) {
+                    // Clear the "no transactions" message
+                    noTransactionsRow.style.display = 'none';
+                    
+                    // Add each transaction to the table
+                    transactions.forEach((transaction, index) => {
+                        const row = document.createElement('tr');
+                        const date = new Date(transaction.date).toISOString().split('T')[0];
+                        const type = transaction.type || (transaction.amount > 0 ? 'Income' : 'Expense');
+                        const sign = type.toLowerCase() === 'expense' ? '-' : '';
+                        
+                        row.innerHTML = `
+                            <td>${date}</td>
+                            <td>${type}</td>
+                            <td>${transaction.category || 'Uncategorized'}</td>
+                            <td>${transaction.description || ''}</td>
+                            <td>${sign}$${Math.abs(transaction.amount).toFixed(2)}</td>
+                            <td><button class="cancel-transaction-btn" data-index="${index}" data-id="${transaction.id}">Cancel</button></td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                    
+                    // Update summary with real data
+                    updateSummary(getTransactionsFromDOM());
+                }
+                
+                // Attach event listeners to the new cancel buttons
+                document.querySelectorAll('.cancel-transaction-btn').forEach(btn => {
+                    btn.addEventListener('click', handleCancelTransaction);
+                });
+                
+            } catch (error) {
+                console.error('Error loading transaction history:', error);
+                // Keep the "no transactions" message visible on error
+                toggleEmptyStateMessages(false);
+            }
+        }
+        
+        function handleCancelTransaction(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to cancel this transaction?')) {
+                // Get the transaction ID
+                const transactionId = this.getAttribute('data-id');
+                
+                // Call API to cancel the transaction
+                if (transactionId) {
+                    fetch(`/api/transactions/${transactionId}/cancel`, { 
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            // Remove the row from the table on success
+                            const row = this.closest('tr');
+                            if (row) row.remove();
+                            
+                            // Update summary after removing a transaction
+                            updateSummary(getTransactionsFromDOM());
+                            
+                            // Show "no transactions" message if this was the last transaction
+                            const remainingTransactions = getTransactionsFromDOM();
+                            if (remainingTransactions.length === 0) {
+                                document.getElementById('no-transactions-row').style.display = '';
+                            }
+                        } else {
+                            throw new Error('Failed to cancel transaction');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error cancelling transaction:', error);
+                        alert('There was an error cancelling your transaction. Please try again.');
+                    });
+                }
+            }
+        }
+        
+        // Function to get transactions from DOM for summary calculation
+        function getTransactionsFromDOM() {
+            const rows = Array.from(document.querySelectorAll('#transaction-table tbody tr:not(#no-transactions-row)'));
+            return rows.map(row => {
+                const cells = row.children;
+                if (!cells || cells.length < 5) return null;
+                
+                return {
+                    row,
+                    date: cells[0]?.textContent.trim() || '',
+                    type: cells[1]?.textContent.trim().toLowerCase() || '',
+                    category: cells[2]?.textContent.trim() || '',
+                    description: cells[3]?.textContent.trim() || '',
+                    amount: parseAmount(cells[4]?.textContent.trim() || '0'),
+                    isIncome: cells[1]?.textContent.trim().toLowerCase() === 'income'
+                };
+            }).filter(t => t !== null);
+        }
+        
+        // Helper: Parse amount string to number
+        function parseAmount(str) {
+            return Number(str.replace(/[^0-9.-]+/g,""));
+        }
+        
+        // Update summary cards
+        function updateSummary(transactions) {
+            let income = 0, expenses = 0;
+            
+            // If there are no transactions, set all values to zero
+            if (!transactions || transactions.length === 0) {
+                document.getElementById('totalIncome').textContent = '0.00';
+                document.getElementById('totalExpenses').textContent = '0.00';
+                document.getElementById('netFlow').textContent = '0.00';
+                return;
+            }
+            
+            transactions.forEach(t => {
+                if (t.isIncome) income += t.amount;
+                else expenses += Math.abs(t.amount);
+            });
+            
+            document.getElementById('totalIncome').textContent = income.toFixed(2);
+            document.getElementById('totalExpenses').textContent = expenses.toFixed(2);
+            document.getElementById('netFlow').textContent = (income - expenses).toFixed(2);
+        }
+
+        // Load charts for analytics
+        async function loadIncomeAnalysis() {
+            const ctx = document.getElementById('income-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['No Data Yet'],
+                    datasets: [{
+                        label: 'Income Sources',
+                        data: [0],
+                        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Income will be displayed when you have transactions'
+                        }
+                    }
+                }
+            });
+        }
+
+        async function loadExpenseAnalysis() {
+            const ctx = document.getElementById('expense-chart').getContext('2d');
+            new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['No Data Yet'],
+                    datasets: [{
+                        label: 'Expense Categories',
+                        data: [100],
+                        backgroundColor: ['rgba(200, 200, 200, 0.2)'],
+                        borderColor: ['rgba(200, 200, 200, 1)'],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Expenses will be displayed when you have transactions'
+                        }
+                    }
+                }
+            });
+        }
 
         // Check authentication on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -656,7 +715,6 @@ header p {
             }
 
             // Load page data
-            loadActivitySummary();
             loadTransactionHistory();
             loadIncomeAnalysis();
             loadExpenseAnalysis();
@@ -687,7 +745,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Get all transaction rows as objects
     function getTransactions() {
-        const rows = Array.from(document.querySelectorAll('#transaction-table tbody tr'));
+        const rows = Array.from(document.querySelectorAll('#transaction-table tbody tr:not(#no-transactions-row)'));
         return rows.map(row => {
             const cells = row.children;
             return {
@@ -697,7 +755,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 category: cells[2].textContent.trim(),
                 description: cells[3].textContent.trim(),
                 amount: parseAmount(cells[4].textContent.trim()),
-                isIncome: !cells[4].textContent.includes('-')
+                isIncome: cells[1].textContent.trim().toLowerCase() === 'income'
             };
         });
     }
@@ -705,6 +763,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update summary cards
     function updateSummary(transactions) {
         let income = 0, expenses = 0;
+        
+        // If there are no transactions, set all values to zero
+        if (transactions.length === 0) {
+            document.getElementById('totalIncome').textContent = '0.00';
+            document.getElementById('totalExpenses').textContent = '0.00';
+            document.getElementById('netFlow').textContent = '0.00';
+            return;
+        }
+        
         transactions.forEach(t => {
             if (t.isIncome) income += t.amount;
             else expenses += Math.abs(t.amount);
@@ -719,6 +786,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const dateVal = document.getElementById('date-filter').value;
         const typeVal = document.getElementById('type-filter').value;
         const transactions = getTransactions();
+        
+        // If no transactions, show the "no transactions" row
+        if (transactions.length === 0) {
+            document.getElementById('no-transactions-row').style.display = '';
+            updateSummary([]);
+            return;
+        }
+        
         let filtered = transactions;
 
         if (dateVal) {
@@ -731,6 +806,15 @@ document.addEventListener('DOMContentLoaded', function() {
         // Show/hide rows
         transactions.forEach(t => t.row.style.display = 'none');
         filtered.forEach(t => t.row.style.display = '');
+        
+        // Show "no results" message if filtered list is empty
+        const noTransactionsRow = document.getElementById('no-transactions-row');
+        if (filtered.length === 0 && noTransactionsRow) {
+            noTransactionsRow.style.display = '';
+            noTransactionsRow.querySelector('p').textContent = 'No transactions match your filter criteria.';
+        } else if (noTransactionsRow) {
+            noTransactionsRow.style.display = 'none';
+        }
 
         updateSummary(filtered);
     }
@@ -753,6 +837,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Remove the row from the table (simulate cancel)
                 const row = btn.closest('tr');
                 if (row) row.remove();
+                
+                // Update summary after removing a transaction
+                updateSummary(getTransactions());
+                
+                // Show "no transactions" message if this was the last transaction
+                const remainingTransactions = getTransactions();
+                if (remainingTransactions.length === 0) {
+                    document.getElementById('no-transactions-row').style.display = '';
+                    document.getElementById('no-transactions-row').querySelector('p').textContent = 'No transactions yet. Your transaction history will appear here once you start making transactions.';
+                }
+                
                 // Optionally, call API to cancel transaction here
                 // fetch(`/api/transactions/cancel`, { method: 'POST', body: JSON.stringify({ id: TRANSACTION_ID }) })
                 //   .then(...)

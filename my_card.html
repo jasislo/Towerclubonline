@@ -208,7 +208,7 @@
                 <div class="card-content">
                     <h3 contenteditable="false">Credit Card</h3>
                     <div class="card-number" style="display: flex; align-items: center;">
-                        <span contenteditable="false" id="creditCardNumber">**** **** **** 5678</span>
+                        <span contenteditable="false" id="creditCardNumber">**** **** **** ****</span>
                         <button 
                             type="button" 
                             class="edit-account-btn" 
@@ -219,21 +219,21 @@
                         </button>
                     </div>
                     <div class="card-details" style="display: flex; gap: 10px;">
-                        <span contenteditable="false" id="creditCardExpiry">Expiry: 11/25</span>
+                        <span contenteditable="false" id="creditCardExpiry">Expiry: MM/YY</span>
                         <button 
                             type="button"
                             class="edit-account-btn"
                             style="background: #22c55e; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 0.8em;"
                             onclick="event.stopPropagation(); enableCardEdit(this, 'creditCardExpiry', true);"
                         >Edit</button>
-                        <span contenteditable="false" id="creditCardHolder">Cardholder: Jane Doe</span>
+                        <span contenteditable="false" id="creditCardHolder">Cardholder: Your Name</span>
                         <button 
                             type="button"
                             class="edit-account-btn"
                             style="background: #22c55e; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 0.8em;"
                             onclick="event.stopPropagation(); enableCardEdit(this, 'creditCardHolder', true);"
                         >Edit</button>
-                        <span contenteditable="false" id="creditCardCVV">CVV: 123</span>
+                        <span contenteditable="false" id="creditCardCVV">CVV: ***</span>
                         <button 
                             type="button"
                             class="edit-account-btn"
@@ -251,7 +251,7 @@
                 <div class="card-content">
                     <h3 contenteditable="false">Debit Card</h3>
                     <div class="card-number" style="display: flex; align-items: center;">
-                        <span contenteditable="false" id="debitCardNumber">**** **** **** 9012</span>
+                        <span contenteditable="false" id="debitCardNumber">**** **** **** ****</span>
                         <button 
                             type="button" 
                             class="edit-account-btn" 
@@ -262,21 +262,21 @@
                         </button>
                     </div>
                     <div class="card-details" style="display: flex; gap: 10px;">
-                        <span contenteditable="false" id="debitCardExpiry">Expiry: 10/24</span>
+                        <span contenteditable="false" id="debitCardExpiry">Expiry: MM/YY</span>
                         <button 
                             type="button"
                             class="edit-account-btn"
                             style="background: #22c55e; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 0.8em;"
                             onclick="event.stopPropagation(); enableCardEdit(this, 'debitCardExpiry', true);"
                         >Edit</button>
-                        <span contenteditable="false" id="debitCardHolder">Cardholder: John Smith</span>
+                        <span contenteditable="false" id="debitCardHolder">Cardholder: Your Name</span>
                         <button 
                             type="button"
                             class="edit-account-btn"
                             style="background: #22c55e; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 0.8em;"
                             onclick="event.stopPropagation(); enableCardEdit(this, 'debitCardHolder', true);"
                         >Edit</button>
-                        <span contenteditable="false" id="debitCardCVV">CVV: 456</span>
+                        <span contenteditable="false" id="debitCardCVV">CVV: ***</span>
                         <button 
                             type="button"
                             class="edit-account-btn"
@@ -294,7 +294,7 @@
                 <div class="card-content">
                     <h3 contenteditable="false">Bank Account</h3>
                     <div class="card-number" style="display: flex; align-items: center;">
-                        <span contenteditable="false" id="bankAccountNumber">Account: 123456789</span>
+                        <span contenteditable="false" id="bankAccountNumber">Account: *********</span>
                         <button 
                             type="button" 
                             class="edit-account-btn" 
@@ -305,14 +305,14 @@
                         </button>
                     </div>
                     <div class="card-details" style="display: flex; gap: 10px;">
-                        <span contenteditable="false" id="bankRoutingNumber">Routing: 987654321</span>
+                        <span contenteditable="false" id="bankRoutingNumber">Routing: *********</span>
                         <button 
                             type="button"
                             class="edit-account-btn"
                             style="background: #22c55e; color: white; border: none; border-radius: 4px; padding: 2px 8px; cursor: pointer; font-size: 0.8em;"
                             onclick="event.stopPropagation(); enableCardEdit(this, 'bankRoutingNumber', true);"
                         >Edit</button>
-                        <span contenteditable="false" id="bankName">Bank: TowerBank</span>
+                        <span contenteditable="false" id="bankName">Bank: Your Bank</span>
                         <button 
                             type="button"
                             class="edit-account-btn"
@@ -329,9 +329,9 @@
                 </div>
                 <div class="card-content">
                     <h3>PayPal</h3>
-                    <div class="card-number">Email: user@example.com</div>
+                    <div class="card-number">Email: your.email@example.com</div>
                     <div class="card-details">
-                        <span>Status: Verified</span>
+                        <span>Status: Connect Account</span>
                     </div>
                 </div>
             </div>
@@ -466,10 +466,10 @@
 
         // Example for Visa card
         localStorage.setItem('selectedCard', JSON.stringify({
-            type: 'Visa',
-            logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visa_Inc._logo.svg/2560px-Visa_Inc._logo.svg.png',
-            number: '**** 0250',
-            expiry: '06/25'
+            type: 'Card',
+            logo: '',
+            number: '**** ****',
+            expiry: 'MM/YY'
         }));
 
         // Example API endpoints (replace with your real endpoints)
