@@ -59,6 +59,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Store phone number for verification
                 localStorage.setItem('phone', phoneNumber);
                 
+                // Check if this phone number matches an existing profile
+                const memberProfile = JSON.parse(localStorage.getItem('memberProfile') || '{}');
+                const isExistingUser = memberProfile && (memberProfile.phone === phoneNumber || memberProfile.loginPhone === phoneNumber);
+                
+                if (isExistingUser) {
+                    console.log('Found existing profile for this phone number');
+                }
+                
                 // Show success message
                 errorMessage.style.color = 'var(--success-color)';
                 errorMessage.textContent = 'Verification code sent!';
@@ -139,4 +147,4 @@ style.textContent = `
         75% { transform: translateX(5px); }
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(style);

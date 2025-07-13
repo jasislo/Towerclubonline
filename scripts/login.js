@@ -126,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Import auth API functions
             const { loginUser } = await import('./auth-api.js');
             const { storeAuthData } = await import('./aut-utils.js');
+            import { SessionManager } from './session-manager.js';
 
             // Call login API
             const result = await loginUser(emailInput.value, passwordInput.value, rememberMeCheckbox.checked);
@@ -133,6 +134,11 @@ document.addEventListener('DOMContentLoaded', () => {
             if (result.success) {
                 // Store authentication data
                 storeAuthData(result.token, result.user, rememberMeCheckbox.checked);
+                SessionManager.setSessionData({
+                    token: result.token,
+                    userId: result.user.id || result.user.userId || result.user.email,
+                    membershipData: result.user
+                });
 
                 // Remember me logic
                 if (rememberMeCheckbox.checked) {

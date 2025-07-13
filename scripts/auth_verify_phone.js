@@ -107,6 +107,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Update user data
                     localStorage.setItem('userData', JSON.stringify(result.user));
                     
+                    // Check if there's existing profile data for this phone number
+                    const memberProfile = JSON.parse(localStorage.getItem('memberProfile') || '{}');
+                    
+                    // If the profile has a phone number that matches, make sure it's linked
+                    if (memberProfile && memberProfile.phone && memberProfile.phone === phoneNumber) {
+                        console.log('Found existing profile data for this phone number');
+                    } else {
+                        // Store the phone number in the member profile for future logins
+                        memberProfile.phone = phoneNumber;
+                        localStorage.setItem('memberProfile', JSON.stringify(memberProfile));
+                        console.log('Updated member profile with phone number for linking');
+                    }
+                    
                     // Redirect to main page
                     window.location.href = '/pages/mainpage.html';
                 } else {
@@ -236,4 +249,4 @@ style.textContent = `
         animation: fadeIn 0.3s ease;
     }
 `;
-document.head.appendChild(style); 
+document.head.appendChild(style);
