@@ -545,4 +545,11 @@ if (window.location.hostname === 'localhost' || window.location.hostname === '12
     setTimeout(() => messagingService.seedDemoData(), 1000);
 }
 
+// Example WebSocket setup
+const socket = new WebSocket('your-websocket-url');
+socket.onmessage = (event) => {
+    const message = JSON.parse(event.data);
+    // Update chat UI
+};
+
 export default messagingService;

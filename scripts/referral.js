@@ -1,5 +1,8 @@
+import { ReferralBonusProgram } from './referral-bonus.js';
+
 class ReferralProfile {
     constructor() {
+        this.bonusProgram = new ReferralBonusProgram();
         this.initializeElements();
         this.loadProfileData();
         this.loadRecentActivity();
@@ -128,6 +131,24 @@ class ReferralProfile {
         setTimeout(() => {
             toast.remove();
         }, 3000);
+    }
+
+    addNewReferral(referredUser) {
+        const referrerCode = document.getElementById('referralCode').textContent;
+        const bonus = this.bonusProgram.calculateBonus(referrerCode, referredUser);
+        
+        // Update stats with new bonus
+        this.bonusProgram.updateReferralStats(referrerCode, bonus);
+        
+        // Show notification to user
+        this.showToast(
+            'New Referral Bonus!', 
+            `You earned $${bonus.immediateBonus} for this referral and will earn $${bonus.recurringBonus} monthly based on activity.`,
+            'success'
+        );
+        
+        // Update UI
+        this.loadReferralStats();
     }
 }
 

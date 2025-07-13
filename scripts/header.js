@@ -1,5 +1,36 @@
-// Create the header dynamically
-const header = `
+// Create different headers for different pages
+const isOnboardingPage = window.location.pathname.includes('onboarding.html');
+const isLandingPage = window.location.pathname.includes('index.html');
+
+const landingHeader = `
+<nav class="main-nav">
+    <div class="nav-content">
+        <!-- Brand Section -->
+        <div style="display: flex; align-items: center;">
+            <a href="/pages/index.html" class="nav-brand">
+                <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo">
+                <span class="brand-name">TowerClub</span>
+            </a>
+            <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
+        </div>
+
+        <!-- Navigation Links -->
+        <div class="nav-links">
+            <a href="#features" class="nav-link">Features</a>
+            <a href="#pricing" class="nav-link">Pricing</a>
+            <a href="#about" class="nav-link">About</a>
+        </div>
+
+        <!-- Navigation Actions -->
+        <div class="nav-actions">
+            <a href="login.html" class="btn btn-outline">Login</a>
+            <a href="pay.html" class="btn btn-primary">Get Started</a>
+        </div>
+    </div>
+</nav>
+`;
+
+const regularHeader = `
 <nav class="main-nav">
     <div class="nav-content">
         <!-- Brand Section -->
@@ -7,11 +38,12 @@ const header = `
             <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo">
             <span class="brand-name">TowerClub</span>
         </a>
+        <div id="google_translate_element" style="display:inline-block; margin-left:15px;"></div>
 
         <!-- Navigation Links -->
         <div class="nav-links">
             <a href="/pages/dashboard.html" class="nav-link">Dashboard</a>
-            <a href="/pages/my_virtualcard.html" class="nav-link">Wallet</a>
+            <a href="/pages/my_card.html" class="nav-link">Wallet</a>
             <a href="/pages/add-transaction.html" class="nav-link">Transfer</a>
             <a href="/pages/activities.html" class="nav-link">Activities</a>
             <a href="/pages/settings.html" class="nav-link">Settings</a>
@@ -24,26 +56,44 @@ const header = `
                 <img id="profilePicture" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/finance-app-sample-kugwu4/assets/ijvuhvqbvns6/uiAvatar@2x.png" alt="Profile Picture" class="profile-picture">
                 <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
             </div>
-            <!-- Dark Mode Button -->
-            <button id="darkModeToggle" class="btn-outline">Dark Mode</button>
             <!-- Log Out Button -->
-            <a href="/pages/logout.html" class="btn-outline">Log out</a>
+            <button id="logoutButton" class="btn-outline">Log out</button>
         </div>
     </div>
 </nav>
 `;
 
+const onboardingHeader = `
+<nav class="main-nav">
+    <div class="nav-content">
+        <!-- Brand Section -->
+        <a href="/pages/mainpage.html" class="nav-brand">
+            <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo">
+            <span class="brand-name">TowerClub</span>
+        </a>
+        <div id="google_translate_element" style="display:inline-block; margin-left:15px;"></div>
+    </div>
+</nav>
+`;
+
+// Choose the appropriate header
+const header = isLandingPage ? landingHeader : 
+               isOnboardingPage ? onboardingHeader : 
+               regularHeader;
+
 // Append the header to the body or a specific container
 document.body.insertAdjacentHTML('afterbegin', header);
 
-// Add functionality for the profile picture upload
+// Add functionality for the profile picture upload only on pages that have it
 const profilePicture = document.getElementById('profilePicture');
 const profilePictureInput = document.getElementById('profilePictureInput');
 
-// Make the profile picture clickable
-profilePicture.addEventListener('click', () => {
-    profilePictureInput.click();
-});
+if (profilePicture && profilePictureInput && !isOnboardingPage) {
+    // Make the profile picture clickable
+    profilePicture.addEventListener('click', () => {
+        profilePictureInput.click();
+    });
+}
 
 // Handle the file input change event
 profilePictureInput.addEventListener('change', (event) => {
@@ -62,71 +112,55 @@ document.querySelector('.nav-brand').addEventListener('click', () => {
     window.location.href = '/pages/mainpage.html';
 });
 
-// Dark Mode Toggle Functionality
-const darkModeToggle = document.getElementById('darkModeToggle');
-const body = document.body;
-
-darkModeToggle.addEventListener('click', () => {
-    body.classList.toggle('dark-mode');
-    darkModeToggle.textContent = body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
-});
-
 // Log Out Button Functionality
-const logoutBtn = document.querySelector('.nav-actions a[href="/pages/logout.html"]');
-if (logoutBtn) {
-    logoutBtn.addEventListener('click', async (e) => {
-        e.preventDefault(); // Prevent default link navigation
+function handleLogout() {
+    try {
+        // Clear all session and local storage data
+        const keysToRemove = [
+            'memberProfile',
+            'profilePicture',
+            'paymentMethod',
+            'cardDetails',
+            'selectedPlan',
+            'selectedLanguage',
+            'authToken',
+            'userSession',
+            'lastLogin',
+            'preferences',
+            'userName',
+            'userUsername',
+            'userEmail',
+            'darkMode'
+        ];
 
-        try {
-            // Clear all session and local storage data
-            const keysToRemove = [
-                'memberProfile',
-                'profilePicture',
-                'paymentMethod',
-                'cardDetails',
-                'selectedPlan',
-                'selectedLanguage',
-                'authToken',
-                'userSession',
-                'lastLogin',
-                'preferences'
-            ];
+        // Remove specific keys
+        keysToRemove.forEach(key => {
+            localStorage.removeItem(key);
+            sessionStorage.removeItem(key);
+        });
 
-            // Remove specific keys
-            keysToRemove.forEach(key => {
-                localStorage.removeItem(key);
-                sessionStorage.removeItem(key);
-            });
+        // Clear any cookies
+        document.cookie.split(';').forEach(cookie => {
+            const [name] = cookie.split('=');
+            document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        });
 
-            // Clear any cookies that might be set
-            document.cookie.split(';').forEach(cookie => {
-                const [name] = cookie.split('=');
-                document.cookie = `${name.trim()}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-            });
-
-            // Optional: Call logout API endpoint if you have one
-            // try {
-            //     await fetch('/api/logout', {
-            //         method: 'POST',
-            //         credentials: 'include'
-            //     });
-            // } catch (error) {
-            //     console.error('Logout API call failed:', error);
-            // }
-
-            // Clear any remaining localStorage data (optional, uncomment if needed)
-            // localStorage.clear();
-            // sessionStorage.clear();
-
-            // Redirect to index page
-            window.location.href = '/index.html';
-        } catch (error) {
-            console.error('Error during logout:', error);
-            // Still redirect even if there's an error
-            window.location.href = '/index.html';
-        }
-    });
+        // Redirect to login page
+        window.location.href = '/pages/login.html';
+    } catch (error) {
+        console.error('Error during logout:', error);
+        // Still redirect even if there's an error
+        window.location.href = '/pages/login.html';
+    }
 }
+
+// Add click event listener to logout button after header is inserted
+document.addEventListener('DOMContentLoaded', () => {
+    const logoutBtn = document.getElementById('logoutButton');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', handleLogout);
+    }
+});
 
 // Utility: Update all profile picture elements on the page
 function updateAllProfilePictures(src) {
@@ -161,3 +195,18 @@ profilePictureInput.addEventListener('change', (event) => {
         reader.readAsDataURL(file);
     }
 });
+
+// Initialize Google Translate
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'en,ar,zh-CN,es,fr',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+}
+
+// Add Google Translate script
+const googleTranslateScript = document.createElement('script');
+googleTranslateScript.type = 'text/javascript';
+googleTranslateScript.src = '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+document.head.appendChild(googleTranslateScript);

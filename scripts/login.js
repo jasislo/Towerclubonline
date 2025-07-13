@@ -179,13 +179,34 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Redirect to pay.html when "Sign Up" is clicked (modified from register.html)
+    // Redirect to PAY.HTML when "Sign Up" is clicked
     if (signUpLink) {
         signUpLink.addEventListener('click', (e) => {
             e.preventDefault();
-            window.location.href = '/pages/pay.html';  // Redirect to pay page
+            window.location.href = '/pages/PAY.HTML';  // Redirect to payment page
         });
     }
+
+    // Also handle any other sign up buttons or links
+    const allSignUpLinks = document.querySelectorAll('a[href="register.html"], .signup-btn, .sign-up-btn');
+    allSignUpLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/pages/PAY.HTML';
+        });
+    });
+
+    // Handle text-based sign up links
+    const signUpTexts = document.querySelectorAll('a');
+    signUpTexts.forEach(link => {
+        if (link.textContent.toLowerCase().includes('sign up') || 
+            link.textContent.toLowerCase().includes('register')) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = '/pages/PAY.HTML';
+            });
+        }
+    });
 
     // Handle phone login button
     if (loginWithPhoneBtn) {
@@ -197,6 +218,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Check authentication status on page load
     checkAuth();
+});
+
+// Additional comprehensive sign-up redirect handler
+document.addEventListener('DOMContentLoaded', () => {
+    // Handle all possible sign-up elements
+    const signUpSelectors = [
+        'a[href="register.html"]',
+        'a[href="/pages/register.html"]',
+        '.signup-btn',
+        '.sign-up-btn',
+        '.register-btn',
+        '#signUpBtn',
+        '#registerBtn',
+        'button[data-action="signup"]',
+        'button[data-action="register"]'
+    ];
+
+    signUpSelectors.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(element => {
+            element.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                window.location.href = '/pages/PAY.HTML';
+            });
+        });
+    });
+
+    // Handle any remaining text-based links
+    document.querySelectorAll('a').forEach(link => {
+        const linkText = link.textContent.toLowerCase().trim();
+        if (linkText.includes('sign up') || 
+            linkText.includes('register') || 
+            linkText.includes('create account') ||
+            linkText.includes('join now')) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.location.href = '/pages/PAY.HTML';
+            });
+        }
+    });
 });
 
 // Add loading animation

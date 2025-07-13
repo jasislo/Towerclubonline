@@ -321,8 +321,6 @@ export async function makeTransaction(transactionData) {
     }
 }
 
-import { fetchFinancialNews, fetchAccountBalance, fetchRecentTransactions, fetchPortfolioData } from './scripts/api-service.js';
-
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const newsData = await fetchFinancialNews();

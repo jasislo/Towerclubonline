@@ -72,8 +72,14 @@ class TransferService {
       paymentMethod: transferData.paymentMethod || 'virtual_card',
       recipientInfo: {
         email: transferData.recipientEmail,
-        type: transferData.recipientType
+        type: transferData.recipientType,
+        bankName: transferData.bankName,
+        accountNumber: transferData.accountNumber,
+        routingNumber: transferData.routingNumber
       },
+      transferSpeed: transferData.transferSpeed,
+      currency: transferData.currency,
+      purpose: transferData.purpose,
       notes: transferData.notes
     });
     
@@ -136,6 +142,9 @@ class TransferService {
       if (!data.accountNumber) throw new Error('Account number is required');
       if (!data.routingNumber) throw new Error('Routing number is required');
     }
+    
+    // In a real application, we would verify if the recipient exists
+    // For example: await this._verifyRecipientExists(data.recipientEmail);
   }
 
   /**
