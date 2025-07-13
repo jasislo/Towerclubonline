@@ -1107,376 +1107,6 @@
             font-weight: 700;
             pointer-events: none;
         }
-
-        /* Make Payment Section */
-        #make-payment-section {
-            margin-top: 40px;
-            padding: 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        #make-payment-section h2 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        #make-payment-section .payment-option {
-            margin-bottom: 15px;
-            padding: 15px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            background-color: #f9fafb;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        #make-payment-section .payment-option:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        #make-payment-section .payment-option i {
-            font-size: 2rem;
-            color: var(--primary-color);
-        }
-
-        #make-payment-section .payment-option span {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text-color);
-        }
-
-        #make-payment-section .btn-paypal {
-            background-color: #ffc439 !important; /* PayPal yellow */
-            color: #111827 !important;            /* Dark text for contrast */
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s;
-            margin-top: 10px;
-            display: inline-block;
-        }
-
-        #make-payment-section .btn-paypal:hover {
-            background-color: #e0a800 !important; /* Darker yellow on hover */
-            color: #111827 !important;
-            transform: scale(1.05);
-        }
-
-        /* Center the Make Payment header */
-        .app-header {
-            text-align: center; /* Center the text */
-            margin-bottom: 20px; /* Add spacing below the header */
-        }
-
-        .brand-link {
-            display: flex;
-            align-items: center;
-            text-decoration: none; /* Remove underline */
-        }
-
-        @media (max-width: 768px) {
-            .footer-top {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links-section {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-
-            #make-payment-section {
-                padding: 15px;
-            }
-        }
-
-        /* Hero Section Styles */
-        .hero-section {
-            background: linear-gradient(90deg, #22c55e, #a855f7); /* Green to Fuchsia gradient */
-            color: white;
-            padding: 100px 20px;
-            text-align: center;
-        }
-
-        .hero-content h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            font-weight: 700;
-        }
-
-        .hero-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            color: #f5f5f5;
-        }
-
-        .hero-actions {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .hero-actions .btn {
-            padding: 12px 24px;
-            font-size: 1rem;
-            border-radius: 5px;
-            transition: transform 0.2s;
-        }
-
-        .hero-actions .btn:hover {
-            transform: translateY(-2px);
-        }
-
-        /* Payment Section Styles */
-        .payment-section {
-            margin-top: 80px;
-            padding: 40px 20px;
-            background-color: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .section-header {
-            font-size: 2rem;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .payment-options {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .payment-option {
-            background-color: #f9fafb;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .payment-option:hover {
-            transform: scale(1.02);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        .payment-option i {
-            font-size: 2rem;
-            color: var(--primary-color);
-        }
-
-        .payment-option span {
-            font-size: 1.1rem;
-            font-weight: 500;
-            color: var(--text-color);
-        }
-
-        .btn-credit-card {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1rem;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            width: 100%;
-        }
-
-        .btn-credit-card:hover {
-            background-color: #00796B;
-        }
-
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            .payment-section {
-                padding: 30px 15px;
-            }
-
-            .section-header {
-                font-size: 1.5rem;
-            }
-
-            .payment-option {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .payment-option i {
-                margin-bottom: 10px;
-            }
-
-            .btn-credit-card {
-                padding: 12px 24px;
-                font-size: 1.1rem;
-            }
-        }
-
-        /* Add styles for the success message buttons */
-        .payment-success .btn {
-            transition: all 0.3s ease;
-            font-weight: 500;
-        }
-        .payment-success .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .payment-success .btn-primary {
-            background: white;
-            color: #22c55e;
-        }
-        .payment-success .btn-primary:hover {
-            background: #f8f8f8;
-        }
-        .payment-success .btn-outline:hover {
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .referral-section {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 40px 0 30px 0;
-        }
-        .referral-form {
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(34,197,94,0.08);
-            padding: 24px 32px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-width: 320px;
-            max-width: 400px;
-            width: 100%;
-        }
-        .referral-label {
-            font-size: 1.1rem;
-            font-weight: 500;
-            margin-bottom: 12px;
-            color: #22c55e;
-            letter-spacing: 0.01em;
-        }
-        .referral-input-group {
-            display: flex;
-            width: 100%;
-            gap: 10px;
-            margin-bottom: 10px;
-        }
-        .referral-input {
-            flex: 1;
-            padding: 10px 14px;
-            border: 1.5px solid #22c55e;
-            border-radius: 6px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-        .referral-input:focus {
-            border-color: #a855f7;
-        }
-        .referral-btn {
-            background: linear-gradient(90deg, #22c55e, #a855f7);
-            color: #fff;
-            border: none;
-            border-radius: 6px;
-            padding: 10px 20px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background 0.2s, transform 0.2s;
-            box-shadow: 0 2px 6px rgba(168,85,247,0.08);
-        }
-        .referral-btn:hover {
-            background: linear-gradient(90deg, #a855f7, #22c55e);
-            transform: translateY(-2px) scale(1.03);
-        }
-        .referral-message {
-            display: block;
-            margin-top: 8px;
-            font-size: 0.98rem;
-            min-height: 20px;
-            text-align: center;
-            transition: color 0.2s;
-        }
-        @media (max-width: 600px) {
-            .referral-form {
-                padding: 16px 8px;
-                min-width: 0;
-            }
-            .referral-input-group {
-                flex-direction: column;
-                gap: 8px;
-            }
-            .referral-btn {
-                width: 100%;
-            }
-        }
-
-        /* Update footer styles to ensure it stays at the bottom */
-        body {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            margin: 0;
-            padding: 0;
-        }
-
-        .app-container {
-            flex: 1 0 auto;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            padding-top: 100px;
-        }
-
-        .main-footer {
-            flex-shrink: 0;
-            width: 100%;
-            background-color: #1f2937;
-            color: white;
-            padding: 60px 0 30px;
-            margin-top: 60px;
-        }
-
-        .landing-content {
-            flex: 1 0 auto;
-            width: 100%;
-        }
-
-        /* Ensure footer stays at bottom even with little content */
-        @media (min-height: 100vh) {
-            .main-footer {
-                margin-top: auto;
-            }
-        }
-
-        /* Add style for selected plan button */
-        .selected-plan {
-            background: linear-gradient(90deg, #22c55e, #a855f7) !important;
-            color: #fff !important;
-            border: none !important;
-            font-weight: 700;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body>
@@ -1513,7 +1143,7 @@
     <div class="app-container">
         <!-- Pricing Section -->
         <section id="pricing" class="pricing-section">
-            <h2>Plan Selected</h2>
+            <h2>Plan & Pricing</h2>
             <div class="pricing-grid">
                 <div class="pricing-card featured">
                     <div class="pricing-header">
@@ -1539,10 +1169,17 @@
             <form id="referralCodeForm" class="referral-form">
                 <label for="referralCodeInput" class="referral-label">Have a referral code?</label>
                 <div class="referral-input-group">
-                    <input type="text" id="referralCodeInput" placeholder="Enter referral code" class="referral-input">
+                    <input 
+                        type="text" 
+                        id="referralCodeInput" 
+                        placeholder="#Enter referral code" 
+                        class="referral-input"
+                        pattern="#.*"
+                        title="Referral code must start with #"
+                    >
                     <button type="submit" class="referral-btn">Apply Code</button>
                 </div>
-                <span id="referralCodeMessage" class="referral-message" style="display:none;"></span>
+                <span id="referralCodeMessage" class="referral-message"></span>
             </form>
         </div>
         <style>
@@ -1668,27 +1305,54 @@
                               label: 'paypal'
                           },
                           createSubscription: function(data, actions) {
+                            // Get the selected plan details
+                            const plan = selectedPlan || sessionStorage.getItem('selectedPlan');
+                            const amount = selectedPlanAmount || parseFloat(sessionStorage.getItem('selectedPlanAmount'));
+
+                            if (!plan || !amount) {
+                                alert('Please select a plan before proceeding with payment.');
+                                return;
+                            }
+
                             return actions.subscription.create({
-                              /* Creates the subscription */
-                              plan_id: 'P-17H9335690871034HNBGKHXQ'
+                                'plan_id': 'P-17H9335690871034HNBGKHXQ',
+                                'custom_id': plan,
+                                'application_context': {
+                                    'shipping_preference': 'NO_SHIPPING',
+                                    'user_action': 'SUBSCRIBE_NOW',
+                                    'description': `TowerClub ${plan} Subscription - $${amount.toFixed(2)}/month`
+                                }
                             });
                           },
                           onApprove: function(data, actions) {
-                            // Payment successful, store status and redirect
-                            window.paymentSecured = true;
+                            // Payment successful - store all necessary data
+                            const plan = selectedPlan || sessionStorage.getItem('selectedPlan');
+                            const amount = selectedPlanAmount || parseFloat(sessionStorage.getItem('selectedPlanAmount'));
+
+                            // Store payment and subscription details
                             sessionStorage.setItem('paymentComplete', 'true');
-                            sessionStorage.setItem('selectedPlan', selectedPlan);
-                            sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
-                            window.location.href = 'register.html';
+                            sessionStorage.setItem('subscriptionID', data.subscriptionID);
+                            sessionStorage.setItem('selectedPlan', plan);
+                            sessionStorage.setItem('selectedPlanAmount', amount);
+                            sessionStorage.setItem('paymentMethod', 'paypal');
+                            sessionStorage.setItem('paymentTimestamp', new Date().toISOString());
+                            
+                            // Show success message
+                            alert(`Thank you! Your ${plan} subscription is now active.`);
+                            
+                            // Redirect to registration with payment data
+                            window.location.href = `register.html?payment=complete&plan=${encodeURIComponent(plan)}&subscription=${data.subscriptionID}`;
+                        },
+                        onError: function(err) {
+                            console.error('PayPal Error:', err);
+                            alert('There was an error processing your payment. Please try again.');
+                        },
+                        onCancel: function(data) {
+                            alert('Payment cancelled. Please try again when you\'re ready.');
                         }
                       }).render('#paypal-button-container-P-17H9335690871034HNBGKHXQ'); // Renders the PayPal button
                     </script>
                 </div>
-            </div>
-
-            <!-- Center the Pay Now with PayPal button -->
-            <div style="display: flex; justify-content: center; margin: 24px 0;">
-              <button class="btn-paypal" id="makePaypalPayment" type="button">Pay Now with PayPal</button>
             </div>
         </div>
              
@@ -1933,105 +1597,179 @@
         });
 
         // Referral Code Form Logic
-document.getElementById('referralCodeForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    const codeInput = document.getElementById('referralCodeInput');
-    const message = document.getElementById('referralCodeMessage');
-    const referralCode = codeInput.value.trim();
+        document.addEventListener('DOMContentLoaded', function() {
+            // Referral Code Form Logic with user tracking
+            const referralForm = document.getElementById('referralCodeForm');
+            const referralInput = document.getElementById('referralCodeInput');
+            const referralMessage = document.getElementById('referralCodeMessage');
 
-    // Replace 'YOUR_VALID_CODE' with your actual valid code or logic
-    if (referralCode === 'YOUR_VALID_CODE') {
-        message.textContent = 'Referral code Applied Successfully!';
-        message.style.color = 'green';
-        message.style.display = 'block';
-        sessionStorage.setItem('referralCode', referralCode);
-    } else {
-        message.textContent = 'Invalid referral code. Please try again.';
-        message.style.color = 'red';
-        message.style.display = 'block';
-    }
-});
-    </script>
-    <script src="https://js.stripe.com/v3/"></script>
-<script>
-/**
- * Stripe integration for card payments.
- * You must have a backend endpoint that creates a PaymentIntent and returns its client_secret.
- * Replace STRIPE_PUBLISHABLE_KEY and /create-payment-intent endpoint with your real values.
- */
-const STRIPE_PUBLISHABLE_KEY = 'pk_test_XXXXXXXXXXXXXXXXXXXXXXXX'; // Replace with your Stripe publishable key
-const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
-const elements = stripe.elements();
-const cardElement = elements.create('card', {hidePostalCode: true});
-cardElement.mount('#card-element');
+            // Function to validate username/referral code format
+            function isValidReferralFormat(code) {
+                return code.startsWith('#') && code.length >= 4;
+            }
 
-const cardForm = document.getElementById('cardPaymentForm');
-const cardErrors = document.getElementById('card-errors');
-const cardPayBtn = document.getElementById('cardPayBtn');
+            // This function would typically call your API to validate the referral code
+            async function validateReferralCodeWithServer(code) {
+                // In a production environment, this should be replaced with an actual API call
+                // For example:
+                // const response = await fetch('/api/validate-referral', {
+                //    method: 'POST',
+                //    headers: { 'Content-Type': 'application/json' },
+                //    body: JSON.stringify({ code })
+                // });
+                // return response.ok;
+                
+                // For demonstration, we're simulating a successful validation
+                // with a 500ms delay to mimic network request
+                await new Promise(resolve => setTimeout(resolve, 500));
+                
+                // In production, return true only if the code exists in your database
+                return true;
+            }
 
-cardForm.addEventListener('submit', async function(event) {
-    event.preventDefault();
-    cardPayBtn.disabled = true;
-    cardPayBtn.textContent = 'Processing...';
-    cardErrors.textContent = '';
+            referralForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const code = referralInput.value.trim();
 
-    // You should get the selected plan and amount from your UI logic
-    let selectedPlan = window.selectedPlan || sessionStorage.getItem('selectedPlan');
-    let selectedPlanAmount = window.selectedPlanAmount || sessionStorage.getItem('selectedPlanAmount');
-    if (!selectedPlan || !selectedPlanAmount) {
-        cardErrors.textContent = 'Please select a plan before making payment.';
-        cardPayBtn.disabled = false;
-        cardPayBtn.textContent = 'Pay Now';
-        return;
-    }
+                // Disable button and show loading state
+                const submitBtn = referralForm.querySelector('.referral-btn');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.textContent = 'Validating...';
+                submitBtn.disabled = true;
+                
+                // First validate the format
+                if (!isValidReferralFormat(code)) {
+                    referralMessage.textContent = 'Invalid format. Code must start with # and be at least 4 characters.';
+                    referralMessage.style.color = '#ff4444';
+                    referralMessage.style.display = 'block';
+                    
+                    // Reset button
+                    submitBtn.textContent = originalBtnText;
+                    submitBtn.disabled = false;
+                    return;
+                }
 
-    // Call your backend to create a PaymentIntent and get client_secret
-    let clientSecret;
-    try {
-        const response = await fetch('/api/create-payment-intent', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                amount: Math.round(Number(selectedPlanAmount) * 100), // amount in cents
-                plan: selectedPlan
-            })
+                try {
+                    // Validate with server (or simulated validation)
+                    const isValidCode = await validateReferralCodeWithServer(code);
+                    
+                    if (!isValidCode) {
+                        referralMessage.textContent = 'Invalid referral code. This code does not exist in our system.';
+                        referralMessage.style.color = '#ff4444';
+                        referralMessage.style.display = 'block';
+                        
+                        // Reset button
+                        submitBtn.textContent = originalBtnText;
+                        submitBtn.disabled = false;
+                        return;
+                    }
+                    
+                    // Store referral data
+                    const referralData = {
+                        referralCode: code,
+                        timestamp: new Date().toISOString(),
+                        plan: selectedPlan || sessionStorage.getItem('selectedPlan'),
+                        amount: selectedPlanAmount || sessionStorage.getItem('selectedPlanAmount')
+                    };
+
+                    // Store in sessionStorage for registration
+                    sessionStorage.setItem('referralCode', code);
+                    sessionStorage.setItem('referralData', JSON.stringify(referralData));
+
+                    referralMessage.textContent = 'Referral code applied successfully!';
+                    referralMessage.style.color = '#22c55e';
+                    referralMessage.style.display = 'block';
+
+                    // Disable input after successful application
+                    referralInput.disabled = true;
+                    submitBtn.textContent = 'Applied';
+                    submitBtn.style.backgroundColor = '#22c55e';
+
+                } catch (error) {
+                    console.error('Referral validation error:', error);
+                    referralMessage.textContent = 'Error applying referral code. Please try again.';
+                    referralMessage.style.color = '#ff4444';
+                    referralMessage.style.display = 'block';
+                }
+            });
         });
-        const data = await response.json();
-        if (!data.clientSecret) throw new Error('No client secret returned');
-        clientSecret = data.clientSecret;
-    } catch (err) {
-        cardErrors.textContent = 'Payment initialization failed. Please try again.';
-        cardPayBtn.disabled = false;
-        cardPayBtn.textContent = 'Pay Now';
-        return;
-    }
 
-    // Confirm card payment
-    const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
-        payment_method: {
-            card: cardElement,
-        }
-    });
+        // Stripe integration for card payments.
+        // You must have a backend endpoint that creates a PaymentIntent and returns its client_secret.
+        // Replace STRIPE_PUBLISHABLE_KEY and /create-payment-intent endpoint with your real values.
+        const STRIPE_PUBLISHABLE_KEY = 'pk_live_51Q1c9WKxFfFtkJUstOvyWc7Wvvuma7hmZtslUdXcGj4Ri5cVDXET75L0M0Bpvq8BIvDPQdK9pa74i9jWuTHz2Ujw00eADQnvsR'; // Your live Stripe publishable key
+        const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
+        const elements = stripe.elements();
+        const cardElement = elements.create('card', {hidePostalCode: true});
+        cardElement.mount('#card-element');
 
-    if (error) {
-        cardErrors.textContent = error.message;
-        cardPayBtn.disabled = false;
-        cardPayBtn.textContent = 'Pay Now';
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-        // Payment successful
-        window.paymentSecured = true;
-        sessionStorage.setItem('paymentComplete', 'true');
-        sessionStorage.setItem('selectedPlan', selectedPlan);
-        sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
-        window.location.href = 'register.html';
-    } else {
-        cardErrors.textContent = 'Payment failed. Please try again.';
-        cardPayBtn.disabled = false;
-        cardPayBtn.textContent = 'Pay Now';
-    }
-});
-</script>
-<script type="text/javascript">
+        const cardForm = document.getElementById('cardPaymentForm');
+        const cardErrors = document.getElementById('card-errors');
+        const cardPayBtn = document.getElementById('cardPayBtn');
+
+        cardForm.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            cardPayBtn.disabled = true;
+            cardPayBtn.textContent = 'Processing...';
+            cardErrors.textContent = '';
+
+            // You should get the selected plan and amount from your UI logic
+            let selectedPlan = window.selectedPlan || sessionStorage.getItem('selectedPlan');
+            let selectedPlanAmount = window.selectedPlanAmount || sessionStorage.getItem('selectedPlanAmount');
+            if (!selectedPlan || !selectedPlanAmount) {
+                cardErrors.textContent = 'Please select a plan before making payment.';
+                cardPayBtn.disabled = false;
+                cardPayBtn.textContent = 'Pay Now';
+                return;
+            }
+
+            // Call your backend to create a PaymentIntent and get client_secret
+            let clientSecret;
+            try {
+                const response = await fetch('/api/create-payment-intent', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        amount: Math.round(Number(selectedPlanAmount) * 100), // amount in cents
+                        plan: selectedPlan
+                    })
+                });
+                const data = await response.json();
+                if (!data.clientSecret) throw new Error('No client secret returned');
+                clientSecret = data.clientSecret;
+            } catch (err) {
+                cardErrors.textContent = 'Payment initialization failed. Please try again.';
+                cardPayBtn.disabled = false;
+                cardPayBtn.textContent = 'Pay Now';
+                return;
+            }
+
+            // Confirm card payment
+            const {error, paymentIntent} = await stripe.confirmCardPayment(clientSecret, {
+                payment_method: {
+                    card: cardElement,
+                }
+            });
+
+            if (error) {
+                cardErrors.textContent = error.message;
+                cardPayBtn.disabled = false;
+                cardPayBtn.textContent = 'Pay Now';
+            } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+                // Payment successful
+                window.paymentSecured = true;
+                sessionStorage.setItem('paymentComplete', 'true');
+                sessionStorage.setItem('selectedPlan', selectedPlan);
+                sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
+                window.location.href = 'register.html';
+            } else {
+                cardErrors.textContent = 'Payment failed. Please try again.';
+                cardPayBtn.disabled = false;
+                cardPayBtn.textContent = 'Pay Now';
+            }
+        });
+    </script>
+    <script type="text/javascript">
   function googleTranslateElementInit() {
     new google.translate.TranslateElement({
       pageLanguage: 'en',
@@ -2078,31 +1816,59 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const referralForm = document.getElementById('referralCodeForm');
-    const referralInput = document.getElementById('referralCodeInput');
-    const referralMsg = document.getElementById('referralCodeMsg');
+// Referral code handling is now managed by the main implementation above
+// This section is removed to avoid duplication and conflicts
+</script>
+<script>
+document.getElementById('makePaypalPayment').addEventListener('click', function() {
+    // Store current page URL for return
+    sessionStorage.setItem('returnToPayPage', 'true');
+    
+    // Get selected plan amount
+    const amount = selectedPlanAmount || sessionStorage.getItem('selectedPlanAmount');
+    
+    // Construct PayPal URL with return parameters
+    const paypalBaseUrl = 'https://www.paypal.com/signin';
+    const returnUrl = encodeURIComponent(window.location.origin + window.location.pathname + '?paypal_return=true');
+    
+    // Open PayPal in new window
+    window.open(`${paypalBaseUrl}?returnUrl=${returnUrl}`, '_blank');
+});
 
-    referralForm.addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const code = referralInput.value.trim();
-        // Replace this with your real referral code validation logic/API call
-        const isValid = await validateReferralCode(code); // returns true if valid
-
-        if (isValid) {
-            referralMsg.textContent = "Referral code Applied Successfully!";
-            referralMsg.style.color = "green";
-        } else {
-            referralMsg.textContent = "Invalid referral code. Please try again.";
-            referralMsg.style.color = "red";
+// Add this code after the existing DOMContentLoaded event listener
+window.addEventListener('load', function() {
+    // Check if returning from PayPal
+    const urlParams = new URLSearchParams(window.location.search);
+    if (urlParams.get('paypal_return') === 'true') {
+        // Show the PayPal payment buttons container
+        const paypalContainer = document.getElementById('paypal-button-container-P-17H9335690871034HNBGKHXQ');
+        if (paypalContainer) {
+            paypalContainer.style.display = 'block';
         }
-    });
-
-    // Dummy validation function, replace with real API call
-    async function validateReferralCode(code) {
-        // Example: simulate API delay and check for a sample code
-        await new Promise(res => setTimeout(res, 300));
-        return code === "YOUR_VALID_CODE"; // Replace with your logic
+        
+        // Update UI to show logged-in state
+        const paypalBtn = document.getElementById('makePaypalPayment');
+        if (paypalBtn) {
+            paypalBtn.textContent = 'Complete Payment with PayPal';
+            paypalBtn.style.backgroundColor = '#169BD7';
+        }
+        
+        // Clean up URL
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+});
+</script>
+<script>
+// Validate plan selection
+document.getElementById('makePaypalPayment').addEventListener('click', function(e) {
+    if (!selectedPlan || !selectedPlanAmount) {
+        e.preventDefault();
+        alert('Please select a membership plan before proceeding with payment.');
+        document.querySelector('.pricing-section').scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+        });
+        return false;
     }
 });
 </script>
