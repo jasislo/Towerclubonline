@@ -7,40 +7,18 @@
     <title data-i18n="page-title">Financial Profile - TowerClub</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="/styles/header.css">
     <script type="module">
         import translationManager from '../scripts/translation-manager.js';
     </script>
+    <link rel="stylesheet" href="/styles/main.css">
+    <link rel="stylesheet" href="/styles/analytics.css">
+    <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
-        :root {
-            --primary-color: #4A90E2;
-            --secondary-color: #a855f7;
-            --secondary-background: #F5F5F5;
-            --primary-text: #333333;
-            --success-color: #4CAF50;
-            --error-color: #FF3B30;
-            --footer-bg: #1f2937;
-            --footer-text: #9ca3af;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Lexend', sans-serif;
-            background-color: var(--secondary-background);
-            color: var(--primary-text);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
+        /* Header Styles */
         .main-nav {
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            color: white;
+            background: linear-gradient(90deg, #22c55e, #a855f7);
             padding: 15px 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             position: fixed;
@@ -63,7 +41,6 @@
             align-items: center;
             gap: 10px;
             text-decoration: none;
-            color: white;
         }
 
         .nav-brand img {
@@ -94,8 +71,8 @@
         }
 
         .nav-link:hover {
-            background: linear-gradient(90deg, #22c55e, #a855f7);
-            color: #ffffff;
+            background: #ffffff;
+            color: #22c55e;
             border-color: #ffffff;
         }
 
@@ -112,26 +89,58 @@
             padding: 8px 16px;
             border-radius: 5px;
             font-size: 0.9rem;
-            text-align: center;
-            display: inline-block;
-            transition: background 0.3s, color 0.3s, border-color 0.3s;
+            transition: background 0.3s, color 0.3s;
         }
 
         .btn-outline:hover {
-            background: #ffffff; /* White background on hover */
-            color: #22c55e; /* Green text on hover */
+            background: #ffffff;
+            color: #22c55e;
+        }
+        
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #a855f7;
+            --secondary-background: #F5F5F5;
+            --primary-text: #333333;
+            --success-color: #4CAF50;
+            --error-color: #FF3B30;
+            --footer-bg: #1f2937;
+            --footer-text: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            padding-top: 70px; /* Reduced from 80px */
+            font-family: 'Lexend', sans-serif;
+            background-color: #f9fafb;
+            color: #333333;
+        }
+
+        .app-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px; /* Reduced top/bottom padding */
         }
 
         .container {
             max-width: 1200px;
-            margin: 0 auto;
+            margin: -10px auto 0; /* Added negative top margin to pull content up */
             padding: 20px;
-            padding-top: 100px;
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 20px;
         }
-
+        
+        header {
+            text-align: center;
+            margin-bottom: 10px; /* Reduced from 20px */
+        }
+        
         .sidebar {
             background: white;
             border-radius: 12px;
@@ -275,6 +284,41 @@
             margin-top: auto;
         }
 
+        /* General Styles */
+        body {
+            padding-top: 70px; /* Reduced from 80px */
+            font-family: 'Lexend', sans-serif;
+            background-color: #f9fafb;
+            color: #333333;
+        }
+
+        .app-container {
+            max-width: 1400px; /* Increased width for horizontal view */
+            margin: 0 auto;
+            padding: 0 20px; /* Reduced top/bottom padding */
+        }
+
+        header {
+            text-align: center; /* Center align the text */
+            margin-bottom: 10px; /* Reduced from 20px */
+        }
+
+        header h1 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: #333333;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #666666;
+        }
+
+        /* Hide the file input */
+        #profilePictureInput {
+            display: none;
+        }
+
         .footer-content {
             max-width: 1200px;
             margin: 0 auto;
@@ -357,15 +401,6 @@
 
         /* Profile Picture Styles */
         .profile-picture-container {
-            position: relative;
-            width: 40px;
-            height: 40px;
-            overflow: hidden;
-            border-radius: 50%;
-            cursor: pointer;
-        }
-
-        .profile-picture-container {
             width: 40px;
             height: 40px;
             border-radius: 50%;
@@ -374,14 +409,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 2px solid #ffffff; /* Optional border for better visibility */
-            transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
+            border: 2px solid #ffffff;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
         .profile-picture-container:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
-            transform: scale(1.1); /* Slightly enlarge the profile picture */
-            cursor: pointer; /* Change cursor to pointer */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            cursor: pointer;
         }
 
         .profile-picture-container img {
@@ -640,131 +675,137 @@
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
         }
     </style>
+    <!-- Add translation manager script -->
+    <script type="module">
+        import translationManager from '../scripts/translation-manager.js';
+    </script>
 </head>
 <body>
-    <!-- Header -->
-    <nav class="main-nav" style="background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); color: white;">
+    <!-- Remove the existing Google Translator element that's fixed positioned -->
+    
+    <nav class="main-nav">
         <div class="nav-content">
-            <!-- Brand Section -->
-            <a href="mainpage.html" class="nav-brand" style="color: white;">
+            <a href="/index.html" class="nav-brand">
                 <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo">
                 <span class="brand-name">TowerClub</span>
             </a>
-
-            <!-- Navigation Links -->
+            <!-- Google Translator element next to TowerClub brand name -->
+            <div id="google_translate_element" style="display: inline-block; margin-left: 15px;"></div>
             <div class="nav-links">
-                <a href="dashboard.html" class="nav-link" style="color: white;">Dashboard</a>
-                <a href="my_card.html" class="nav-link" style="color: white;">Wallet</a>
-                <a href="add-transaction.html" class="nav-link" style="color: white;">Transfer</a>
-                <a href="activities.html" class="nav-link" style="color: white;">Activities</a>
-                <a href="settings.html" class="nav-link" style="color: white;">Settings</a>
+                <a href="/pages/dashboard.html" class="nav-link">Dashboard</a>
+                <a href="/pages/wallet.html" class="nav-link">Wallet</a>
+                <a href="/pages/transfer.html" class="nav-link">Transfer</a>
+                <a href="/pages/activities.html" class="nav-link">Activities</a>
+                <a href="/pages/settings.html" class="nav-link">Settings</a>
             </div>
-
-            <!-- Navigation Actions -->
             <div class="nav-actions">
-                <!-- Profile Picture -->
                 <div class="profile-picture-container">
-                    <img id="profilePicture" src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dXNlcnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=900&q=60" alt="Profile Picture" class="profile-picture">
-                    <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
+                    <img id="profilePicture" src="../assets/images/default-profile.png" alt="Profile Picture">
+                    <input type="file" id="profilePictureInput" accept="image/*">
                 </div>
-                <!-- Log Out Button -->
-                <a href="/pages/logout.html" class="btn btn-outline" style="color: white; border: 2px solid white;">Logout</a>
-                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
+                <a href="/pages/logout.html" class="btn-outline">Log Out</a>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container">
-        <aside class="sidebar">
-            <h2>Navigation</h2>
-            <ul>
-                <li><a href="dashboard.html">Overview</a></li>
-                <li><a href="activities.html">Transactions</a></li>
-                <li><a href="dashboard2.html">Reports</a></li>
-                <li><a href="settings.html">Settings</a></li>
-            </ul>
-        </aside>
-        <section class="main-content">
-            <h1>Financial Dashboard</h1>
-            <div class="stats-container">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <span class="material-icons">account_balance_wallet</span>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Total Balance</h3>
-                        <p>$0.00</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <span class="material-icons">trending_up</span>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Total Profit</h3>
-                        <p>$0.00</p>
-                    </div>
-                </div>
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <span class="material-icons">swap_horiz</span>
-                    </div>
-                    <div class="stat-info">
-                        <h3>Total Trades</h3>
-                        <p>0</p>
-                    </div>
-                </div>
-            </div>
-            <div class="recent-activity">
-                <h2>Recent Activity</h2>
-                <div class="activity-list">
-                    <div class="activity-item">
-                        <div class="activity-info">
-                            <h4>Deposit</h4>
-                            <p>2 hours ago</p>
+    <div class="app-container">
+        <header>
+            <h1 data-i18n="financial-profile-title"></h1>
+            <p></p>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="container">
+            <aside class="sidebar">
+                <h2>Navigation</h2>
+                <ul>
+                    <li><a href="dashboard.html">Overview</a></li>
+                    <li><a href="activities.html">Transactions</a></li>
+                    <li><a href="dashboard2.html">Reports</a></li>
+                    <li><a href="settings.html">Settings</a></li>
+                </ul>
+            </aside>
+            <section class="main-content">
+                <h1>Financial Dashboard</h1>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <span class="material-icons">account_balance_wallet</span>
                         </div>
-                        <div class="activity-amount positive">+$0.00</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-info">
-                            <h4>Withdrawal</h4>
-                            <p>5 hours ago</p>
-                        </div>
-                        <div class="activity-amount negative">-$0.00</div>
-                    </div>
-                    <div class="activity-item">
-                        <div class="activity-info">
-                            <h4>Trade</h4>
-                            <p>1 day ago</p>
-                        </div>
-                        <div class="activity-amount positive">+$0.00</div>
-                    </div>
-                </div>
-            </div>
-            <section class="section balance-card">
-                <h2>Your Balance</h2>
-                <p>Current Account Balance</p>
-                <p class="amount">$0.00</p>
-                <button id="cashoutBtn" class="cashout-btn">Cash Out Full Balance</button>
-                
-                <!-- Payment Methods Section (Hidden by default) -->
-                <div id="paymentMethodsSection" class="payment-methods-section" style="display: none;">
-                    <h3>Select Payment Method</h3>
-                    <div id="paymentMethodsContainer" class="payment-methods-container">
-                        <!-- Payment methods will be loaded dynamically -->
-                        <div class="loading-indicator">
-                            <span class="material-icons spin">autorenew</span>
-                            <p>Loading your payment methods...</p>
+                        <div class="stat-info">
+                            <h3>Total Balance</h3>
+                            <p>$0.00</p>
                         </div>
                     </div>
-                    <div class="payment-actions">
-                        <button id="addNewPaymentMethodBtn" class="add-payment-btn">Add New Payment Method</button>
-                        <button id="cancelCashoutBtn" class="cancel-btn">Cancel</button>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <span class="material-icons">trending_up</span>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Profit</h3>
+                            <p>$0.00</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <span class="material-icons">swap_horiz</span>
+                        </div>
+                        <div class="stat-info">
+                            <h3>Total Trades</h3>
+                            <p>0</p>
+                        </div>
                     </div>
                 </div>
+                <div class="recent-activity">
+                    <h2>Recent Activity</h2>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-info">
+                                <h4>Deposit</h4>
+                                <p>2 hours ago</p>
+                            </div>
+                            <div class="activity-amount positive">+$0.00</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-info">
+                                <h4>Withdrawal</h4>
+                                <p>5 hours ago</p>
+                            </div>
+                            <div class="activity-amount negative">-$0.00</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-info">
+                                <h4>Trade</h4>
+                                <p>1 day ago</p>
+                            </div>
+                            <div class="activity-amount positive">+$0.00</div>
+                        </div>
+                    </div>
+                </div>
+                <section class="section balance-card">
+                    <h2>Your Balance</h2>
+                    <p>Current Account Balance</p>
+                    <p class="amount">$0.00</p>
+                    <button id="cashoutBtn" class="cashout-btn">Cash Out Full Balance</button>
+                    
+                    <!-- Payment Methods Section (Hidden by default) -->
+                    <div id="paymentMethodsSection" class="payment-methods-section" style="display: none;">
+                        <h3>Select Payment Method</h3>
+                        <div id="paymentMethodsContainer" class="payment-methods-container">
+                            <!-- Payment methods will be loaded dynamically -->
+                            <div class="loading-indicator">
+                                <span class="material-icons spin">autorenew</span>
+                                <p>Loading your payment methods...</p>
+                            </div>
+                        </div>
+                        <div class="payment-actions">
+                            <button id="addNewPaymentMethodBtn" class="add-payment-btn">Add New Payment Method</button>
+                            <button id="cancelCashoutBtn" class="cancel-btn">Cancel</button>
+                        </div>
+                    </div>
+                </section>
             </section>
-        </section>
+        </div>
     </div>
 
     <!-- Footer -->
@@ -811,7 +852,7 @@
                     <div class="footer-column">
                         <h4>Social</h4>
                         <ul>
-                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">X</a></li>
                             <li><a href="#">LinkedIn</a></li>
                             <li><a href="#">Facebook</a></li>
                             <li><a href="#">Instagram</a></li>
@@ -1115,7 +1156,7 @@
 <script src="/scripts/sync.js"></script>
 <script src="/scripts/header.js"></script>
 <script>
-  applyTranslations(); // Call this on page load
+    applyTranslations(); // Call this on page load
 </script>
 <script type="module">
     import DarkMode from '/scripts/dark-mode.js';
@@ -1123,18 +1164,63 @@
         DarkMode.init();
     });
 </script>
+<script type="module">
+    import profilePictureManager from '/scripts/profile-picture-manager.js';
+    // No need to call anything, the manager auto-initializes and syncs on DOMContentLoaded
+</script>
+
+<!-- Add Google Translator scripts -->
 <script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'en',
-      includedLanguages: 'en,ar,zh-CN,es,fr',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-  }
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'en',
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+            autoDisplay: false,
+            gaTrack: false,
+            gaId: ''
+        }, 'google_translate_element');
+        
+        // Hide "Powered by" text and position Google Translator next to TowerClub
+        var interval = setInterval(function() {
+            // Hide Google branding
+            var poweredBy = document.querySelector('.goog-logo-link');
+            var poweredByText = document.querySelector('.skiptranslate');
+            if (poweredBy) {
+                poweredBy.setAttribute('style', 'display: none');
+            }
+            if (poweredByText) {
+                poweredByText.setAttribute('style', 'display: none');
+            }
+            
+            // Check if header is dynamically inserted and inject Google Translate element after brand-name
+            var brandName = document.querySelector('.brand-name');
+            var navBrand = document.querySelector('.nav-brand');
+            var translateElement = document.getElementById('google_translate_element');
+            
+            if (brandName && navBrand && translateElement) {
+                // If translate element exists but not in the right position, move it
+                if (!translateElement.parentElement.classList || !translateElement.parentElement.classList.contains('nav-content')) {
+                    translateElement.remove(); // Remove it from current position
+                    // Create a new one in the right position
+                    var newTranslateElement = document.createElement('div');
+                    newTranslateElement.id = 'google_translate_element';
+                    newTranslateElement.setAttribute('style', 'display:inline-block; margin-left:15px;');
+                    navBrand.insertAdjacentElement('afterend', newTranslateElement);
+                    
+                    // Reinitialize Google Translate
+                    new google.translate.TranslateElement({
+                        pageLanguage: 'en',
+                        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                        autoDisplay: false,
+                        gaTrack: false,
+                        gaId: ''
+                    }, 'google_translate_element');
+                }
+                clearInterval(interval);
+            }
+        }, 100);
+    }
 </script>
-<script 
-  type="text/javascript" 
-  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

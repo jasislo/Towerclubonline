@@ -10,13 +10,20 @@
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/transactions.css">
     <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Add translation manager script -->
+    <script type="module">
+        import translationManager from '../scripts/translation-manager.js';
+    </script>
     <style>
         body {
-            padding-top: 70px; /* Add padding to prevent content from hiding behind fixed nav */
+            padding-top: 80px; /* Updated padding for fixed header */
         }
 
+        /* Header Styles */
         .main-nav {
-            background: linear-gradient(90deg, #22c55e, #a855f7); /* Gradient background */
+            background: linear-gradient(90deg, #22c55e, #a855f7);
             padding: 15px 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             position: fixed;
@@ -118,120 +125,9 @@
         .btn-outline:hover {
             background: #ffffff;
             color: #22c55e;
-            border-color: #22c55e;
         }
 
-        /* Center the Transaction Details Section */
-        .transaction-details-container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background: #ffffff;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        .content-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .balance-overview,
-        .transaction-history {
-            margin-top: 20px;
-        }
-
-        .balance-overview h2,
-        .transaction-history h2 {
-            text-align: center;
-        }
-
-        .balance-cards {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-
-        .transaction-list {
-            margin-top: 20px;
-        }
-
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            border: 1px solid #e5e7eb;
-            border-radius: 8px;
-            background: #f9fafb;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .transaction-item:hover {
-            background: #f3f4f6;
-        }
-
-        .transaction-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .transaction-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #1f2937;
-            margin-bottom: 5px;
-        }
-
-        .transaction-date {
-            font-size: 0.9rem;
-            color: #6b7280;
-        }
-
-        .transaction-amount {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .transaction-amount.positive {
-            color: #10b981; /* Green for positive amounts */
-        }
-
-        .transaction-amount.negative {
-            color: #ef4444; /* Red for negative amounts */
-        }
-
-        @media (max-width: 768px) {
-            .footer-top {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .footer-bottom {
-                flex-direction: column;
-                gap: 20px;
-                text-align: center;
-            }
-
-            .balance-cards {
-                flex-direction: column;
-                gap: 20px;
-            }
-
-            .transaction-item {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-
-            .transaction-amount {
-                margin-top: 10px;
-            }
-        }
-
+        /* Updated Footer Styles from activities.html */
         .main-footer {
             background-color: #1f2937;
             color: white;
@@ -249,7 +145,7 @@
             display: grid;
             grid-template-columns: 1fr 2fr;
             gap: 40px;
-            margin-bottom: 40px;
+            margin-bottom: 20px; /* Reduced from 40px to 20px */
         }
 
         .footer-brand {
@@ -304,9 +200,21 @@
 
         .footer-bottom {
             border-top: 1px solid #374151;
-            padding-top: 30px;
+            padding-top: 10px; /* Reduced from 15px to 10px */
             text-align: center;
-            color: #9ca3af;
+            color: #ffffff;
+            width: 100%; /* Ensure the container takes full width */
+            display: flex; /* Use flexbox for better centering */
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            color: #ffffff;
+            text-align: center;
+            width: 100%; /* Take full width of the parent */
+            padding: 0 20px; /* Add some padding on the sides */
         }
 
         @media (max-width: 768px) {
@@ -530,24 +438,12 @@
         body.dark-mode .footer-bottom {
             color: #b0b0b0;
         }
-
-        /* Dark mode button styles */
-        body.dark-mode .btn-outline {
-            background: #3d3d3d;
-            border-color: #4d4d4d;
-            color: #ffffff;
-        }
-
-        body.dark-mode .btn-outline:hover {
-            background: #4d4d4d;
-            color: #22c55e;
-        }
     </style>
 </head>
 <body>
     <!-- Header will be dynamically inserted by header.js -->
     <div id="google_translate_element" style="position: fixed; top: 10px; right: 150px; z-index: 2000;"></div>
-
+    
     <div class="app-container">
         <main class="main-content">
             <!-- Centered Transaction Details Section -->
@@ -555,9 +451,6 @@
                 <!-- Header Section -->
                 <div class="content-header">
                     <div class="header-left">
-                        <button onclick="history.back()" class="btn btn-icon">
-                            <span class="material-icons">arrow_back</span>
-                        </button>
                         <div>
                             <h1>Add Transaction</h1>
                             <p>Enter your transaction details below.</p>
@@ -603,15 +496,16 @@
         </main>
     </div>
 
+    <!-- Replace existing footer with the one from activities.html -->
     <footer class="main-footer">
         <div class="footer-content">
             <div class="footer-top">
                 <div class="footer-brand">
                     <div class="brand-wrapper">
-                        <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo">
-                        <span class="brand-name">TowerClub LLC</span>
+                        <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo" data-i18n="footer-logo-alt">
+                        <span class="brand-name" data-i18n="footer-brand-name">TowerClub LLC</span>
                     </div>
-                    <p class="brand-description">
+                    <p class="brand-description" data-i18n="footer-description">
                         Your trusted platform for financial growth and investment opportunities.
                     </p>
                 </div>
@@ -655,7 +549,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 TowerClub LLC. All rights reserved.</p>
+                <p data-i18n="footer-copyright">&copy; 2024 TowerClub LLC. All rights reserved.</p>
             </div>
         </div>
     </footer>
@@ -664,6 +558,9 @@
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
     <script src="/scripts/header.js"></script>
+    <script>
+        applyTranslations(); // Call this on page load
+    </script>
     <script type="module">
         import DarkMode from '/scripts/dark-mode.js';
         document.addEventListener('DOMContentLoaded', () => {
@@ -689,14 +586,6 @@
         }
 
         function setupEventListeners() {
-            // Back button functionality
-            const backButton = document.querySelector('.btn-icon');
-            if (backButton) {
-                backButton.addEventListener('click', function() {
-                    history.back();
-                });
-            }
-
             // Transfer button functionality
             const transferButton = document.getElementById('editBtn');
             if (transferButton) {
@@ -757,17 +646,6 @@
             }
         }
 
-        // Sync profile picture everywhere on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedPic = localStorage.getItem('profilePicture');
-            if (savedPic) {
-                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.src = savedPic;
-                });
-            }
-        });
-
         // Export functions for use in other scripts
         window.AddTransactionPage = {
             initializePage,
@@ -778,9 +656,23 @@
             updatePageForDarkMode
         };
     </script>
-    <script type="module">
+
+<script type="module">
     import profilePictureManager from '/scripts/profile-picture-manager.js';
     // No need to call anything, the manager auto-initializes and syncs on DOMContentLoaded
+</script>
+
+<script>
+// Sync profile picture everywhere on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const savedPic = localStorage.getItem('profilePicture');
+    if (savedPic) {
+        ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.src = savedPic;
+        });
+    }
+});
 </script>
 
 <script type="module">

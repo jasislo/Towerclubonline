@@ -22,10 +22,12 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            padding-top: 80px; /* Add padding for fixed header */
         }
 
+        /* Header Styles - Will be applied from header.css */
         .main-nav {
-            background: linear-gradient(90deg, #22c55e, #a855f7); /* Gradient background */
+            background: linear-gradient(90deg, #22c55e, #a855f7);
             padding: 15px 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             position: fixed;
@@ -51,14 +53,14 @@
         }
 
         .nav-brand img {
-            height: 40px; /* Adjust logo size */
+            height: 40px;
             width: auto;
         }
 
         .brand-name {
             font-size: 1.5rem;
             font-weight: 600;
-            color: #ffffff; /* White text for contrast */
+            color: #ffffff;
         }
 
         .nav-links {
@@ -67,7 +69,7 @@
         }
 
         .nav-link {
-            color: #ffffff; /* White text for contrast */
+            color: #ffffff;
             font-weight: 500;
             font-size: 1rem;
             text-decoration: none;
@@ -78,8 +80,8 @@
         }
 
         .nav-link:hover {
-            background: #ffffff; /* White background on hover */
-            color: #22c55e; /* Green text on hover */
+            background: #ffffff;
+            color: #22c55e;
             border-color: #ffffff;
         }
 
@@ -90,7 +92,7 @@
         }
 
         .profile-picture-container {
-            width: 40px; /* Match size from referral profile */
+            width: 40px;
             height: 40px;
             border-radius: 50%;
             overflow: hidden;
@@ -99,13 +101,13 @@
             align-items: center;
             justify-content: center;
             border: 2px solid #ffffff;
-            cursor: pointer;
             transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
         .profile-picture-container:hover {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             transform: scale(1.1);
+            cursor: pointer;
         }
 
         .profile-picture-container img {
@@ -125,15 +127,15 @@
         }
 
         .btn-outline:hover {
-            background: #ffffff; /* White background on hover */
-            color: #22c55e; /* Green text on hover */
+            background: #ffffff;
+            color: #22c55e;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 16px;
-            padding-top: 100px; /* Adjust for fixed header */
+            /* padding-top already added to body */
         }
 
         .app-bar {
@@ -141,9 +143,8 @@
             align-items: center;
             padding: 16px 0;
             background-color: #fff;
-            position: sticky;
-            top: 0;
-            z-index: 100;
+            position: relative;
+            z-index: 10;
         }
 
         .back-button {
@@ -355,12 +356,15 @@
             font-weight: 500;
         }
 
-        .profile-picture-container {
-            width: 120px;
-            height: 120px;
+        /* This is a duplicate style that's being updated to match activities.html */
+        /* The first profile-picture-container style defined earlier should be used for the header */
+        /* This style might be used elsewhere in the page */
+        .profile-picture {
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             overflow: hidden;
-            margin: 0 auto;
+            margin-right: 15px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -368,13 +372,13 @@
             transition: box-shadow 0.3s ease, transform 0.3s ease;
         }
 
-        .profile-picture-container:hover {
+        .profile-picture:hover {
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             transform: scale(1.1);
             cursor: pointer;
         }
 
-        .profile-picture-container img {
+        .profile-picture img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -658,10 +662,7 @@
     </script>
 </head>
 <body>
-    <div id="google_translate_element"></div>
-
-    <!-- Header will be loaded by header.js -->
-</nav>
+    <!-- Header elements removed -->
 
     <!-- Main Content -->
     <div class="container">
@@ -796,7 +797,6 @@
     </div>
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
-    <script src="/scripts/header.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             const backButton = document.querySelector('.back-button');
@@ -917,14 +917,10 @@
         });
 
         document.addEventListener('DOMContentLoaded', function () {
-            const profilePictureHeader = document.getElementById('profilePicture'); // Header profile picture
             const profilePictureMain = document.getElementById('profileImage'); // Main profile picture
             const profilePictureInput = document.getElementById('profilePictureInput'); // File input for profile picture
 
-            // Make the header profile picture clickable
-            profilePictureHeader.addEventListener('click', () => {
-                profilePictureInput.click();
-            });
+            // Header profile picture removed
 
             // Make the main profile picture clickable
             profilePictureMain.addEventListener('click', () => {
@@ -937,8 +933,7 @@
                 if (file) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        // Update both profile pictures
-                        profilePictureHeader.src = e.target.result;
+                        // Update main profile picture only (header removed)
                         profilePictureMain.src = e.target.result;
                     };
                     reader.readAsDataURL(file);
@@ -1149,37 +1144,7 @@
     import DarkMode from '/scripts/dark-mode.js';
     // DarkMode.init() is called automatically on DOMContentLoaded
 </script>
-<!-- Scripts -->
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'en',
-      includedLanguages: 'en,ar,zh-CN,es,fr',
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-  }
-</script>
-<script 
-  type="text/javascript" 
-  src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-</script>
-<script>
-(function() {
-    // Helper to check if Google Translate banner iframe is present
-    function checkGoogleBanner() {
-        var bannerFrame = document.querySelector('iframe.goog-te-banner-frame');
-        if (bannerFrame && bannerFrame.style.display !== 'none') {
-            document.body.classList.add('has-google-banner');
-        } else {
-            document.body.classList.remove('has-google-banner');
-        }
-    }
-    // Check on load and every second (in case of language change)
-    window.addEventListener('load', function() {
-        setInterval(checkGoogleBanner, 1000);
-    });
-})();
-</script>
+<!-- Google Translate removed -->
 <script>
 document.addEventListener('DOMContentLoaded', function () {
     // Redirect to chatssection.html when Message button is clicked
@@ -1247,6 +1212,20 @@ document.addEventListener('DOMContentLoaded', async function () {
         updateFollowerCount();
     });
 });
+</script>
+
+<!-- Google Translator Element -->
+<div id="google_translate_element" style="position: fixed; top: 10px; right: 150px; z-index: 2000;"></div>
+
+<!-- Required Scripts -->
+<script src="/scripts/profile-picture-sync.js"></script>
+<script src="/scripts/sync.js"></script>
+<script src="/scripts/header.js"></script>
+<script type="module">
+    import DarkMode from '/scripts/dark-mode.js';
+    document.addEventListener('DOMContentLoaded', () => {
+        DarkMode.init();
+    });
 </script>
 </body>
 </html>

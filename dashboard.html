@@ -7,8 +7,124 @@
     <title data-i18n="page-title">Dashboard - TowerClub</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <link rel="stylesheet" href="/styles/responsive.css">
     <style>
+        /* Header Styles from activities.html */
+        .main-nav {
+            background: linear-gradient(90deg, #22c55e, #a855f7);
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-brand img {
+            height: 40px;
+            width: auto;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1rem;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #ffffff;
+            color: #22c55e;
+            border-color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-picture-container {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .profile-picture-container:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .profile-picture-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: #ffffff;
+            color: #22c55e;
+        }
+
+        body {
+            padding-top: 80px; /* Added for fixed header */
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+
         :root {
             --primary-color: #39D2C0;
             --text-color: #15161E;
@@ -28,16 +144,8 @@
             box-sizing: border-box;
         }
 
-        body {
-            font-family: 'Lexend', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-        }
-
-
-
         .main-content {
-            padding-top: 80px;
+            padding-top: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -345,93 +453,6 @@
             color: var(--error-color);
         }
 
-        /* Footer */
-        .main-footer {
-            background-color: #1f2937;
-            color: white;
-            padding: 60px 0 30px;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-top {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand {
-            max-width: 300px;
-        }
-
-        .brand-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .brand-wrapper img {
-            height: 40px;
-            width: auto;
-        }
-
-        .brand-description {
-            color: #9ca3af;
-            line-height: 1.6;
-        }
-
-        .footer-links-section {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-        }
-
-        .footer-column h4 {
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: #9ca3af;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-column ul li a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #374151;
-            padding-top: 30px;
-            text-align: center;
-            color: #9ca3af;
-        }
-
-        @media (max-width: 768px) {
-            .footer-top {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links-section {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
     </style>
     <!-- Add translation manager script -->
     <script type="module">
@@ -439,11 +460,17 @@
     </script>
 </head>
 <body>
+    <!-- Header navigation from activities.html -->
+    <!-- Header will be dynamically inserted by header.js -->
+    <div id="google_translate_element" style="position: fixed; top: 10px; right: 150px; z-index: 2000;"></div>
+    
     <!-- Main Content -->
     <div class="main-content">
-        <div class="dashboard-header">
-            <h1 data-i18n="dashboard-welcome">Welcome back!</h1>
-            <p data-i18n="dashboard-date">Today is <span id="currentDate"></span></p>
+        <div class="dashboard-header" style="text-align: center; width: 100%; display: flex; justify-content: center; align-items: center;">
+            <div style="display: inline-block; text-align: center; margin: 0 auto; padding: 20px;">
+                <h1 data-i18n="dashboard-welcome" style="text-align: center; margin-bottom: 5px;">Welcome back!</h1>
+                <p data-i18n="dashboard-date" style="text-align: center;">Today is <span id="currentDate"></span></p>
+            </div>
         </div>
 
         <div class="dashboard-cards">
@@ -585,135 +612,35 @@
         </div>
     </div>
 
-    <!-- Footer -->
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <div class="brand-wrapper">
-                        <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo" data-i18n="footer-logo-alt">
-                        <span class="brand-name" data-i18n="footer-brand-name">TowerClub LLC</span>
-                    </div>
-                    <p class="brand-description" data-i18n="footer-description">
-                        Your trusted platform for financial growth and investment opportunities.
-                    </p>
-                </div>
-                <div class="footer-links-section">
-                    <div class="footer-column">
-                        <h4 data-i18n="footer-company">Company</h4>
-                        <ul>
-                            <li><a href="#" data-i18n="footer-about">About Us</a></li>
-                            <li><a href="#" data-i18n="footer-careers">Careers</a></li>
-                            <li><a href="#" data-i18n="footer-press">Press</a></li>
-                            <li><a href="#" data-i18n="footer-blog">Blog</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4 data-i18n="footer-resources">Resources</h4>
-                        <ul>
-                            <li><a href="#" data-i18n="footer-help">Help Center</a></li>
-                            <li><a href="#" data-i18n="footer-guides">Guides</a></li>
-                            <li><a href="#" data-i18n="footer-api">API</a></li>
-                            <li><a href="#" data-i18n="footer-status">Status</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4 data-i18n="footer-legal">Legal</h4>
-                        <ul>
-                            <li><a href="#" data-i18n="footer-privacy">Privacy</a></li>
-                            <li><a href="#" data-i18n="footer-terms">Terms</a></li>
-                            <li><a href="#" data-i18n="footer-security">Security</a></li>
-                            <li><a href="#" data-i18n="footer-cookies">Cookies</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Social</h4>
-                        <ul>
-                            <li><a href="#">X</a></li>
-                            <li><a href="#">Youtube</a></li>
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Instagram</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 TowerClub LLC. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
+    <!-- Profile picture sync script -->
     <script src="/scripts/profile-picture-sync.js"></script>
+    <script src="/scripts/sync.js"></script>
     <script src="/scripts/header.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Redirect to mainpage.html when clicking TowerClub in header
-            const navBrand = document.querySelector('.nav-brand');
-            navBrand.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.location.href = '/pages/mainpage.html';
-            });
-
-            const recentTransactionsCard = document.querySelector('.recent-transactions');
-            recentTransactionsCard.addEventListener('click', () => {
-                window.location.href = '/pages/activities.html';
-            });
-
-            const portfolioCard = document.querySelector('.dashboard-card:nth-child(5)');
-            portfolioCard.addEventListener('click', () => {
-                window.location.href = '/pages/crypto.html';
-            });
-
-            // Redirect to socialmedia.html when clicking Savings Rate card
-            const savingsRateCard = document.getElementById('savingsRateCard');
-            if (savingsRateCard) {
-                savingsRateCard.addEventListener('click', () => {
-                    window.location.href = '/pages/socialmedia.html';
-                });
-            }
-
-            const cryptoItems = document.querySelectorAll('.crypto-item');
-            cryptoItems.forEach((cryptoItem, index) => {
-                cryptoItem.addEventListener('click', () => {
-                    window.location.href = `/pages/crypto.html?crypto=${index + 1}`;
-                });
-            });
-
-            const activityItems = document.querySelectorAll('.activity-item');
-            activityItems.forEach((activityItem) => {
-                activityItem.addEventListener('click', () => {
-                    window.location.href = '/pages/activities.html';
-                });
-            });
-
-            const chatItems = document.querySelectorAll('.chat-item');
-            chatItems.forEach((chatItem, index) => {
-                chatItem.addEventListener('click', () => {
-                    window.location.href = `/pages/socialmedia2.html?chat=${index + 1}`;
-                });
-            });
-
-            applyTranslations(); // Call this on page load
-        });
-
-        // Sync profile picture everywhere on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            const savedPic = localStorage.getItem('profilePicture');
-            if (savedPic) {
-                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.src = savedPic;
-                });
-            }
-        });
+        applyTranslations(); // Call this on page load
     </script>
-    <script src="/scripts/sync.js"></script>
     <script type="module">
         import DarkMode from '/scripts/dark-mode.js';
         document.addEventListener('DOMContentLoaded', () => {
             DarkMode.init();
         });
     </script>
+    <script type="module">
+        import profilePictureManager from '/scripts/profile-picture-manager.js';
+        // No need to call anything, the manager auto-initializes and syncs on DOMContentLoaded
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
+                gaTrack: false,
+                gaId: ''
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
     <script>
 document.addEventListener('DOMContentLoaded', () => {
     // --- API Endpoints (Replace with your real endpoints and keys) ---
@@ -879,5 +806,18 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <script type="module" src="../scripts/feature-access.js"></script>
+<script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
+                gaTrack: false,
+                gaId: ''
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<!-- Footer script removed -->
 </body>
 </html>

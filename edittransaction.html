@@ -2,99 +2,130 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Edit Transaction – TowerClub" data–i18n="meta-description">
-    <title data–i18n="page-title">Edit Transaction – TowerClub</title>
-    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Edit Transaction – TowerClub" data-i18n="meta-description">
+    <title data-i18n="page-title">Edit Transaction – TowerClub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/transactions.css">
     <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/footer.css">
+    <!-- Add translation manager script -->
     <script type="module">
         import translationManager from '../scripts/translation-manager.js';
     </script>
     <style>
         body {
-            padding-top: 70px; /* Add padding to prevent content from hiding behind fixed nav */
+            padding-top: 80px; /* Add padding for fixed header */
         }
 
         /* Main styles */
 
-        .main-footer {
-            background-color: #1f2937;
-            color: white;
-            padding: 60px 0 30px;
-            margin-top: auto;
+        /* Header Styles */
+        .main-nav {
+            background: linear-gradient(90deg, #22c55e, #a855f7);
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
         }
 
-        .footer-content {
+        .nav-content {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        .footer-top {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand {
-            max-width: 300px;
-        }
-
-        .brand-wrapper {
+        .nav-brand {
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 15px;
+            text-decoration: none;
         }
 
-        .brand-wrapper img {
+        .nav-brand img {
             height: 40px;
             width: auto;
         }
 
-        .brand-description {
-            color: #9ca3af;
-            line-height: 1.6;
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
         }
 
-        .footer-links-section {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
+        .nav-links {
+            display: flex;
+            gap: 20px;
         }
 
-        .footer-column h4 {
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: #9ca3af;
+        .nav-link {
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1rem;
             text-decoration: none;
-            transition: color 0.2s;
+            padding: 8px 16px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
         }
 
-        .footer-column ul li a:hover {
-            color: white;
+        .nav-link:hover {
+            background: #ffffff;
+            color: #22c55e;
+            border-color: #ffffff;
         }
 
-        .footer-bottom {
-            border-top: 1px solid #374151;
-            padding-top: 30px;
-            text-align: center;
-            color: #9ca3af;
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-picture-container {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .profile-picture-container:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .profile-picture-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: #ffffff;
+            color: #22c55e;
         }
 
         /* Center-align the content header */
@@ -133,28 +164,18 @@
             color: #6b7280;
         }
 
-        @media (max-width: 768px) {
-            .footer-top {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links-section {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+        /* Media query for footer removed */
     </style>
 </head>
 <body>
-    <!-- Header will be loaded by header.js -->
+    <!-- Header will be dynamically inserted by header.js -->
+    <div id="google_translate_element" style="position: fixed; top: 10px; right: 150px; z-index: 2000;"></div>
     
     <div class="app-container">
         <!-- Main Content -->
         <main class="main-content">
             <!-- Your existing content here -->
             <div class="content-header">
-                <button onclick="history.back()" class="btn btn-icon">
-                    <span class="material-icons">arrow_back</span>
-                </button>
                 <h1 data–i18n="edit-transaction-title">Edit Transaction</h1>
                 <p data–i18n="edit-transaction-desc">Modify your transaction details below.</p>
             </div>
@@ -249,67 +270,10 @@
         </main>
     </div>
 
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <div class="brand-wrapper">
-                        <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo" data–i18n="footer-logo-alt">
-                        <span class="brand-name" data–i18n="footer-brand-name">TowerClub LLC</span>
-                    </div>
-                    <p class="brand-description" data–i18n="footer-description">
-                        Your trusted platform for financial growth and investment opportunities.
-                    </p>
-                </div>
-                <div class="footer-links-section">
-                    <div class="footer-column">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Press</a></li>
-                            <li><a href="#">Blog</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Resources</h4>
-                        <ul>
-                            <li><a href="#">Help Center</a></li>
-                            <li><a href="#">Guides</a></li>
-                            <li><a href="#">API</a></li>
-                            <li><a href="#">Status</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Legal</h4>
-                        <ul>
-                            <li><a href="#">Privacy</a></li>
-                            <li><a href="#">Terms</a></li>
-                            <li><a href="#">Security</a></li>
-                            <li><a href="#">Cookies</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Social</h4>
-                        <ul>
-                            <li><a href="#">Twitter</a></li>
-                            <li><a href="#">LinkedIn</a></li>
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Instagram</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p data–i18n="footer-copyright">&copy; 2024 TowerClub LLC. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer removed -->
 
-    <!-- Include header.js -->
-    <script src="/scripts/header.js"></script>
+    <!-- Header and profile scripts removed -->
     <script type="module" src="/scripts/transactions/edit-transaction.js"></script>
-    <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
     <script>
         document.getElementById('editTransactionForm').addEventListener('submit', async (event) => {
@@ -379,5 +343,36 @@
         });
     </script>
 
+    <script src="/scripts/profile-picture-sync.js"></script>
+    <script src="/scripts/sync.js"></script>
+    <script src="/scripts/header.js"></script>
+    <script>
+        applyTranslations(); // Call this on page load
+    </script>
+    <script type="module">
+        import profilePictureManager from '/scripts/profile-picture-manager.js';
+        // No need to call anything, the manager auto-initializes and syncs on DOMContentLoaded
+    </script>
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+        // Sync profile picture everywhere on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedPic = localStorage.getItem('profilePicture');
+            if (savedPic) {
+                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.src = savedPic;
+                });
+            }
+        });
+    </script>
 </body>
 </html>

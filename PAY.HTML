@@ -1153,11 +1153,12 @@
                     <ul class="pricing-features">
                         <li>Advanced analytics</li>
                         <li>Build Financial social Network</li>
-                        <li>Financial Newsupdates</li>
+                        <li>Financial News updates</li>
                         <li>Crypto Currencies updates</li>
                         <li>Priority support</li>
                         <li>Transfers between Members</li>
                         <li>Profile and Chats</li>
+                        <li>Referral Program</li>
                     </ul>
                     <a href="#" class="btn btn-primary btn-block get-started-btn" data-plan="VIP Member">Get Started</a>
                 </div>
@@ -1768,6 +1769,36 @@
                 cardPayBtn.textContent = 'Pay Now';
             }
         });
+
+        // Handle redirect from Stripe Checkout
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check URL parameters for Stripe success
+            const urlParams = new URLSearchParams(window.location.search);
+            const stripeSuccess = urlParams.get('stripe_success') === 'true';
+            const stripeRedirect = urlParams.get('redirect_status') === 'succeeded';
+            
+            // If returning from successful Stripe payment
+            if (stripeSuccess || stripeRedirect) {
+                // Mark payment as complete
+                window.paymentSecured = true;
+                sessionStorage.setItem('paymentComplete', 'true');
+                
+                // Get stored plan details (or default if missing)
+                const plan = sessionStorage.getItem('selectedPlan') || 'VIP Member';
+                const amount = sessionStorage.getItem('selectedPlanAmount') || '14.95';
+                
+                // Store payment method information
+                sessionStorage.setItem('paymentMethod', 'stripe');
+                sessionStorage.setItem('paymentTimestamp', new Date().toISOString());
+                
+                // Show success message
+                alert(`Thank you! Your ${plan} subscription is now active.`);
+                
+                // Clean URL parameters and redirect to registration
+                window.history.replaceState({}, document.title, window.location.pathname);
+                window.location.href = 'register.html?payment=complete&plan=' + encodeURIComponent(plan);
+            }
+        });
     </script>
     <script type="text/javascript">
   function googleTranslateElementInit() {
@@ -1788,9 +1819,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const stripePayBtn = document.getElementById('externalStripePayBtn');
     if (stripePayBtn) {
         stripePayBtn.addEventListener('click', function() {
-            // Open Stripe Checkout in a new tab
-            window.open('https://buy.stripe.com/3cI14o1tV3q3eqq8LbbII00', '_blank');
-            // After payment, user should be redirected to register.html via Stripe's success_url
+            // Get selected plan and amount
+            let selectedPlan = window.selectedPlan || sessionStorage.getItem('selectedPlan');
+            let selectedPlanAmount = window.selectedPlanAmount || sessionStorage.getItem('selectedPlanAmount');
+            
+            if (!selectedPlan || !selectedPlanAmount) {
+                alert('Please select a plan before making payment.');
+                return;
+            }
+            
+            // Store payment details before opening Stripe
+            sessionStorage.setItem('selectedPlan', selectedPlan);
+            sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
+            
+            // Calculate success redirect URL
+            const successUrl = window.location.origin + '/pages/register.html';
+            
+            // Open Stripe Checkout in a new tab with success_url
+            window.open('https://buy.stripe.com/3cI14o1tV3q3eqq8LbbII00?success_url=' + encodeURIComponent(successUrl), '_blank');
+            
+            // Listen for message from the popup
+            window.addEventListener('message', function(event) {
+                if (event.data === 'stripe_payment_complete') {
+                    // Mark payment as complete
+                    window.paymentSecured = true;
+                    sessionStorage.setItem('paymentComplete', 'true');
+                    
+                    // Redirect to register page
+                    window.location.href = 'register.html';
+                }
+            });
         });
     }
 
@@ -1808,9 +1866,28 @@ document.addEventListener('DOMContentLoaded', function() {
     const getStartedBtn = document.getElementById('getStartedNowBtn');
     if (getStartedBtn) {
         getStartedBtn.addEventListener('click', function() {
-            // Open payment in a new tab or process payment
-            window.open('https://buy.stripe.com/3cI14o1tV3q3eqq8LbbII00', '_blank');
-            // After payment, user should be redirected to register.html via Stripe's success_url
+            // Get selected plan and amount
+            let selectedPlan = window.selectedPlan || sessionStorage.getItem('selectedPlan');
+            let selectedPlanAmount = window.selectedPlanAmount || sessionStorage.getItem('selectedPlanAmount');
+            
+            if (!selectedPlan || !selectedPlanAmount) {
+                alert('Please select a plan first.');
+                document.querySelector('.pricing-section').scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                return;
+            }
+            
+            // Store payment details before opening Stripe
+            sessionStorage.setItem('selectedPlan', selectedPlan);
+            sessionStorage.setItem('selectedPlanAmount', selectedPlanAmount);
+            
+            // Calculate success redirect URL
+            const successUrl = window.location.origin + '/pages/register.html';
+            
+            // Open Stripe Checkout in a new tab with success_url
+            window.open('https://buy.stripe.com/3cI14o1tV3q3eqq8LbbII00?success_url=' + encodeURIComponent(successUrl), '_blank');
         });
     }
 });
@@ -1871,6 +1948,13 @@ document.getElementById('makePaypalPayment').addEventListener('click', function(
         return false;
     }
 });
+</script>
+<script>
+// Redirect to register.html on click
+makePaypalPayment.onclick = function(e) {
+    e.preventDefault();
+    window.location.href = 'register.html';
+};
 </script>
 </body>
 </html>

@@ -256,12 +256,63 @@
             font-size: 1rem;
             font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s, transform 0.2s;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            max-width: 300px;
+            margin: 0 auto;
         }
 
         .btn-paypal:hover {
             background: #e0a800;
             transform: scale(1.05);
+        }
+        
+        .btn-paypal.connected {
+            background: linear-gradient(90deg, #22c55e, #a855f7);
+            color: white;
+        }
+        
+        .btn-paypal.connected:hover {
+            background: linear-gradient(90deg, #1ea74f, #9440e0);
+        }
+        
+        .paypal-features {
+            margin-top: 10px;
+            padding: 15px;
+            background-color: rgba(34, 197, 94, 0.1);
+            border-radius: 8px;
+            display: none;
+            max-width: 300px;
+            margin: 10px auto;
+            transition: all 0.3s ease;
+        }
+        
+        .paypal-features.visible {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        .paypal-features ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .paypal-features li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #333;
+        }
+        
+        .paypal-features li span.material-icons {
+            color: #22c55e;
+            margin-right: 8px;
+            font-size: 16px;
         }
 
         .crypto-message {
@@ -277,6 +328,17 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
     </style>
 </head>
@@ -300,7 +362,17 @@
 
         <!-- Login with PayPal Section -->
         <section class="paypal-login">
-            <button class="btn-paypal" onclick="processPayment()">Log in with PayPal</button>
+            <button class="btn-paypal" id="paypalButton" onclick="processPayment()">
+                <span class="material-icons" id="paypalIcon">account_balance_wallet</span>
+                <span id="paypalButtonText">Log in with PayPal</span>
+            </button>
+            <div class="paypal-features" id="paypalFeatures">
+                <ul>
+                    <li><span class="material-icons">check_circle</span> Trade cryptocurrencies</li>
+                    <li><span class="material-icons">check_circle</span> Buy and sell Bitcoin</li>
+                    <li><span class="material-icons">check_circle</span> Use as payment method</li>
+                </ul>
+            </div>
         </section>
 
         <!-- Cards Section -->
@@ -407,32 +479,82 @@
         // Check PayPal login status on page load
         async function checkPayPalLoginStatus() {
             try {
+                // First check localStorage for previously established connection
+                const storedConnection = localStorage.getItem('paypalConnected');
+                if (storedConnection === 'true') {
+                    isPayPalLoggedIn = true;
+                    updatePayPalLoginUI();
+                    return;
+                }
+                
+                // If no stored connection, check with server
                 const response = await fetch('/verify-payment');
                 const data = await response.json();
                 isPayPalLoggedIn = data.paymentComplete === true;
                 
                 // Update UI based on login status
                 updatePayPalLoginUI();
+                
+                // If logged in, store in localStorage for future visits
+                if (isPayPalLoggedIn) {
+                    localStorage.setItem('paypalConnected', 'true');
+                }
             } catch (error) {
                 console.error('Failed to verify PayPal login status:', error);
-                isPayPalLoggedIn = false;
+                
+                // As a fallback, check localStorage
+                const storedConnection = localStorage.getItem('paypalConnected');
+                isPayPalLoggedIn = storedConnection === 'true';
+                updatePayPalLoginUI();
             }
         }
         
         // Update UI based on PayPal login status
         function updatePayPalLoginUI() {
             const loginBtn = document.querySelector('.btn-paypal');
+            const paypalFeatures = document.getElementById('paypalFeatures');
+            const paypalButtonText = document.getElementById('paypalButtonText');
+            const paypalIcon = document.getElementById('paypalIcon');
+            const cryptoMessage = document.querySelector('.crypto-message');
             
             if (isPayPalLoggedIn) {
                 // User is logged in
-                loginBtn.textContent = 'Logged in with PayPal';
-                loginBtn.style.backgroundColor = '#4CAF50';
+                paypalButtonText.textContent = 'Connected with PayPal';
+                loginBtn.classList.add('connected');
+                paypalIcon.textContent = 'check_circle';
                 loginBtn.onclick = logoutOfPayPal;
+                
+                // Show PayPal features
+                paypalFeatures.classList.add('visible');
+                
+                // Update crypto message
+                if (cryptoMessage) {
+                    cryptoMessage.textContent = 'Crypto features are now available! You can trade cryptocurrencies.';
+                    cryptoMessage.style.color = 'var(--success-color)';
+                    cryptoMessage.style.borderColor = 'var(--success-color)';
+                }
+                
+                // Store the PayPal connection status in localStorage
+                localStorage.setItem('paypalConnected', 'true');
             } else {
                 // User is not logged in
-                loginBtn.textContent = 'Log in with PayPal';
-                loginBtn.style.backgroundColor = '#ffc439';
+                paypalButtonText.textContent = 'Log in with PayPal';
+                loginBtn.classList.remove('connected');
+                paypalIcon.textContent = 'account_balance_wallet';
                 loginBtn.onclick = processPayment;
+                
+                // Hide PayPal features
+                paypalFeatures.classList.remove('visible');
+                
+                // Reset crypto message
+                if (cryptoMessage) {
+                    cryptoMessage.textContent = 'Crypto features are available only with PayPal services.';
+                    cryptoMessage.style.color = '#6b7280';
+                    cryptoMessage.style.borderColor = '#e5e7eb';
+                }
+                
+                // Remove the PayPal connection status from localStorage
+                localStorage.removeItem('paypalConnected');
             }
         }
         
@@ -441,9 +563,15 @@
             try {
                 await fetch('/api/paypal/logout');
                 isPayPalLoggedIn = false;
+                localStorage.removeItem('paypalConnected');
                 updatePayPalLoginUI();
+                alert('You have been disconnected from PayPal. Crypto features are no longer available.');
             } catch (error) {
                 console.error('Failed to logout of PayPal:', error);
+                // Still update UI in case of error
+                isPayPalLoggedIn = false;
+                localStorage.removeItem('paypalConnected');
+                updatePayPalLoginUI();
             }
         }
 
@@ -531,6 +659,23 @@
 
         // Call fetchCryptoPrices on page load
         document.addEventListener('DOMContentLoaded', () => {
+            // Check URL parameters for PayPal auth response
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('paypal_auth') && urlParams.get('paypal_auth') === 'success') {
+                // PayPal auth was successful
+                isPayPalLoggedIn = true;
+                localStorage.setItem('paypalConnected', 'true');
+                
+                // Check if we need to redirect to a specific crypto page
+                const redirectUrl = localStorage.getItem('cryptoRedirectAfterPayPal');
+                if (redirectUrl) {
+                    localStorage.removeItem('cryptoRedirectAfterPayPal');
+                    window.location.href = redirectUrl;
+                    return;
+                }
+            }
+            
+            // Continue with normal page initialization
             fetchCryptoPrices();
             checkPayPalLoginStatus(); // Check PayPal login status on page load
 
@@ -542,10 +687,19 @@
                     if (el) el.src = savedPic;
                 });
             }
+            
+            // Update the UI based on stored PayPal connection
+            if (localStorage.getItem('paypalConnected') === 'true') {
+                isPayPalLoggedIn = true;
+                updatePayPalLoginUI();
+            }
         });
 
         // Process PayPal payment - redirect to PayPal OAuth login
         function processPayment() {
+            // Save current page URL to return after PayPal auth
+            localStorage.setItem('paypalReturnUrl', window.location.href);
+            
             // Redirect user to PayPal OAuth login page
             const clientId = 'AfxfDtMQIvo3xh0u2CGcJtlWEjJA4ZflxcCsR1tG2tz4Auhqp32Xogkb3dFYrRteOpPrHpht3SRDcuH1';
             const redirectUri = encodeURIComponent(window.location.origin + '/api/paypal/callback');
@@ -556,6 +710,14 @@
 
         // Check PayPal login status before allowing trade
         async function checkPayPalLogin(tradeUrl) {
+            // First check localStorage for previously stored connection
+            const storedConnection = localStorage.getItem('paypalConnected');
+            if (storedConnection === 'true') {
+                isPayPalLoggedIn = true;
+                window.location.href = tradeUrl;
+                return;
+            }
+            
             if (isPayPalLoggedIn) {
                 window.location.href = tradeUrl;
             } else {
@@ -566,15 +728,34 @@
                     
                     if (data.paymentComplete) {
                         isPayPalLoggedIn = true;
+                        localStorage.setItem('paypalConnected', 'true');
+                        updatePayPalLoginUI();
                         window.location.href = tradeUrl;
                     } else {
-                        alert('Please log in with PayPal to proceed with trading.');
-                        // Scroll to the PayPal login button for better UX
-                        document.querySelector('.paypal-login').scrollIntoView({ behavior: 'smooth' });
+                        const confirmConnect = confirm('You need to connect with PayPal to access crypto trading features. Connect now?');
+                        if (confirmConnect) {
+                            // Scroll to the PayPal login button for better UX
+                            document.querySelector('.paypal-login').scrollIntoView({ behavior: 'smooth' });
+                            // Store the intended destination to redirect after connecting
+                            localStorage.setItem('cryptoRedirectAfterPayPal', tradeUrl);
+                            // Highlight the PayPal button
+                            const paypalButton = document.getElementById('paypalButton');
+                            paypalButton.style.boxShadow = '0 0 15px #a855f7';
+                            setTimeout(() => {
+                                paypalButton.style.boxShadow = 'none';
+                            }, 2000);
+                        }
                     }
                 } catch (e) {
                     console.error('Error verifying PayPal login:', e);
-                    alert('Unable to verify PayPal login. Please try again.');
+                    
+                    // Final fallback - check localStorage again
+                    if (localStorage.getItem('paypalConnected') === 'true') {
+                        window.location.href = tradeUrl;
+                    } else {
+                        alert('Unable to verify PayPal connection. Please try connecting with PayPal first.');
+                        document.querySelector('.paypal-login').scrollIntoView({ behavior: 'smooth' });
+                    }
                 }
             }
         }

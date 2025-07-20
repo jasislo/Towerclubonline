@@ -7,40 +7,14 @@
     <title data-i18n="page-title">Dashboard - TowerClub</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/footer.css">
     <script type="module">
         import translationManager from '../scripts/translation-manager.js';
     </script>
     <style>
-        :root {
-            --primary-color: #4A90E2;
-            --secondary-color: #22c55e;
-            --text-color: #333333;
-            --background-color: #f9fafb;
-            --card-background: #ffffff;
-            --border-color: #E5E7EB;
-            --error-color: #FF4D4F;
-            --success-color: #22c55e;
-            --footer-bg: #1f2937;
-            --footer-text: #9ca3af;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Lexend', sans-serif;
-            background-color: var(--background-color);
-            color: var(--text-color);
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-
-        /* Header Styles */
+        /* Header Styles from activities.html */
         .main-nav {
             background: linear-gradient(90deg, #22c55e, #a855f7);
             padding: 15px 30px;
@@ -146,8 +120,38 @@
             color: #22c55e;
         }
 
+        :root {
+            --primary-color: #4A90E2;
+            --secondary-color: #22c55e;
+            --text-color: #333333;
+            --background-color: #f9fafb;
+            --card-background: #ffffff;
+            --border-color: #E5E7EB;
+            --error-color: #FF4D4F;
+            --success-color: #22c55e;
+            --footer-bg: #1f2937;
+            --footer-text: #9ca3af;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Lexend', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header Styles - Removed */
+
         .main-content {
-            padding-top: 100px;
+            padding-top: 20px; /* Adjusted padding since header is removed */
             max-width: 1200px;
             margin: 0 auto;
         }
@@ -324,38 +328,9 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <nav class="main-nav">
-        <div class="nav-content">
-            <!-- Brand Section -->
-            <a href="/pages/mainpage.html" class="nav-brand">
-                <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="logo" data-i18n="logo-alt">
-                <span class="brand-name" data-i18n="brand-name">TowerClub</span>
-            </a>
-
-            <!-- Navigation Links -->
-            <div class="nav-links">
-                <a href="/pages/dashboard.html" class="nav-link" data-i18n="nav-dashboard">Dashboard</a>
-                <a href="/pages/my_virtualcard.html" class="nav-link">Wallet</a>
-                <a href="/pages/add-transaction.html" class="nav-link" data-i18n="nav-transfer">Transfer</a>
-                <a href="/pages/activities.html" class="nav-link" data-i18n="nav-activities">Activities</a>
-                <a href="/pages/settings.html" class="nav-link">Settings</a>
-            </div>
-
-            <!-- Navigation Actions -->
-            <div class="nav-actions">
-                <!-- Profile Picture -->
-                <div class="profile-picture-container">
-                    <img id="profilePicture" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/finance-app-sample-kugwu4/assets/ijvuhvqbvns6/uiAvatar@2x.png" alt="Profile Picture" class="profile-picture">
-                    <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
-                </div>
-                <!-- Log Out Button -->
-                <a href="/pages/logout.html" class="btn btn-outline">Log out</a>
-                <!-- Google Translate language selector button -->
-                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
-            </div>
-        </div>
-    </nav>
+    <!-- Header from activities.html -->
+    <!-- Header will be dynamically inserted by header.js -->
+    <div id="google_translate_element" style="position: fixed; top: 10px; right: 150px; z-index: 2000;"></div>
 
     <!-- Main Content -->
     <div class="main-content">
@@ -477,33 +452,40 @@
         </div>
     </footer>
 
+    <!-- Add required scripts for header functionality -->
+    <script src="/scripts/profile-picture-sync.js"></script>
+    <script src="/scripts/sync.js"></script>
+    <script src="/scripts/header.js"></script>
     <script>
-        // Profile Picture Sync
-        const profilePicture = document.getElementById('profilePicture');
-        const profilePictureInput = document.getElementById('profilePictureInput');
-        profilePicture.addEventListener('click', () => {
-            profilePictureInput.click();
-        });
-        profilePictureInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    profilePicture.src = e.target.result;
-                    localStorage.setItem('profilePicture', e.target.result);
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+        applyTranslations(); // Call this on page load
+    </script>
+    <script type="module">
+        import DarkMode from '/scripts/dark-mode.js';
         document.addEventListener('DOMContentLoaded', () => {
-            const savedPic = localStorage.getItem('profilePicture');
-            if (savedPic) {
-                ['profilePicture', 'profileImage', 'profileImg'].forEach(id => {
-                    const el = document.getElementById(id);
-                    if (el) el.src = savedPic;
-                });
-            }
-            
+            DarkMode.init();
+        });
+    </script>
+    <script type="module">
+        import profilePictureManager from '/scripts/profile-picture-manager.js';
+        // No need to call anything, the manager auto-initializes and syncs on DOMContentLoaded
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
+                gaTrack: false,
+                gaId: ''
+            }, 'google_translate_element');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <script>
+        // Profile Picture Sync code removed
+
+        document.addEventListener('DOMContentLoaded', () => {
             // Enhanced balance card click handling
             const balanceCard = document.querySelector('.balance-card');
             if (balanceCard) {
@@ -756,28 +738,8 @@
             fetchFinancialNews();
         });
     </script>
-    <script type="module">
-        import DarkMode from '/scripts/dark-mode.js';
-        document.addEventListener('DOMContentLoaded', () => {
-            DarkMode.init();
-        });
-    </script>
-    <script src="/scripts/profile-picture-sync.js"></script>
+    <!-- header.js and profile-picture-sync.js removed -->
     <script src="/scripts/sync.js"></script>
-    <script src="/scripts/header.js"></script>
-    <!-- Google Translate language selector button -->
-    <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'en',
-          includedLanguages: 'en,ar,zh-CN,es,fr',
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
-      }
-    </script>
-    <script 
-      type="text/javascript" 
-      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-    </script>
+    <!-- Google Translate code removed -->
 </body>
 </html>

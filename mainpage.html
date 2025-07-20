@@ -9,6 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/responsive.css">
     <style>
         :root {
             --primary-color: #39D2C0;
@@ -352,91 +353,8 @@
             width: 0% !important;
         }
 
-        .main-footer {
-            background-color: #1f2937;
-            color: white;
-            padding: 60px 0 30px;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-top {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand {
-            max-width: 300px;
-        }
-
-        .brand-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .brand-wrapper img {
-            height: 40px;
-            width: auto;
-        }
-
-        .brand-description {
-            color: #9ca3af;
-            line-height: 1.6;
-        }
-
-        .footer-links-section {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-        }
-
-        .footer-column h4 {
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: #9ca3af;
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-column ul li a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #374151;
-            padding-top: 30px;
-            text-align: center;
-            color: #9ca3af;
-        }
-
         @media (max-width: 768px) {
-            .footer-top {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links-section {
-                grid-template-columns: repeat(2, 1fr);
-            }
+            /* Media query styles */
         }
     </style>
     <script type="module">
@@ -485,7 +403,7 @@
 </head>
 
 <body>
-    <div id="google_translate_element"></div>
+    <div id="google_translate_element" style="position: fixed; top: 10px; right: 150px; z-index: 2000;"></div>
 
     <div class="main-content">
         <div class="dashboard-header">
@@ -548,62 +466,7 @@
         </a>
     </div>
 
-    <footer class="main-footer">
-        <div class="footer-content">
-            <div class="footer-top">
-                <div class="footer-brand">
-                    <div class="brand-wrapper">
-                        <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo">
-                        <span class="brand-name">TowerClub LLC</span>
-                    </div>
-                    <p class="brand-description">
-                        Your trusted platform for financial growth and investment opportunities.
-                    </p>
-                </div>
-                <div class="footer-links-section">
-                    <div class="footer-column">
-                        <h4>Company</h4>
-                        <ul>
-                            <li><a href="#">About Us</a></li>
-                            <li><a href="#">Careers</a></li>
-                            <li><a href="#">Press</a></li>
-                            <li><a href="#">Blog</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Resources</h4>
-                        <ul>
-                            <li><a href="#">Help Center</a></li>
-                            <li><a href="#">Guides</a></li>
-                            <li><a href="#">API</a></li>
-                            <li><a href="#">Status</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Legal</h4>
-                        <ul>
-                            <li><a href="#">Privacy</a></li>
-                            <li><a href="#">Terms</a></li>
-                            <li><a href="#">Security</a></li>
-                            <li><a href="#">Cookies</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-column">
-                        <h4>Social</h4>
-                        <ul>
-                            <li><a href="#">X</a></li>
-                            <li><a href="#">Youtube</a></li>
-                            <li><a href="#">Facebook</a></li>
-                            <li><a href="#">Instagram</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 TowerClub LLC. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
+    <!-- Footer removed -->
     <script src="../scripts/header-override.js"></script>
     <script src="../scripts/main.js"></script>
     <script src="../scripts/profile-picture-sync.js"></script>
@@ -725,7 +588,7 @@
                 // Update welcome message
                 const welcomeMessage = document.getElementById('welcomeMessage');
                 if (welcomeMessage) {
-                    welcomeMessage.textContent = `Welcome to TowerClub!`;
+                    welcomeMessage.textContent = `Welcome Back to TowerClub!`;
                 }
 
                 // Update profile picture
@@ -743,7 +606,7 @@
                 // Update dashboard subtitle
                 const dashboardSubtitle = document.getElementById('dashboardSubtitle');
                 if (dashboardSubtitle) {
-                    dashboardSubtitle.textContent = 'Welcome to TowerClub!';
+                    dashboardSubtitle.textContent = 'Here\'s an overview of your account.';
                 }
 
                 // Store merged user data
@@ -768,12 +631,12 @@
                 // Update welcome message to generic greeting
                 const welcomeMessage = document.getElementById('welcomeMessage');
                 if (welcomeMessage) {
-                    welcomeMessage.textContent = `Welcome to TowerClub!`;
+                    welcomeMessage.textContent = `Welcome Back to TowerClub!`;
                 }
 
                 const dashboardSubtitle = document.getElementById('dashboardSubtitle');
                 if (dashboardSubtitle) {
-                    dashboardSubtitle.textContent = 'Welcome to TowerClub!';
+                    dashboardSubtitle.textContent = 'Here\'s an overview of your account.';
                 }
                 
                 // Reset all financial values to zero
@@ -1304,14 +1167,14 @@
                             text: shareText,
                             url: referralLink
                         }).catch(() => {
-                            // If user cancels or share fails, fallback to Twitter
+                            // If user cancels or share fails, fallback to X
                             window.open(
                                 `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`,
                                 '_blank'
                             );
                         });
                     } else {
-                        // Fallback: Show share options for Twitter, Facebook, WhatsApp
+                        // Fallback: Show share options for X, Facebook, WhatsApp
                         const shareUrl = encodeURIComponent(referralLink);
                         const text = encodeURIComponent('Join me on TowerClub and earn rewards!');
                         const modal = document.createElement('div');
@@ -1324,7 +1187,7 @@
                                 <h3 style="margin-bottom: 16px;">Share your referral link</h3>
                                 <input type="text" value="${referralLink}" readonly style="width: 100%; margin-bottom: 12px; padding: 6px 8px; border-radius: 4px; border: 1px solid #ccc;">
                                 <div style="margin-bottom: 16px;">
-                                    <a href="https://twitter.com/intent/tweet?text=${text}%20${shareUrl}" target="_blank" style="margin:0 8px;">Twitter</a>
+                                    <a href="https://twitter.com/intent/tweet?text=${text}%20${shareUrl}" target="_blank" style="margin:0 8px;">X</a>
                                     <a href="https://www.facebook.com/sharer/sharer.php?u=${shareUrl}" target="_blank" style="margin:0 8px;">Facebook</a>
                                     <a href="https://wa.me/?text=${text}%20${shareUrl}" target="_blank" style="margin:0 8px;">WhatsApp</a>
                                 </div>

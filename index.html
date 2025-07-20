@@ -9,8 +9,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/index.css">
-    <link rel="stylesheet" href="../styles/footer.css">
     <link rel="stylesheet" href="/styles/header.css">
+    <link rel="stylesheet" href="/styles/responsive.css">
     <link rel="icon" type="image/png" href="../assets/images/towerclub_logo.png">
     <style>
         /* Updated Navigation Bar with Improved Contrast */
@@ -177,86 +177,6 @@
             margin-bottom: 20px; /* Added spacing below icon */
         }
 
-        /* Footer */
-        .main-footer {
-            background-color: #1f2937; /* Dark gray background */
-            color: white; /* White text for contrast */
-            padding: 60px 0 30px;
-            margin-top: auto;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        .footer-top {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand {
-            max-width: 300px;
-        }
-
-        .brand-wrapper {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .footer-logo {
-            height: 40px;
-            width: auto;
-        }
-
-        .brand-description {
-            color: #9ca3af; /* Light gray for description text */
-            line-height: 1.6;
-        }
-
-        .footer-links-section {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 30px;
-        }
-
-        .footer-column h4 {
-            color: white; /* White headings for better contrast */
-            margin-bottom: 20px;
-        }
-
-        .footer-column ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .footer-column ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-column ul li a {
-            color: #9ca3af; /* Light gray for links */
-            text-decoration: none;
-            transition: color 0.2s;
-        }
-
-        .footer-column ul li a:hover {
-            color: white; /* White on hover for better visibility */
-        }
-
-        .footer-bottom {
-            border-top: 1px solid #374151; /* Subtle border for separation */
-            padding-top: 30px;
-            text-align: center;
-            color: #9ca3af; /* Light gray for bottom text */
-        }
-
         @media (max-width: 768px) {
             .hero-section h1 {
                 font-size: 2.5rem; /* Adjusted font size for smaller screens */
@@ -269,25 +189,6 @@
             .features-grid {
                 grid-template-columns: 1fr; /* Single column layout for smaller screens */
             }
-
-            .footer-content {
-                flex-direction: column; /* Stack footer content vertically */
-                text-align: center;
-            }
-
-            .footer-top {
-                grid-template-columns: 1fr;
-            }
-
-            .footer-links-section {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .footer-links-section {
-                grid-template-columns: 1fr;
-            }
         }
 
         .language-select {
@@ -297,6 +198,122 @@
             font-size: 1rem;
             margin-left: 10px;
         }
+
+        /* Footer Styles */
+        .main-footer {
+            background-color: #111827; /* Dark background for footer */
+            color: #ffffff; /* White text color */
+            padding: 40px 20px;
+            font-size: 0.875rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .footer-top {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 40px;
+            margin-bottom: 20px;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-width: 300px;
+        }
+
+        .brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-logo {
+            height: 30px;
+            width: auto;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff; /* White color for brand name */
+        }
+
+        .brand-description {
+            font-size: 1rem;
+            color: #e5e7eb; /* Light gray color for description */
+        }
+
+        .footer-links-section {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+
+        .footer-column {
+            flex: 1;
+        }
+
+        .footer-column h4 {
+            font-size: 1.125rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+            color: #ffffff; /* White color for section titles */
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .footer-column a {
+            color: #a1a1aa; /* Light gray color for links */
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-column a:hover {
+            color: #22c55e; /* Green color on hover */
+        }
+
+        .footer-bottom {
+            text-align: center;
+            border-top: 1px solid #374151; /* Light border on top */
+            padding-top: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .footer-bottom p {
+            color: #ffffff; /* White color for copyright text */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .footer-links-section {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .footer-top {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 
     <!-- Add translation manager script -->
@@ -305,6 +322,33 @@
     </script>
 </head>
 <body>
+    <!-- Header Section -->
+    <nav class="main-nav">
+        <div class="nav-content">
+            <!-- Brand Section -->
+            <div style="display: flex; align-items: center;">
+                <a href="/pages/index.html" class="nav-brand">
+                    <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo">
+                    <span class="brand-name">TowerClub</span>
+                </a>
+                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
+            </div>
+
+            <!-- Navigation Links -->
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#about" class="nav-link">About</a>
+            </div>
+
+            <!-- Navigation Actions -->
+            <div class="nav-actions">
+                <a href="login.html" class="btn btn-outline">Login</a>
+                <a href="pay.html" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="app-container" style="padding-top:48px;">
         <main class="landing-content">
             <!-- Hero Section -->
@@ -456,59 +500,60 @@
                 </div>
             </section>
         </main>
+        <!-- Footer -->
         <footer class="main-footer">
             <div class="footer-content">
                 <div class="footer-top">
                     <div class="footer-brand">
                         <div class="brand-wrapper">
                             <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" class="footer-logo" data-i18n="footer-logo-alt">
-                            <span class="brand-name" data-i18n="footer-brand-name">TowerClub LLC</span>
+                            <span class="brand-name">TowerClub LLC</span>
                         </div>
-                        <p class="brand-description" data-i18n="footer-description">
+                        <p class="brand-description">
                             Your trusted platform for financial growth and investment opportunities.
                         </p>
                     </div>
                     <div class="footer-links-section">
                         <div class="footer-column">
-                            <h4 data-i18n="footer-company">Company</h4>
+                            <h4>Company</h4>
                             <ul>
-                                <li><a href="#" data-i18n="footer-about">About Us</a></li>
-                                <li><a href="#" data-i18n="footer-careers">Careers</a></li>
-                                <li><a href="#" data-i18n="footer-press">Press</a></li>
-                                <li><a href="#" data-i18n="footer-blog">Blog</a></li>
+                                <li><a href="#">About Us</a></li>
+                                <li><a href="#">Careers</a></li>
+                                <li><a href="#">Press</a></li>
+                                <li><a href="#">Blog</a></li>
                             </ul>
                         </div>
                         <div class="footer-column">
-                            <h4 data-i18n="footer-resources">Resources</h4>
+                            <h4>Resources</h4>
                             <ul>
-                                <li><a href="#" data-i18n="footer-help">Help Center</a></li>
-                                <li><a href="#" data-i18n="footer-guides">Guides</a></li>
-                                <li><a href="#" data-i18n="footer-api">API</a></li>
-                                <li><a href="#" data-i18n="footer-status">Status</a></li>
+                                <li><a href="#">Help Center</a></li>
+                                <li><a href="#">Guides</a></li>
+                                <li><a href="#">API</a></li>
+                                <li><a href="#">Status</a></li>
                             </ul>
                         </div>
                         <div class="footer-column">
-                            <h4 data-i18n="footer-legal">Legal</h4>
+                            <h4>Legal</h4>
                             <ul>
-                                <li><a href="#" data-i18n="footer-privacy">Privacy</a></li>
-                                <li><a href="#" data-i18n="footer-terms">Terms</a></li>
-                                <li><a href="#" data-i18n="footer-security">Security</a></li>
-                                <li><a href="#" data-i18n="footer-cookies">Cookies</a></li>
+                                <li><a href="#">Privacy</a></li>
+                                <li><a href="#">Terms</a></li>
+                                <li><a href="#">Security</a></li>
+                                <li><a href="#">Cookies</a></li>
                             </ul>
                         </div>
                         <div class="footer-column">
-                            <h4 data-i18n="footer-social">Social</h4>
+                            <h4>Social</h4>
                             <ul>
-                                <li><a href="#" data-i18n="footer-twitter">X</a></li>
-                                <li><a href="#" data-i18n="footer-linkedin">Youtube</a></li>
-                                <li><a href="#" data-i18n="footer-facebook">Facebook</a></li>
-                                <li><a href="#" data-i18n="footer-instagram">Instagram</a></li>
+                                <li><a href="#">X</a></li>
+                                <li><a href="#">LinkedIn</a></li>
+                                <li><a href="#">Facebook</a></li>
+                                <li><a href="#">Instagram</a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="footer-bottom">
-                    <p data-i18n="footer-copyright">&copy; 2025 TowerClub LLC. All rights reserved.</p>
+                    <p>&copy; 2024 TowerClub LLC. All rights reserved.</p>
                 </div>
             </div>
         </footer>
@@ -533,6 +578,23 @@
     <script src="/scripts/translation-manager.js"></script>
     <script src="../scripts/main.js"></script>
     <script src="/scripts/sync.js"></script>
+    
+    <!-- Prevent header.js from inserting its own header -->
+    <script>
+        // Override the insertAdjacentHTML method to prevent header.js from adding another header
+        const originalInsertAdjacentHTML = Element.prototype.insertAdjacentHTML;
+        
+        Element.prototype.insertAdjacentHTML = function(position, html) {
+            // If this is an attempt to insert a header and we're on the index page, block it
+            if (position === 'afterbegin' && this === document.body && html.includes('main-nav')) {
+                console.log('Prevented header.js from inserting a duplicate header');
+                return;
+            }
+            // Otherwise, proceed normally
+            return originalInsertAdjacentHTML.call(this, position, html);
+        };
+    </script>
+    
     <script src="/scripts/header.js"></script>
     <script src="/scripts/login.js"></script>
     <script>

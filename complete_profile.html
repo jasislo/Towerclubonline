@@ -29,15 +29,15 @@
             background-color: var(--secondary-color);
             color: var(--text-color);
             line-height: 1.6;
-            padding-top: 80px; /* Add padding for fixed navigation */
             min-height: 100vh;
             display: flex;
             flex-direction: column;
+            padding-top: 80px; /* Added for fixed header */
         }
 
-        /* Updated Navigation Bar */
+        /* Header Styles - copied from activities.html */
         .main-nav {
-            background: linear-gradient(90deg, #22c55e, #a855f7); /* Green to Fuchsia gradient */
+            background: linear-gradient(90deg, #22c55e, #a855f7);
             padding: 15px 30px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
             position: fixed;
@@ -400,36 +400,6 @@
             }
         }
 
-        /* Profile Picture Styling */
-        .profile-picture-container {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            overflow: hidden;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #ffffff; /* Optional border for better visibility */
-            transition: box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition for hover effect */
-        }
-
-        .profile-picture-container:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add a shadow effect */
-            transform: scale(1.1); /* Slightly enlarge the profile picture */
-            cursor: pointer; /* Change cursor to pointer */
-        }
-
-        .profile-picture-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .profile-picture-container input[type="file"] {
-            display: none; /* Hide the file input */
-        }
-
         /* Notification styling */
         .notification {
             position: fixed;
@@ -461,36 +431,31 @@
     </script>
 </head>
 <body>
+    <!-- Header navigation added, matching activities.html -->
     <nav class="main-nav">
         <div class="nav-content">
-            <!-- Brand Section -->
-            <a href="/pages/mainpage.html" class="nav-brand">
-                <img src="/assets/images/towerclub_logo.png" alt="TowerClub Logo" class="logo" data-i18n="logo-alt">
+            <a href="/pages/dashboard.html" class="nav-brand">
+                <img src="../assets/images/towerclub_logo.png" alt="TowerClub Logo" data-i18n="logo-alt">
                 <span class="brand-name" data-i18n="brand-name">TowerClub</span>
             </a>
-
-            <!-- Navigation Links -->
+            <div id="google_translate_element" style="display: inline-block; margin-left: 15px;"></div>
             <div class="nav-links">
                 <a href="/pages/dashboard.html" class="nav-link" data-i18n="nav-dashboard">Dashboard</a>
-                <a href="/pages/my_card.html" class="nav-link">Wallet</a>
-                <a href="/pages/add-transaction.html" class="nav-link" data-i18n="nav-transfer">Transfer</a>
+                <a href="/pages/my_card.html" class="nav-link" data-i18n="nav-wallet">Wallet</a>
+                <a href="/pages/transfer.html" class="nav-link" data-i18n="nav-transfer">Transfer</a>
                 <a href="/pages/activities.html" class="nav-link" data-i18n="nav-activities">Activities</a>
-                <a href="/pages/settings.html" class="nav-link">Settings</a>
+                <a href="/pages/settings.html" class="nav-link" data-i18n="nav-settings">Settings</a>
             </div>
-
-            <!-- Navigation Actions -->
             <div class="nav-actions">
-                <!-- Profile Picture -->
                 <div class="profile-picture-container">
-                    <img id="profilePicture" src="https://storage.googleapis.com/flutterflow-io-6f20.appspot.com/projects/finance-app-sample-kugwu4/assets/ijvuhvqbvns6/uiAvatar@2x.png" alt="Profile Picture" class="profile-picture">
-                    <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
+                    <img id="profilePicture" src="../assets/images/profile-placeholder.jpg" alt="Profile Picture">
                 </div>
-                <!-- Log Out Button -->
-                <a href="/pages/logout.html" class="btn btn-outline">Log out</a>
-                <div id="google_translate_element" style="display:inline-block; vertical-align:middle; margin-left:10px;"></div>
+                <a href="/pages/logout.html" class="btn-outline" data-i18n="nav-logout">Log Out</a>
             </div>
         </div>
     </nav>
+
+    <div id="google_translate_element" style="position: fixed; top: 10px; right: 150px; z-index: 2000;"></div>
 
     <div class="container">
         <header>
@@ -595,7 +560,7 @@
                     <div class="footer-column">
                         <h4 data-i18n="footer-social">Social</h4>
                         <ul>
-                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">X</a></li>
                             <li><a href="#">LinkedIn</a></li>
                             <li><a href="#">Facebook</a></li>
                             <li><a href="#">Instagram</a></li>
@@ -815,44 +780,64 @@
             input.setCustomValidity(isValid ? '' : errorMessage);
         }
 
-        const profilePicture = document.getElementById('profilePicture');
-        const profilePictureInput = document.getElementById('profilePictureInput');
-
-        // Make the profile picture clickable
-        profilePicture.addEventListener('click', () => {
-            profilePictureInput.click();
-        });
-
-        // Handle the file input change event
-        profilePictureInput.addEventListener('change', (event) => {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    profilePicture.src = e.target.result; // Update the profile picture preview
-                };
-                reader.readAsDataURL(file);
-            }
-        });
+        // Header-related code removed
     </script>
-    <script src="/scripts/profile-picture-sync.js"></script>
-    <script src="/scripts/sync.js"></script>
-    <script src="/scripts/header.js"></script>
+    <!-- Header scripts removed -->
     <script>
       applyTranslations(); // Call this on page load
     </script>
+    <!-- Google translator scripts removed -->
     <script type="text/javascript">
-      function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-          pageLanguage: 'en',
-          includedLanguages: 'en,ar,zh-CN,es,fr',
-          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
-      }
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false,
+                gaTrack: false,
+                gaId: ''
+            }, 'google_translate_element');
+            
+            // Hide "Powered by" text and position Google Translator next to TowerClub
+            var interval = setInterval(function() {
+                // Hide Google branding
+                var poweredBy = document.querySelector('.goog-logo-link');
+                var poweredByText = document.querySelector('.skiptranslate');
+                if (poweredBy) {
+                    poweredBy.setAttribute('style', 'display: none');
+                }
+                if (poweredByText) {
+                    poweredByText.setAttribute('style', 'display: none');
+                }
+                
+                // Check if header is dynamically inserted and inject Google Translate element after brand-name
+                var brandName = document.querySelector('.brand-name');
+                var navBrand = document.querySelector('.nav-brand');
+                var translateElement = document.getElementById('google_translate_element');
+                
+                if (brandName && navBrand && translateElement) {
+                    // If translate element exists but not in the right position, move it
+                    if (!translateElement.parentElement.classList || !translateElement.parentElement.classList.contains('nav-content')) {
+                        translateElement.remove(); // Remove it from current position
+                        // Create a new one in the right position
+                        var newTranslateElement = document.createElement('div');
+                        newTranslateElement.id = 'google_translate_element';
+                        newTranslateElement.setAttribute('style', 'display:inline-block; margin-left:15px;');
+                        navBrand.insertAdjacentElement('afterend', newTranslateElement);
+                        
+                        // Reinitialize Google Translate
+                        new google.translate.TranslateElement({
+                            pageLanguage: 'en',
+                            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                            autoDisplay: false,
+                            gaTrack: false,
+                            gaId: ''
+                        }, 'google_translate_element');
+                    }
+                    clearInterval(interval);
+                }
+            }, 100);
+        }
     </script>
-    <script 
-      type="text/javascript" 
-      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
-    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>

@@ -9,18 +9,16 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="/styles/main.css">
     <link rel="stylesheet" href="/styles/transactions.css">
-    <link rel="stylesheet" href="/styles/header.css">
     <link rel="stylesheet" href="/styles/footer.css">
+    <link rel="stylesheet" href="/styles/header.css">
     <style>
         :root {
-            --header-gradient-start: #22c55e;
-            --header-gradient-end: #a855f7;
             --background-color: #F5F5F5;
             --text-color: #333333;
         }
         
         body {
-            padding-top: 70px; /* Add padding to prevent content from hiding behind fixed nav */
+            padding-top: 80px; /* Updated padding for header */
             font-family: 'Lexend', sans-serif;
             background-color: var(--background-color);
             color: var(--text-color);
@@ -28,45 +26,158 @@
             flex-direction: column;
             min-height: 100vh;
         }
+        
+        /* Header Styles */
+        .main-nav {
+            background: linear-gradient(90deg, #22c55e, #a855f7);
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-brand img {
+            height: 40px;
+            width: auto;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1rem;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #ffffff;
+            color: #22c55e;
+            border-color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-picture-container {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .profile-picture-container:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .profile-picture-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: #ffffff;
+            color: #22c55e;
+        }
 
         .text-gray-400 {
             color: #9ca3af;
         }
-
-        /* Center-align the content header */
-        .content-header {
+        
+        /* Input with validation styling */
+        .input-with-validation {
+            position: relative;
             display: flex;
-            flex-direction: column;
             align-items: center;
-            justify-content: center;
-            text-align: center;
-            margin-bottom: 20px;
         }
-
-        .content-header .btn-icon {
-            margin-bottom: 10px; /* Add spacing between the back button and the text */
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 24px;
-            color: #4f46e5; /* Optional: Add a color for the back button */
-            transition: transform 0.2s ease;
+        
+        .validation-indicator {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-left: 10px;
+            display: none;
         }
-
-        .content-header .btn-icon:hover {
-            transform: scale(1.1); /* Slightly enlarge on hover */
+        
+        .validation-indicator.valid {
+            display: block;
+            background-color: #22c55e;
         }
-
-        .content-header h1 {
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #1f2937;
-            margin-bottom: 5px;
+        
+        .validation-indicator.invalid {
+            display: block;
+            background-color: #ef4444;
         }
-
-        .content-header p {
-            font-size: 1rem;
-            color: #6b7280;
+        
+        .validation-indicator.checking {
+            display: block;
+            background-color: #f59e0b;
+        }
+        
+        #recipientStatus {
+            margin-top: 5px;
+            font-size: 0.85rem;
+        }
+        
+        #recipientStatus.valid {
+            color: #22c55e;
+        }
+        
+        #recipientStatus.invalid {
+            color: #ef4444;
         }
 
         /* Footer styles */
@@ -164,17 +275,13 @@
     </script>
 </head>
 <body>
+    <!-- Header will be dynamically inserted by header.js -->
+    <div id="google_translate_element" style="position: fixed; top: 10px; right: 150px; z-index: 2000;"></div>
+
     <div class="app-container">
         <!-- Main Content -->
         <main class="main-content">
             <!-- Your existing content here -->
-            <div class="content-header">
-                <button onclick="history.back()" class="btn btn-icon">
-                    <span class="material-icons">arrow_back</span>
-                </button>
-                <h1 data-i18n="transfer-title">Transfer Money</h1>
-                <p data-i18n="transfer-subtitle">Send money to friends, family, or businesses securely</p>
-            </div>
 
             <div class="card transaction-form">
                 <form id="transferForm">
@@ -189,7 +296,11 @@
 
                     <div class="form-group">
                         <label for="recipientEmail" data-i18n="transfer-recipient-username">Recipient Username</label>
-                        <input type="text" id="recipientEmail" name="recipientEmail" placeholder="Enter username" required>
+                        <div class="input-with-validation">
+                            <input type="text" id="recipientEmail" name="recipientEmail" placeholder="Enter username" required>
+                            <div id="recipientValidation" class="validation-indicator"></div>
+                        </div>
+                        <small id="recipientStatus" class="form-text"></small>
                     </div>
 
                     <div class="form-group bank-details" style="display: none;">
@@ -258,14 +369,83 @@
         </main>
     </div>
 
-    <!-- Include header.js -->
-    <script src="/scripts/header.js"></script>
     <script type="module" src="/scripts/transactions/edit-transaction.js"></script>
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
     <!-- Transfer functionality -->
     <script type="module">
     import transferService from '/scripts/transfer-service.js';
+    import { getAuth, onAuthStateChanged } from 'firebase/auth';
+    import { initializeApp } from 'firebase/app';
+    
+    // Initialize Firebase
+    const firebaseConfig = {
+        // Your Firebase config should be loaded from an environment variable
+        // or a configuration file in production
+        apiKey: "YOUR_API_KEY",
+        authDomain: "towerclub-app.firebaseapp.com",
+        projectId: "towerclub-app",
+        storageBucket: "towerclub-app.appspot.com",
+        messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+        appId: "YOUR_APP_ID"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    
+    // Check if user is logged in
+    onAuthStateChanged(auth, (user) => {
+        if (!user) {
+            // Redirect to login page if not authenticated
+            window.location.href = '/pages/login.html?redirect=' + encodeURIComponent(window.location.href);
+        }
+    });
+    
+    // Recipient verification with debounce
+    let debounceTimeout;
+    const recipientInput = document.getElementById('recipientEmail');
+    const recipientValidation = document.getElementById('recipientValidation');
+    const recipientStatus = document.getElementById('recipientStatus');
+    
+    recipientInput.addEventListener('input', () => {
+        const username = recipientInput.value.trim();
+        
+        // Clear any existing timeout
+        clearTimeout(debounceTimeout);
+        
+        if (username.length > 2) {
+            // Show checking state
+            recipientValidation.className = 'validation-indicator checking';
+            recipientStatus.className = '';
+            recipientStatus.textContent = 'Checking username...';
+            
+            // Debounce the API call
+            debounceTimeout = setTimeout(async () => {
+                try {
+                    const exists = await transferService.verifyRecipient(username);
+                    
+                    if (exists) {
+                        recipientValidation.className = 'validation-indicator valid';
+                        recipientStatus.className = 'valid';
+                        recipientStatus.textContent = 'Username found!';
+                    } else {
+                        recipientValidation.className = 'validation-indicator invalid';
+                        recipientStatus.className = 'invalid';
+                        recipientStatus.textContent = 'Username not found';
+                    }
+                } catch (error) {
+                    recipientValidation.className = 'validation-indicator invalid';
+                    recipientStatus.className = 'invalid';
+                    recipientStatus.textContent = 'Error verifying username';
+                }
+            }, 500); // Wait 500ms after the user stops typing
+        } else {
+            // Clear validation for short usernames
+            recipientValidation.className = '';
+            recipientStatus.className = '';
+            recipientStatus.textContent = '';
+        }
+    });
 
     document.getElementById('makeTransferBtn').addEventListener('click', async () => {
         try {
@@ -311,7 +491,7 @@
                 transferSpeed,
                 purpose,
                 notes,
-                paymentMethod: 'virtual_card' // This should ideally come from a payment method selection
+                paymentMethod: 'paypal' // Set PayPal as the default payment method
             };
 
             // Process the transfer
@@ -347,6 +527,11 @@
         document.querySelectorAll('.bank-details').forEach(el => {
             el.style.display = isBank ? 'block' : 'none';
         });
+        
+        // Clear validation when switching recipient types
+        recipientValidation.className = '';
+        recipientStatus.className = '';
+        recipientStatus.textContent = '';
     });
 </script>
 
@@ -411,5 +596,18 @@
     <script src="/scripts/profile-picture-sync.js"></script>
     <script src="/scripts/sync.js"></script>
     <script src="/scripts/header.js"></script>
+    <script>
+        applyTranslations(); // Call this on page load
+    </script>
+    <script type="module">
+    import DarkMode from '/scripts/dark-mode.js';
+    document.addEventListener('DOMContentLoaded', () => {
+        DarkMode.init();
+    });
+</script>
+<script type="module">
+    import profilePictureManager from '/scripts/profile-picture-manager.js';
+    // No need to call anything, the manager auto-initializes and syncs on DOMContentLoaded
+</script>
 </body>
 </html>

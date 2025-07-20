@@ -7,6 +7,7 @@
     <title data-i18n="page-title">Login - TowerClub</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/styles/responsive.css">
     <style>
         body {
             font-family: 'Lexend', sans-serif;
@@ -250,7 +251,7 @@
         </form>
         <div class="auth-footer">
             <p data-i18n="login-no-account">Don't have an account?</p>
-            <a href="register.html" id="signUpLink" data-i18n="login-create-account">Sign up</a>
+            <a href="pay.html" id="signUpLink" data-i18n="login-create-account">Sign up</a>
             <div id="google_translate_element" style="margin-top: 12px;"></div>
         </div>
     </div>
@@ -260,7 +261,15 @@
     <script src="/scripts/sync.js"></script>
     <script src="/scripts/login.js"></script>
     <script>
-        applyTranslations(); // Call this on page load
+        // Ensure this script runs even if there are issues with translation
+        try {
+            if (typeof applyTranslations === 'function') {
+                applyTranslations(); // Call this on page load
+            }
+        } catch (error) {
+            console.error('Translation error:', error);
+            // Continue execution even if translations fail
+        }
 
         // Redirect to pay.html when sign up link is clicked
         document.addEventListener('DOMContentLoaded', function() {
@@ -268,8 +277,24 @@
             if (signUpLink) {
                 signUpLink.addEventListener('click', function(e) {
                     e.preventDefault();
+                    console.log('Sign up clicked, redirecting to pay.html');
                     window.location.href = 'pay.html';
                 });
+            } else {
+                console.error('Sign up link element not found');
+            }
+        });
+
+        // Additional direct binding for the sign up link as a fallback
+        window.addEventListener('load', function() {
+            const signUpLink = document.getElementById('signUpLink');
+            if (signUpLink) {
+                signUpLink.onclick = function(e) {
+                    e.preventDefault();
+                    console.log('Sign up clicked (backup handler), redirecting to pay.html');
+                    window.location.href = 'pay.html';
+                    return false;
+                };
             }
         });
     </script>

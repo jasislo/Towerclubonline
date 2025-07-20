@@ -7,7 +7,6 @@
     <title data-i18n="page-title">My Card – TowerClub</title>
     <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;500;600&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="../styles/header.css">
     <script type="module">
         import translationManager from '../scripts/translation-manager.js';
     </script>
@@ -38,16 +37,150 @@
             display: flex;
             flex-direction: column;
             min-height: 100vh;
+            padding-top: 80px; /* Add space for fixed header */
         }
 
+        /* Header Styles */
+        .main-nav {
+            background: linear-gradient(90deg, #22c55e, #a855f7);
+            padding: 15px 30px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+        }
 
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+        }
+
+        .nav-brand img {
+            height: 40px;
+            width: auto;
+        }
+
+        .brand-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        /* Update Google Translate styling */
+        #google_translate_element {
+            margin-left: 10px;
+        }
+
+        #google_translate_element .goog-te-gadget {
+            color: white;
+        }
+
+        #google_translate_element .goog-te-gadget-simple {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 3px;
+            border-radius: 4px;
+        }
+
+        #google_translate_element .goog-te-menu-value {
+            color: white;
+        }
+
+        #google_translate_element .goog-te-menu-value span {
+            color: white !important;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-link {
+            color: #ffffff;
+            font-weight: 500;
+            font-size: 1rem;
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 2px solid transparent;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s, border-color 0.3s;
+        }
+
+        .nav-link:hover {
+            background: #ffffff;
+            color: #22c55e;
+            border-color: #ffffff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .profile-picture-container {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid #ffffff;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .profile-picture-container:hover {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            transform: scale(1.1);
+            cursor: pointer;
+        }
+
+        .profile-picture-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ffffff;
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .btn-outline:hover {
+            background: #ffffff;
+            color: #22c55e;
+        }
 
         /* Existing styles */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            padding-top: 100px;
             flex: 1;
         }
 
@@ -194,9 +327,19 @@
             position: relative;
             transition: box-shadow 0.2s;
         }
+
+        /* Google Translate */
+        #google_translate_element {
+            margin-left: 10px;
+            display: inline-block;
+            vertical-align: middle;
+        }
     </style>
 </head>
 <body>
+    <!-- Add Hidden File Input for Profile Picture -->
+    <input type="file" id="profilePictureInput" accept="image/*" style="display: none;">
+
     <!-- Main Content -->
     <div class="container">
         <!-- Add Payment Methods -->
@@ -382,7 +525,7 @@
                     <div class="footer-column">
                         <h4>Social</h4>
                         <ul>
-                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">X</a></li>
                             <li><a href="#">LinkedIn</a></li>
                             <li><a href="#">Facebook</a></li>
                             <li><a href="#">Instagram</a></li>
@@ -481,127 +624,20 @@
                 const response = await fetch(`${API_BASE}/${methodType}`, {
                     method: 'PATCH',
                     headers: {
-                        'Content-Type': 'application/json',
-                        // Add authentication if needed
-                        // 'Authorization': 'Bearer ' + localStorage.getItem('authToken')
+                        'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ [field]: value })
+                    body: JSON.stringify({
+                        [field]: value
+                    })
                 });
-                if (!response.ok) throw new Error('Failed to save');
-                // Optionally show a success message
-            } catch (err) {
-                alert('Failed to save changes. Please try again.');
+                
+                if (!response.ok) {
+                    throw new Error('Failed to update data');
+                }
+                
+                return await response.json();
+            } catch (error) {
+                console.error('Error updating data:', error);
+                throw error;
             }
         }
-
-        // Enhanced enableCardEdit to call API on save
-        function enableCardEdit(btn, spanId, focusEnd = false) {
-            const cardSpan = btn.parentElement.querySelector(`#${spanId}`);
-            if (!cardSpan) return;
-
-            // If already editing, do nothing
-            if (cardSpan.isContentEditable) return;
-
-            cardSpan.setAttribute('contenteditable', 'true');
-            cardSpan.focus();
-
-            // Optionally place cursor at end for expiry/cardholder/cvv
-            if (focusEnd && typeof window.getSelection === "function") {
-                const range = document.createRange();
-                range.selectNodeContents(cardSpan);
-                range.collapse(false);
-                const sel = window.getSelection();
-                sel.removeAllRanges();
-                sel.addRange(range);
-            }
-
-            // Save on blur or Enter key
-            async function saveEdit(e) {
-                if (e.type === 'blur' || (e.type === 'keydown' && e.key === 'Enter')) {
-                    cardSpan.setAttribute('contenteditable', 'false');
-                    cardSpan.removeEventListener('blur', saveEdit);
-                    cardSpan.removeEventListener('keydown', saveEdit);
-
-                    // Determine method type and field
-                    let methodType, field;
-                    if (spanId.startsWith('creditCard')) {
-                        methodType = 'creditCard';
-                        field = spanId.replace('creditCard', '').toLowerCase(); // e.g. number, expiry, holder, cvv
-                    } else if (spanId.startsWith('debitCard')) {
-                        methodType = 'debitCard';
-                        field = spanId.replace('debitCard', '').toLowerCase();
-                    } else if (spanId.startsWith('bank')) {
-                        methodType = 'bankAccount';
-                        field = spanId.replace('bank', '').toLowerCase(); // accountnumber, routingnumber, name
-                    }
-                    // Remove label prefix if present (e.g. "Expiry: 11/25" -> "11/25")
-                    let value = cardSpan.textContent;
-                    if (field === 'expiry' && value.includes(':')) value = value.split(':')[1].trim();
-                    if (field === 'holder' && value.includes(':')) value = value.split(':')[1].trim();
-                    if (field === 'cvv' && value.includes(':')) value = value.split(':')[1].trim();
-                    if (field === 'accountnumber' && value.includes(':')) value = value.split(':')[1].trim();
-                    if (field === 'routingnumber' && value.includes(':')) value = value.split(':')[1].trim();
-                    if (field === 'name' && value.includes(':')) value = value.split(':')[1].trim();
-
-                    // Save to backend
-                    await saveFieldToAPI(methodType, field, value);
-
-                    if (e.type === 'keydown' && e.key === 'Enter') {
-                        e.preventDefault();
-                    }
-                }
-            }
-            cardSpan.addEventListener('blur', saveEdit);
-            cardSpan.addEventListener('keydown', saveEdit);
-        }
-
-        function selectPaymentMethod(method) {
-            // Show confirmation dialog
-            let methodName;
-            switch(method) {
-                case 'creditCard': methodName = 'Credit Card'; break;
-                case 'debitCard': methodName = 'Debit Card'; break;
-                case 'bankAccount': methodName = 'Bank Account'; break;
-                case 'paypal': methodName = 'PayPal'; break;
-                default: methodName = method;
-            }
-
-            if (confirm(`Would you like to select ${methodName} as your payment method?`)) {
-                // Remove previous selection
-                ['creditCard', 'debitCard', 'bankAccount', 'paypal'].forEach(function(id) {
-                    const container = document.getElementById(id + 'Container');
-                    if (container) {
-                        container.classList.remove('selected-payment-method');
-                        container.removeAttribute('title');
-                    }
-                });
-
-                // Mark selected
-                const selected = document.getElementById(method + 'Container');
-                if (selected) {
-                    selected.classList.add('selected-payment-method');
-                    selected.setAttribute('title', 'Selected');
-                }
-
-                // Store selection in localStorage
-                localStorage.setItem('selectedPaymentMethod', method);
-
-                // Redirect to payment_methods.html
-                window.location.href = 'payment_methods.html';
-            }
-        }
-
-        // On page load, restore selection and show tooltip
-        document.addEventListener('DOMContentLoaded', function() {
-            const selected = localStorage.getItem('selectedPaymentMethod');
-            if (selected) {
-                const container = document.getElementById(selected + 'Container');
-                if (container) {
-                    container.classList.add('selected-payment-method');
-                    container.setAttribute('title', 'Selected');
-                }
-            }
-        });
-    </script>
-</body>
-</html>
